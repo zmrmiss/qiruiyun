@@ -1,0 +1,235 @@
+<div class="page-sidebar-wrapper">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar navbar-collapse collapse" ng-class="{activetop:isActiveTop}">
+        <!-- BEGIN SIDEBAR MENU -->
+        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="false" data-slide-speed="200" style="padding-top: 40px">
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <li class="sidebar-toggler-wrapper hide">
+                <div class="sidebar-toggler">
+                    <span></span>
+                </div>
+            </li>
+            <!-- END SIDEBAR TOGGLER BUTTON -->
+            <li class="nav-item">
+                <div class="nav-link nav-toggle">
+                    <span class="title"></span>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a ui-sref="desktop" class="nav-link nav-toggle">
+                    <i class="icon-home"></i>
+                    <span class="title">管理控制台</span>
+                </a>
+            </li>
+            <li class="heading">
+                <h3 class="uppercase">产品</h3>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-envelope"></i>
+                    <span class="title">短信</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <!--<li class="nav-item">-->
+                    <!--<a ui-sref="test" class="nav-link nav-toggle">-->
+                    <!--<i class="fa fa-comment-o"></i>-->
+                    <!--<span class="title">短信测试</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+
+
+                    <li class="nav-item">
+                        <a ui-sref="industry.report" class="nav-link">
+                            <i class="fa fa-paper-plane-o"></i>
+                            <span class="title">营销短信</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="plat.report" class="nav-link">
+                            <i class="fa fa-comments-o"></i>
+                            <span class="title">行业短信</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="message.hear.report" class="nav-link">
+                            <i class="fa fa-font"></i>
+                            <span class="title">接口短信</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="intl.report" class="nav-link">
+                            <i class="fa fa-plane"></i>
+                            <span class="title">国际短信</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--<li class="nav-item">-->
+                <!--<a ui-sref="proxy.manage" class="nav-link nav-toggle">-->
+                    <!--<i class="fa fa-diamond"></i>-->
+                    <!--<span class="title">代理管理</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a ui-sref="contact" class="nav-link nav-toggle">
+                    <i class="fa fa-fax"></i>
+                    <span class="title">通讯录</span>
+                </a>
+            </li>
+            <li class="nav-item" ng-if="smedShow">
+                <a ui-sref="sme.send" class="nav-link nav-toggle">
+                    <i class="fa fa-comment"></i>
+                    <span class="title">短信体验</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a ui-sref="develop.API" class="nav-link nav-toggle">
+                    <i class="icon-wrench"></i>
+                    <span class="title">开发者</span>
+                </a>
+            </li>
+
+
+            <!--<li class="nav-item">-->
+                <!--<a href="javascript:;" class="nav-link nav-toggle">-->
+                    <!--<i class="icon-wrench"></i>-->
+                    <!--<span class="title">开发者工具</span>-->
+                    <!--<span class="arrow"></span>-->
+                <!--</a>-->
+                <!--<ul class="sub-menu">-->
+                    <!--<li class="nav-item">-->
+                        <!--<a target="_blank" href="/apiv3.html" class="nav-link">-->
+                            <!--<i class="fa fa-download"></i>-->
+                            <!--<span class="title">API文档</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a ui-sref="code" class="nav-link">-->
+                            <!--<i class="fa fa-download"></i>-->
+                            <!--<span class="title">状态码查询</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+            <!--<li class="heading">-->
+                <!--<h3 class="uppercase">财务</h3>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-credit-card-alt"></i>
+                    <span class="title">财务</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <!--<li class="nav-item">-->
+                    <!--<a ui-sref="test" class="nav-link nav-toggle">-->
+                    <!--<i class="fa fa-comment-o"></i>-->
+                    <!--<span class="title">短信测试</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <li class="nav-item  ">
+                        <a ui-sref="payment.account" class="nav-link nav-toggle">
+                            <i class="fa fa-database"></i>
+                            <span class="title">充值</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="orders.all" class="nav-link nav-toggle">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="title">订单</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="money.bills" class="nav-link nav-toggle">
+                            <i class="fa fa-credit-card"></i>
+                            <span class="title">钱包明细</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="invoice.claim" class="nav-link nav-toggle">
+                            <i class="fa fa-id-card-o"></i>
+                            <span class="title">发票</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-if="refundShow">
+                        <a ui-sref="orders.refund" class="nav-link nav-toggle">
+                            <i class="fa fa-gg"></i>
+                            <span class="title">退款</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!--<li class="nav-item  ">-->
+            <!--<a ui-sref="invoice.all" class="nav-link nav-toggle">-->
+            <!--<i class="fa fa-list-alt"></i>-->
+            <!--<span class="title">发票</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li class="heading">-->
+                <!--<h3 class="uppercase">设置</h3>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-cog fa-spin"></i>
+                    <span class="title">系统 & 设置</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <!--<li class="nav-item">-->
+                    <!--<a ui-sref="test" class="nav-link nav-toggle">-->
+                    <!--<i class="fa fa-comment-o"></i>-->
+                    <!--<span class="title">短信测试</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a ui-sref="system.ip" class="nav-link nav-toggle">-->
+                            <!--<i class="fa fa-cog"></i>-->
+                            <!--<span class="title">系统设置</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li class="nav-item">
+                        <a ui-sref="account.info" class="nav-link nav-toggle">
+                            <i class="fa fa-user"></i>
+                            <span class="title">账户设置</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="customer.news" class="nav-link nav-toggle">
+                            <i class="fa fa-calendar"></i>
+                            <span class="title">消息日志</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="Export.export" href="#/Export/export" class="nav-link nav-toggle">
+                            <i class="fa fa-upload"></i>
+                            <span class="title">导出记录</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--<li class="nav-item">-->
+            <!--<a ui-sref="logs" class="nav-link nav-toggle">-->
+            <!--<i class="fa fa-envelope-o"></i>-->
+            <!--<span class="title">操作日志</span>-->
+            <!--</a>-->
+            <!--</li>-->
+        </ul>
+        <!-- END SIDEBAR MENU -->
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+</div>

@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta  charset="utf-8" />
+    <title>API手册 | 创瑞云-CR-来自通讯的极速体验！</title>
+
+    <link rel="stylesheet" href="../public/assets/plugins/bootstrap/css/bootstrap.min.css"  type="text/css" />
+    <link rel="stylesheet" href="../public/assets/layout/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../public/assets/layout/css/prism.css" type="text/css" />
+    <link rel="shortcut icon" href="/assets/layout/img/favicon.ico" /> </head>
+    <script src="../public/assets/plugins/jquery.min.js"  type="text/javascript" ></script>
+    <script src="../public/assets/plugins/bootstrap/js/bootstrap.min.js"  type="text/javascript" ></script>
+
+    <script src="../public/assets/plugins/prism.js"  type="text/javascript"></script>
+    <!-- ie 下placeholder 内容不显示问题  -->
+
+    <!--<script src="../js/jquery.placeholder.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(function () {
+        // Invoke the plugin
+        $('input, textarea').placeholder();
+      });
+    </script>-->
+</head>
+<body >
+<!--<div class="navigation ">-->
+    <!--<div class="container"> <a href="" class="logo pull-left"></a>-->
+        <!--<div class="pull-right" style="margin-top:24px;"> <a hrsingogin.html" class=" btn btn-outline-white">登录</a> <a href="register.html" class="btn-blue" style="margin-left:10px;">注册</a> </div>-->
+        <!--<ul class="pull-right menu">-->
+            <!--<li><a th:href="@{/}">首页</a><span>|</span></li>-->
+            <!--<li><a href="">产品服务</a><span>|</span></li>-->
+            <!--<li><a href="">行业案例</a><span>|</span></li>-->
+            <!--<li><a href="product-price.html">价格</a><span>|</span></li>-->
+            <!--<li><a href="">线上体验</a><span>|</span></li>-->
+            <!--<li><a href="#">开发者中心</a>-->
+                <!--<ul>-->
+                    <!--<li><a href="api.html" >API手册</a></li>-->
+                    <!--<li><a href="helper.html" >帮助中心</a></li>-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="header">
+    <div class="container-cr"> <a class="logo" href="index.html">
+        <img alt="logo"  src="resources/images/site_logo/chonry.png" /> </a>
+        <div class="nav">
+            <a href="index.html" tppabs="http://cr.1cloudsp.com/">首页</a>
+            <a href="api.html" tppabs="http://cr.1cloudsp.com/api.html">API手册</a>
+            <a href="help.html" tppabs="http://cr.1cloudsp.com/help.html">帮助中心</a>
+            <!--<a href="tel:400-006-0086" class="tel" th:if="${session.site.id == 1}">热线：400-006-0086</a>-->
+            <!--<a href="tel:400-865-0285" class="tel" th:if="${session.site.id == 2}">热线：400-865-0285</a>-->
+            <!--<a href="tel:400-0233-021" class="tel" th:if="${session.site.id == 3}">热线：400-0233-021</a>-->
+            <!--<a href="tel:400-006-0086" class="tel" th:if="${session.site.id != 1 && session.site.id != 2 && session.site.id != 3}">热线：400-006-0086</a>-->
+            <!--<a class="nav-small" href="javascript:void(0);"><i class="iconfont icon-mulu"></i></a>-->
+        </div>
+    </div>
+</div>
+<div class="container container-api">
+    <div class="row">
+        <div class="col-sm-3 col-md-3 col-xs-12">
+            <nav class="navbar navbar-default cr-detail-menu" role="navigation">
+                <div class="container-fluid menu-item">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar-collapse" aria-expanded="false">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"  name="topF">API手册 </a>
+                    </div>
+                    <div class="navbar-collapse collapse" id="example-navbar-collapse" aria-expanded="false" style="height: 1px;">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#1" style="font-size: 13px;">短信发送接口</a></li>
+                            <li><a href="#2" style="font-size: 13px;">国际短信发送接口</a></li>
+                            <li><a href="#3" style="font-size: 13px;">语音验证码发送接口</a></li>
+                            <li><a href="#4" style="font-size: 13px;">上行短信推送接口</a></li>
+                            <li><a href="#5" style="font-size: 13px;">短信状态推送接口</a></li>
+                            <li><a href="#6" style="font-size: 13px;">短信余额条数查询接口</a></li>
+                            <li><a href="#7" style="font-size: 13px;">短信模板查询接口</a></li>
+                            <li><a href="#8" style="font-size: 13px;">短信签名查询接口</a></li>
+                            <li><a href="#9" style="font-size: 13px;">短信状态查询接口</a></li>
+                            <li><a href="#10" style="font-size: 13px;">错误码列表</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col-sm-9 col-md-9 col-xs-12">
+            <!-- 短信发送接口 -->
+            <div class="cr-detail-box" id="1">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信发送接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交短信发送请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/api/send</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>mobile</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>13813572468,13900000001</td>
+                                <td>接收短信的手机号码，多个号码以半角逗号,隔开</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>您的验证码是123456</td>
+                                <td>发送的短信内容，采用utf8编码</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td>data</td>-->
+                                <!--<td>String</td>-->
+                                <!--<td>可选</td>-->
+                                <!--<td>{<br>-->
+                                    <!--&nbsp;&nbsp;&nbsp;&nbsp;'13800000001':'您的验证码是1234',<br>-->
+                                    <!--&nbsp;&nbsp;&nbsp;&nbsp;'13800000002':'您的验证码是4321'<br>-->
+                                    <!--}</td>-->
+                                <!--<td> 参数data和参数mobile|content不能同时使用，参数data主要用来发送多条短信且每条短信的内容不同的场景 </td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td>sign</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>【测试签名】</td>
+                                <td>短信签名，请确保签名已经被平台审核通过</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td>type</td>-->
+                                <!--<td>String</td>-->
+                                <!--<td>必须</td>-->
+                                <!--<td>1</td>-->
+                                <!--<td>短信类别，1：行业应用短信；2：会员营销短信</td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td>scheduleSendTime</td>
+                                <td>String</td>
+                                <td>可选</td>
+                                <td>2016-01-01 18:00:00</td>
+                                <td>短信定时发送时间，格式为：2016-01-01 18:00:00；参数如果为空表示立即发送</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">  <br>/* ---示例代码----*/
+                	<code class="language-java">
+package apiserver;
+
+import java.security.MessageDigest;
+
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.lang.RandomStringUtils;
+
+public class ApiTest {
+    private String MD5(String value) throws Exception  {
+        StringBuffer md5StrBuff = new StringBuffer();
+
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.update(value.getBytes("UTF-8"));
+
+        byte[] result = md5.digest();
+
+        for (int i = 0; i &lt; result.length; i++) {
+            if (Integer.toHexString(0xFF &amp; result[i]).length() == 1) {
+                md5StrBuff.append("0").append(Integer.toHexString(0xFF &amp; result[i]));
+            } else {
+                md5StrBuff.append(Integer.toHexString(0xFF &amp; result[i]));
+            }
+        }
+
+        return md5StrBuff.toString();
+    }
+
+    private void sendsms() throws Exception {
+        HttpClient httpClient = new HttpClient();
+        PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/api/send");
+        postMethod.getParams().setContentCharset("UTF-8");
+        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+                    new DefaultHttpMethodRetryHandler());
+
+        String accesskey = "y0r3Ize4tzltVYAL"; //用户开发key
+        String accessScrect = "TKRLnRPpuuQgmKcKhrqttB7sweyBJu5t"; //用户开发秘钥
+        String random = RandomStringUtils.random(10); //随机字符串
+        String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+        String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+        NameValuePair[] data = {
+                new NameValuePair("token", token),
+                new NameValuePair("accesskey", accesskey),
+                new NameValuePair("timestamp", timestamp),
+                new NameValuePair("random", random),
+                new NameValuePair("mobile", "13900000001,13900000002"),
+                new NameValuePair("content", "测试短信"),
+                new NameValuePair("sign", "【测试签名】"),
+        };
+        postMethod.setRequestBody(data);
+
+        int statusCode = httpClient.executeMethod(postMethod);
+        System.out.println("statusCode: " + statusCode + ", body: "
+                    + postMethod.getResponseBodyAsString());
+    }
+
+    public static void main(String[] args) throws Exception {
+        ApiTest t = new ApiTest();
+        t.sendsms();
+    }
+}</code>
+                    <br/>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <pre class="cont info-bg">
+                    <code  class="language-json">
+                    	{
+    code: "0",
+    msg: "SUCCESS",
+    uuids: [
+        {
+            smuuid: "f3e5aeab9bda27f420a443868eff7000fh81fk",
+            mobile: "13900000001"
+        },
+        {
+            smuuid: "0b83811fb2db238ea1ace9206d431db08hkkvn",
+            mobile: "13900000002"
+        }
+    ]
+}
+                    </code>
+                </pre>
+                    <div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；smuuid唯一标识一条短信记录，用户可以通过smuuid来查询短信的状态信息。</div>
+                </div>
+            </div>
+            <!-- 短信发送接口 -->
+
+            <!-- 国际短信发送接口 -->
+            <div class="cr-detail-box" id="2">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信发送接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交短信发送请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/intl/api/send</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>mobile</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>13813572468,13900000001</td>
+                                <td>接收短信的手机号码，多个号码以半角逗号,隔开</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>您的验证码是123456</td>
+                                <td>发送的短信内容，采用utf8编码</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td>data</td>-->
+                                <!--<td>String</td>-->
+                                <!--<td>可选</td>-->
+                                <!--<td>{<br>-->
+                                    <!--&nbsp;&nbsp;&nbsp;&nbsp;'13800000001':'您的验证码是1234',<br>-->
+                                    <!--&nbsp;&nbsp;&nbsp;&nbsp;'13800000002':'您的验证码是4321'<br>-->
+                                    <!--}</td>-->
+                                <!--<td> 参数data和参数mobile|content不能同时使用，参数data主要用来发送多条短信且每条短信的内容不同的场景 </td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td>sign</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>【测试签名】</td>
+                                <td>短信签名，请确保签名已经被平台审核通过</td>
+                            </tr>
+                            <tr>
+                                <td>scheduleSendTime</td>
+                                <td>String</td>
+                                <td>可选</td>
+                                <td>2016-01-01 18:00:00</td>
+                                <td>短信定时发送时间，格式为：2016-01-01 18:00:00；参数如果为空表示立即发送</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">  <br>/* ---示例代码----*/
+                	<code class="language-java">
+package apiserver;
+
+import java.security.MessageDigest;
+
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.lang.RandomStringUtils;
+
+public class ApiTest {
+    private String MD5(String value) throws Exception  {
+        StringBuffer md5StrBuff = new StringBuffer();
+
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.update(value.getBytes("UTF-8"));
+
+        byte[] result = md5.digest();
+
+        for (int i = 0; i &lt; result.length; i++) {
+            if (Integer.toHexString(0xFF &amp; result[i]).length() == 1) {
+                md5StrBuff.append("0").append(Integer.toHexString(0xFF &amp; result[i]));
+            } else {
+                md5StrBuff.append(Integer.toHexString(0xFF &amp; result[i]));
+            }
+        }
+
+        return md5StrBuff.toString();
+    }
+
+    private void sendsms() throws Exception {
+        HttpClient httpClient = new HttpClient();
+        PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/intl/api/send");
+        postMethod.getParams().setContentCharset("UTF-8");
+        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+                    new DefaultHttpMethodRetryHandler());
+
+        String accesskey = "y0r3Ize4tzltVYAL"; //用户开发key
+        String accessScrect = "TKRLnRPpuuQgmKcKhrqttB7sweyBJu5t"; //用户开发秘钥
+        String random = RandomStringUtils.random(10); //随机字符串
+        String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+        String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+        NameValuePair[] data = {
+                new NameValuePair("token", token),
+                new NameValuePair("accesskey", accesskey),
+                new NameValuePair("timestamp", timestamp),
+                new NameValuePair("random", random),
+                new NameValuePair("mobile", "8613900000001,8613900000002"),
+                new NameValuePair("content", "Test Msg......"),
+                new NameValuePair("sign", "[Test Sign]"),
+        };
+        postMethod.setRequestBody(data);
+
+        int statusCode = httpClient.executeMethod(postMethod);
+        System.out.println("statusCode: " + statusCode + ", body: "
+                    + postMethod.getResponseBodyAsString());
+    }
+
+    public static void main(String[] args) throws Exception {
+        ApiTest t = new ApiTest();
+        t.sendsms();
+    }
+}</code>
+                    <br/>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <pre class="cont info-bg">
+                    <code  class="language-json">
+                    	{
+    code: "0",
+    msg: "SUCCESS",
+    uuids: [
+        {
+            smuuid: "f3e5aeab9bda27f420a443868eff7000fh81fk",
+            mobile: "8613900000001"
+        },
+        {
+            smuuid: "0b83811fb2db238ea1ace9206d431db08hkkvn",
+            mobile: "8613900000002"
+        }
+    ]
+}
+                    </code>
+                </pre>
+                    <div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；smuuid唯一标识一条短信记录，用户可以通过smuuid来查询短信的状态信息。</div>
+                </div>
+            </div>
+            <!-- 国际短信发送接口 -->
+
+            <!-- 语音验证码发送接口 -->
+            <div class="cr-detail-box" id="3">
+                <div class="cr-detail-info info1">
+                    <div class="tit">语音验证码发送接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交语音验证码发送请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/voice/send</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>mobile</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>13900000001</td>
+                                <td>接收语音短信的手机号码，多个号码以半角逗号,隔开</td>
+                            </tr>
+                            <tr>
+                                <td>voiceCode</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>123456</td>
+                                <td>语音数字，4~8位数字</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">/* ---示例代码----*/
+                <code class="language-java">
+HttpClient httpClient = new HttpClient();
+PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/voice/send");
+postMethod.getParams().setContentCharset("UTF-8");
+postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+        new DefaultHttpMethodRetryHandler());
+
+String accesskey = "y04tzr3IzVYALelt"; //用户开发key
+String accessScrect = "TKRLnBJu5tKcKhrqRPpuuQgmeyttB7sw"; //用户开发秘钥
+String random = RandomStringUtils.random(10); //随机字符串
+String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+NameValuePair[] data = {
+        new NameValuePair("token", token),
+        new NameValuePair("accesskey", accesskey),
+        new NameValuePair("timestamp", timestamp),
+        new NameValuePair("random", random),
+        new NameValuePair("mobile", "13900000001"),
+        new NameValuePair("voiceCode", "123456"),
+};
+postMethod.setRequestBody(data);
+
+int statusCode = httpClient.executeMethod(postMethod);
+System.out.println("statusCode: " + statusCode + ", body: "
+        + postMethod.getResponseBodyAsString());</code>
+                    <br>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <!--
+                <script src="http://cdn.1cloudsp.com/assets/login/js/jquery.js"></script>
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <div class="cont info-bg" id="result2">
+                    </div>
+                    <div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；</div>
+                </div>
+                -->
+            </div>
+            <!-- 语音验证码发送接口 -->
+
+            <!-- 上行短信推送接口 -->
+            <div class="cr-detail-box" id="4">
+                <div class="cr-detail-info info1">
+                    <div class="tit">上行短信推送接口</div>
+                    <div class="cont info-bg">平台通过HTTP的POST方式提交上行短信数据到用户的接收地址。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">上行短信数据格式</div>
+                    <div class="cont info-bg" > {"mobile":"", "content":"", "receiveTime":""} </div>
+                    <div class="tip">JSON格式：mobile是发送上行短信的用户手机号；content是上行短信内容；receiveTime是发送上行短信的时间</div>
+                </div>
+            </div>
+            <!-- 上行短信推送接口 -->
+
+            <!-- 短信状态推送接口 -->
+            <div class="cr-detail-box" id="5">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信状态推送接口</div>
+                    <div class="cont info-bg">平台通过HTTP的POST方式提交短信发送状态数据到用户的接收地址。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信发送状态数据格式</div>
+                    <div class="cont info-bg" id="result1"> {"smUuid":"", "deliverResult":"", "deliverTime":""} </div>
+                    <div class="tip">JSON格式：smUuid是短信唯一标识；deliverResult是短信发送的状态结果，DELIVED表示发送成功，其他表示失败；deliverTime是状态报告回执的时间</div>
+                </div>
+            </div>
+            <!-- 短信状态推送接口 -->
+
+            <!-- 短信余额条数查询接口 -->
+            <div class="cr-detail-box" id="6">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信余额条数查询接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交短信状态查询请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/query/account</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">/* ---示例代码----*/
+                	<code class="language-java">
+HttpClient httpClient = new HttpClient();
+PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/query/account");
+postMethod.getParams().setContentCharset("UTF-8");
+postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+        new DefaultHttpMethodRetryHandler());
+
+String accesskey = "y0r3IzVYALe4tzlt"; //用户开发key
+String accessScrect = "TKRLnRPpuuQgmeyBJu5tKcKhrqttB7sw"; //用户开发秘钥
+String random = RandomStringUtils.random(10); //随机字符串
+String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+NameValuePair[] data = {
+        new NameValuePair("token", token),
+        new NameValuePair("accesskey", accesskey),
+        new NameValuePair("timestamp", timestamp),
+        new NameValuePair("random", random)
+};
+postMethod.setRequestBody(data);
+
+int statusCode = httpClient.executeMethod(postMethod);
+System.out.println("statusCode: " + statusCode + ", body: "
+        + postMethod.getResponseBodyAsString());</code>
+                    <br/>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <!--<script src="assets/login/js/jquery.js"></script>-->
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <!--<div class="cont info-bg">-->
+                    <div class="cont info-bg"> {"code":"0","msg":"SUCCESS","data":{"1":9983,"2":9998}} </div>
+                    <div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；1表示行业应用的短信条数余额、2表示会员营销的短信条数余额</div>
+                </div>
+            </div>
+            <!-- 短信余额条数查询接口 -->
+
+            <!-- 短信模板查询接口 -->
+            <div class="cr-detail-box" id="7">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信模板查询接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交短信状态查询请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/query/templatelist</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">/* ---示例代码----*/
+                <code class="language-java">
+HttpClient httpClient = new HttpClient();
+PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/query/templatelist");
+postMethod.getParams().setContentCharset("UTF-8");
+postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+        new DefaultHttpMethodRetryHandler());
+
+String accesskey = "y0r3IzVYALe4tzlt"; //用户开发key
+String accessScrect = "TKRLnRPpuuQgmeyBJu5tKcKhrqttB7sw"; //用户开发秘钥
+String random = RandomStringUtils.random(10); //随机字符串
+String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+NameValuePair[] data = {
+        new NameValuePair("token", token),
+        new NameValuePair("accesskey", accesskey),
+        new NameValuePair("timestamp", timestamp),
+        new NameValuePair("random", random)
+};
+postMethod.setRequestBody(data);
+
+int statusCode = httpClient.executeMethod(postMethod);
+System.out.println("statusCode: " + statusCode + ", body: "
+        + postMethod.getResponseBodyAsString());</code>
+                    <br/>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <!--<script src="assets/login/js/jquery.js"></script>-->
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <!--<div class="cont info-bg">-->
+                    <pre class="cont info-bg">
+                	<code class="language-json">
+                	{
+    "code": "0",
+    "msg": "SUCCESS",
+    "data": {
+        "1": [
+            {
+                "template": "{1}你好：您的订单已经出库，请注意查收",
+                "customerId": 10000,
+                "applyStatus": 2,
+                "categoryId": 2
+            },
+            {
+                "template": "你的验证码是：{1}",
+                "customerId": 10000,
+                "applyStatus": 2,
+                "categoryId": 1
+            }
+        ],
+        "2": [
+            {
+                "template": "{1}你好：您的订单已经出库，请注意查收",
+                "customerId": 10000,
+                "applyStatus": 2,
+                "categoryId": 2
+            },
+            {
+                "template": "你的验证码是：{1}",
+                "customerId": 10000,
+                "applyStatus": 2,
+                "categoryId": 1
+            }
+        ]
+    }
+}</code>
+                  </pre>
+                    <!--<div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；data中的1表示行业应用的短信条数余额、data中的2表示会员营销的短信条数余额</div>-->
+                </div>
+            </div>
+            <!-- 短信模板查询接口 -->
+
+            <!-- 短信签名查询接口 -->
+            <div class="cr-detail-box" id="8">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信签名查询接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交短信状态查询请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/query/signlist</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">/* ---示例代码----*/
+                <code class="language-java">
+HttpClient httpClient = new HttpClient();
+PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/query/signlist");
+postMethod.getParams().setContentCharset("UTF-8");
+postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+        new DefaultHttpMethodRetryHandler());
+
+String accesskey = "y0r3IzVYALe4tzlt"; //用户开发key
+String accessScrect = "TKRLnRPpuuQgmeyBJu5tKcKhrqttB7sw"; //用户开发秘钥
+String random = RandomStringUtils.random(10); //随机字符串
+String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+NameValuePair[] data = {
+        new NameValuePair("token", token),
+        new NameValuePair("accesskey", accesskey),
+        new NameValuePair("timestamp", timestamp),
+        new NameValuePair("random", random)
+};
+postMethod.setRequestBody(data);
+
+int statusCode = httpClient.executeMethod(postMethod);
+System.out.println("statusCode: " + statusCode + ", body: "
+        + postMethod.getResponseBodyAsString());</code>
+                    <br>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <!--<script src="assets/login/js/jquery.js"></script>-->
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <!--<div class="cont info-bg">-->
+                    <pre class="cont info-bg">
+                	<code class="language-json">
+                {
+    "code": "0",
+    "msg": "SUCCESS",
+    "data": {
+        "1": [
+            {
+                "extNo": "000005",
+                "exemptFlag": 2,
+                "customerId": 10000,
+                "sign": "【创瑞测试】",
+                "applyStatus": 2
+            }
+        ],
+        "2": [
+            {
+                "extNo": "000006",
+                "customerId": 10000,
+                "sign": "【创瑞测试】",
+                "applyStatus": 2
+            }
+        ]
+    }
+}</code> </pre>
+                    <!--<div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；data中的1表示行业应用的短信条数余额、data中的2表示会员营销的短信条数余额</div>-->
+                </div>
+            </div>
+            <!-- 短信签名查询接口 -->
+
+            <!-- 短信状态查询接口 -->
+            <div class="cr-detail-box" id="9">
+                <div class="cr-detail-info info1">
+                    <div class="tit">短信状态查询接口</div>
+                    <div class="cont info-bg">用户通过HTTP的POST方式提交短信状态查询请求。编码采用UTF-8编码。</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求地址</div>
+                    <div class="cont info-table">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-4">环境</th>
+                                <th class="col-8">HTTP请求地址</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>正式环境</td>
+                                <td>http://api.1cloudsp.com/query/sms</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求参数</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">名称</th>
+                                <th class="col-1">类型</th>
+                                <th class="col-2">是否必须</th>
+                                <th class="col-3">示例值</th>
+                                <th class="col-4">描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>0b83811fb2db238ea1ace9206d431db0</td>
+                                <td>MD5(AccessSecret + random + timestamp)通过MD5消息摘要算法计算的结果，AccessSecret是平台分配给用户的开发秘钥，random是本次请求携带的随机串，timestamp是本次请求携带的当前时间戳</td>
+                            </tr>
+                            <tr>
+                                <td>accesskey</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>y0r3Ize4tzltVYAL</td>
+                                <td>平台分配给用户的开发Key，登录系统首页可通过"开发key"功能获取</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>1465227303037</td>
+                                <td>发送请求时的系统时间戳，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>random</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>23rfsdf332</td>
+                                <td>发送请求时产生的随机串，参入token的计算</td>
+                            </tr>
+                            <tr>
+                                <td>smuuid</td>
+                                <td>String</td>
+                                <td>必须</td>
+                                <td>f3e5aeab9bda27f420a443868eff7000fh81fk,<br>
+                                    f3e5aeab9bda27f420a443868eff7000fh81fk</td>
+                                <td>smuuid唯一标识一条短信，查询多条短信的状态可以用半角逗号,对smuuid进行分割</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">请求示例</div>
+                    <pre class="cont info-bg">/* ---示例代码----*/
+                <code class="language-java">
+HttpClient httpClient = new HttpClient();
+PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/query/sms");
+postMethod.getParams().setContentCharset("UTF-8");
+postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+        new DefaultHttpMethodRetryHandler());
+
+String accesskey = "y04tzr3IzVYALelt"; //用户开发key
+String accessScrect = "TKRLnBJu5tKcKhrqRPpuuQgmeyttB7sw"; //用户开发秘钥
+String random = RandomStringUtils.random(10); //随机字符串
+String timestamp = ""+System.currentTimeMillis(); //当前时间戳
+String token = this.MD5(accessScrect+random+timestamp); //计算token
+
+NameValuePair[] data = {
+        new NameValuePair("token", token),
+        new NameValuePair("accesskey", accesskey),
+        new NameValuePair("timestamp", timestamp),
+        new NameValuePair("random", random),
+        new NameValuePair("smuuid", "eda232a5e46eb447846ac2fa300d54a7nm1w4t") //短信的uuid
+};
+postMethod.setRequestBody(data);
+
+int statusCode = httpClient.executeMethod(postMethod);
+System.out.println("statusCode: " + statusCode + ", body: "
+        + postMethod.getResponseBodyAsString());</code>
+                    <br>/* ---示例代码----*/
+                </pre>
+                    <div class="tip">JAVA格式</div>
+                </div>
+                <div class="cr-detail-info info1">
+                    <div class="tit">响应示例</div>
+                    <pre class="cont info-bg">
+                    <code  class="language-json">
+                    	{
+                        code: "0",
+                        msg: "SUCCESS",
+                        report: [
+                            {
+                                smuuid: "f3e5aeab9bda27f420a443868eff7000fh81fk",
+                                mobile: "13900000001",
+                                sendTime: "2016-01-01 18:00:00",
+                                sendResult: "0",
+                                recvTime: "2016-01-01 18:00:00",
+                                recvResult: "DELIVER"
+                            },
+                            {
+                                smuuid: "0b83811fb2db238ea1ace9206d431db08hkkvn",
+                                mobile: "13900000002",
+                                sendTime: "2016-01-01 18:00:00",
+                                sendResult: "0",
+                                recvTime: "2016-01-01 18:00:00",
+                                recvResult: "DELIVER"
+                            }
+                        ]
+                    }
+                    </code>
+                </pre>
+                    <div class="tip">JSON格式：code如果为0表示请求成功，非0表示请求失败，参考错误码列表查看具体失败原因；</div>
+                </div>
+            </div>
+            <!-- 短信状态查询接口 -->
+
+            <!-- 错误码列表 -->
+            <div class="cr-detail-box" id="10">
+                <div class="cr-detail-info info1">
+                    <div class="tit">错误码列表</div>
+                    <div class="cont info-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">错误码</th>
+                                <th class="col-10">错误描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>9001</td>
+                                <td>签名格式不正确</td>
+                            </tr>
+                            <tr>
+                                <td>9002</td>
+                                <td>参数未赋值</td>
+                            </tr>
+                            <tr>
+                                <td>9003</td>
+                                <td>手机号码格式不正确</td>
+                            </tr>
+                            <tr>
+                                <td>9004</td>
+                                <td>请求已经失效</td>
+                            </tr>
+                            <tr>
+                                <td>9005</td>
+                                <td>token验证不正确</td>
+                            </tr>
+                            <tr>
+                                <td>9006</td>
+                                <td>用户accessKey不正确</td>
+                            </tr>
+                            <tr>
+                                <td>9007</td>
+                                <td>IP白名单限制</td>
+                            </tr>
+                            <tr>
+                                <td>9008</td>
+                                <td>短信类别不正确</td>
+                            </tr>
+                            <tr>
+                                <td>9009</td>
+                                <td>短信内容参数不正确</td>
+                            </tr>
+                            <tr>
+                                <td>9010</td>
+                                <td>用户短信余额不足</td>
+                            </tr>
+                            <tr>
+                                <td>9011</td>
+                                <td>用户帐户异常</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 错误码列表 -->
+
+
+
+        </div>
+    </div>
+</div>
+<!--<footer>-->
+    <!--<div class="container">-->
+        <!--<ul class="clearfix">-->
+            <!--<li class="li01">-->
+                <!--<h3>产品服务</h3>-->
+                <!--<a href="">接口短信</a> <a href="">国际验证码</a> <a href="">Web短信</a> <a href="">语音验证码</a> <a href="">国际语音验证码</a> <a href="">话费充值</a> <a href="">流量分发</a> <a href="">手机入网</a> </li>-->
+            <!--<li>-->
+                <!--<h3>开发者中心</h3>-->
+                <!--<a th:href="@{/help.html}">新手指南</a> <a th:href="@{/api.html}">API文档</a> <a th:href="@{/help.html}">常见问题</a> </li>-->
+            <!--<li>-->
+                <!--<h3>关于我们</h3>-->
+                <!--<a href="">企业简介</a> <a href="">资质荣誉</a> <a href="">联系我们</a> </li>-->
+            <!--<li th:switch="${session.site.id}">-->
+                <!--<h3 th:case="1">关注创瑞云</h3>-->
+                <!--<h3 th:case="2">关注天瑞云</h3>-->
+                <!--<h3 th:case="3">关注短信网</h3>-->
+                <!--<h3 th:case="*">关注创瑞云</h3>-->
+                <!--<img th:src="@{/assets/layout/img/qr/chonry.jpg}"  th:case="1" alt="" title="" />-->
+                <!--<img th:src="@{/assets/layout/img/qr/tinree.jpg}"  th:case="2" alt="" title="" />-->
+                <!--<img th:src="@{/assets/layout/img/qr/dxw.jpg}"  th:case="3" alt="" title="" />-->
+                <!--<img th:src="@{/assets/layout/img/qr/chonry.jpg}"  th:case="*" alt="" title="" />-->
+                <!--<p class="footer-tell" th:case="1">400-006-0086</p>-->
+                <!--<p class="footer-tell" th:case="2">400-865-0285</p>-->
+                <!--<p class="footer-tell" th:case="3">400-0233-021</p>-->
+                <!--<p class="footer-tell" th:case="*">400-006-0086</p>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<div th:switch="${session.site.id}">-->
+            <!--<address th:case="1">-->
+                <!--Copyright © 安徽创瑞信息技术有限公司 All Rights Reserved 版权  皖ICP备12004788号-->
+            <!--</address>-->
+            <!--<address th:case="2">-->
+                <!--Copyright © 安徽天瑞信息技术有限公司 All Rights Reserved 版权-->
+            <!--</address>-->
+            <!--<address th:case="3">-->
+                <!--Copyright © 短信网 畅增信息科技（上海）有限公司 版权所有 All Rights Reserved 版权-->
+            <!--</address>-->
+            <!--<address th:case="*">-->
+                <!--Copyright © 安徽合肥创瑞信息科技有限公司 All Rights Reserved 版权  皖ICP备12004788号-->
+            <!--</address>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</footer>-->
+
+
+<div class=" back-top">
+    <a href="#topF" name="topF"><img src="../public/assets/layout/img/home/line-support-icon03.jpg" tppabs="http://cr.1cloudsp.com/assets/layout/img/home/line-support-icon03.jpg" alt="" title=""></a>
+</div>
+
+
+</body>
+</html>

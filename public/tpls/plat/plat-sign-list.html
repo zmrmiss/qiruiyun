@@ -1,0 +1,138 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询条件</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <input type="text" class="form-control input-sm" ng-model="params.sign" placeholder="请输入签名查询">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">审核状态</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <ui-select ng-model="params.status" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width: 150px; float: left;">
+                                                <ui-select-match placeholder="不限">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="item.status as item in statusData" value="{{item.status}}">
+                                                    {{item.name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="search()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="open(null)"> 新增签名</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th style="width: 200px;"> 创建日期 </th>
+                            <th> 签名 </th>
+                            <th>备注</th>
+                            <!--<th> 签名ID </th>-->
+                            <!--<th> 扩展号 </th>-->
+                            <!--<th> 是否免限 </th>-->
+                            <th> 审核状态 </th>
+                            <!--<th> 审核说明 </th>-->
+                            <th> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.create_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                            <td> 【{{data.content}}】 </td>
+                            <td ng-bind="data.remark">  </td>
+                            <!--<td ng-bind="data.id">  </td>-->
+                            <!--<td ng-bind="data.extNo">  </td>-->
+                            <!--<td ng-bind="data.exemptFlag">  </td>-->
+                            <td>
+                                <span class="font-yellow-gold" ng-if="data.status == 0">待审核</span>
+                                <span class="font-green-1" ng-if="data.status == 1">已通过</span>
+                                <span class="font-red" ng-if="data.status == 2">
+                                    已驳回
+                                    <div style="color: red">原因:
+                                            <span>{{data.reason}}</span>
+                                        </div>
+                                </span>
+                            </td>
+                            <!--<td ng-bind="data.applyReply">  </td>-->
+                            <td>
+                                <a href="javascript:;" class="btn btn-xs blue" ng-click="DeleSign(data.id)"> 删除 </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template"  id="signEdit.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platSignEditForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">短信签名</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">签名内容</label>
+                        <div class="col-md-9">
+                            <span>【</span><input type="text" class="input-sm" style="width: 318px;" ng-model="data.content" name="sign" placeholder="签名字数 2-10 个字"><span>】</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">备注</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control input-sm" ng-model="data.remark" name="remark" placeholder="建议签名为公司、产品或品牌简称"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row alert alert-info" style="margin-bottom: 0;text-align: center">
+                <strong><i class="fa fa-exclamation-circle"></i></strong>人工审核将在1小时内完成，请耐心等待！(工作时间:8:30~21:00)</div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

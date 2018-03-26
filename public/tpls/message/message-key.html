@@ -1,0 +1,173 @@
+<div class="portlet light" id="key_border" style="background-color: transparent;padding: 0;margin: 0;border: 0;">
+    <div class="portlet-body" style="position: relative;height: 65px">
+        <div id="clickbotprev" style="z-index:270;display: inline-block;float: left;border-right: 1px solid #cae7fb;"><img src="../public/assets/layout/img/next.png" alt=""></div>
+        <div class="tabbable-line swiper-container clearfix" style="width: 72%;display: inline-block;float: left">
+            <ul id="tabs" class="nav nav-tabs2 nav-tabs swiper-wrapper clearfix">
+                <li ng-repeat="key in key" class="swiper-slide clearfix" ng-class="{actives:isActiveKey(key.username)}" ng-click="onClickKey(key.username,key.remind)">
+                    <div ng-class="{triangle:isActiveKey(key.username)}"></div>
+                    <a ui-sref="message.hear.report" style="">
+                        <div class="ellipsis">{{key.title}} <span ng-if="key.is_stop==1">[已关闭]</span></div>
+                        <div style="font-size: 12px;padding-top: 5px">APIKey : <span ng-bind="key.username"></span></div>
+                    </a>
+                </li>
+            </ul>
+            <!-- Add Arrows -->
+
+        </div>
+
+            <a href="#" ng-click="SearchAccount()" ng-if="searchOff" style="float: right;padding: 22px;background-color: #ecf6fd;height: 65px;border-left: 1px solid #cae7fb">
+                <i class="fa fa-search" style="font-size: 24px;color: #ccc"></i>
+                <span class="title"></span>
+            </a>
+
+        <div class="tabbable-line" style="float: right">
+            <ul id="tabs" class="nav nav-tabs2 nav-tabs swiper-wrapper" style="margin-right:0;">
+                <li style="background-color: #ecf6fd;padding:0px  30px 0 ;height: 65px;width: 100%;float: right;border: 0;">
+                    <a href="#" ng-click="CreateAccount()" style="padding-top: 0;padding-bottom: 0;">
+                        <div style="font-size: 23px;text-align: center;"> + </div>
+                    </a>
+                    <div class="white-space: nowrap;" style="color: #000;white-space: nowrap;">新增API账号
+                        <a href="#" tooltips tooltip-side="left" tooltip-template="<span>API账号用于区分、隔离不同业务。例如一个API账号用于发送验证码，另一个API账号用于发送营销短信。</span>"><i class="fa fa-exclamation-circle"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Add Arrows -->
+
+        </div>
+
+        <div id="clickbotnext" style="z-index:270;display: inline-block;float: left;border-left: 1px solid #cae7fb;"><img src="../public/assets/layout/img/prev.png" alt=""></div>
+    </div>
+
+    <div ui-view=""></div>
+</div>
+<script type="text/ng-template" id="create.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">创建API账号</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">API账号名称</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.title" name="newMobile"
+                                   placeholder="请输入新增的API账号名称（20字以内）" required ng-minlength="2" ng-maxlength="20">
+                            <span style="color:red" ng-show="myForm.newMobile.$dirty && myForm.newMobile.$invalid">API账号限制为2-20个字符</span>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">短信类型</label>
+                        <div class="col-md-9">
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio">
+                                    <input type="radio" name="product" ng-model="data.type" ng-checked="true" ng-value="1" ng-change="loadGood(1)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1" checked="checked"> 验证码
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="product" ng-model="data.type" ng-value="2" ng-change="loadGood(2)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="2" > 通知&订单
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="product" ng-model="data.type" ng-value="3" ng-change="loadGood(2)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="3"> 营销
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.newMobile.$invalid"
+                    ng-click="ok()">确定
+            </button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="search.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">API名称</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="dataSearch.title" name="title" placeholder="输入创建API账号时的名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Apikey</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="dataSearch.api_key" name="api_key" placeholder="输入API账号的key">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">查询
+            </button>
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">关闭</button>
+
+        </div>
+    </form>
+</script>
+<script>
+    $(function () {
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerGroup:5,
+                pagination: '.swiper-pagination',
+                nextButton: '#clickbotnext',
+                prevButton: '#clickbotprev',
+                slidesPerView:5,
+//        centeredSlides: true,
+                paginationClickable: true,
+                spaceBetween: 0
+            });
+
+
+
+    })
+//    $('#clickbotprev').on('hover',function () {
+//        swiper.res
+//    })
+    $("#clickbotprev").hover(function () {
+
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerGroup:5,
+            pagination: '.swiper-pagination',
+            nextButton: '#clickbotnext',
+            prevButton: '#clickbotprev',
+            slidesPerView:5,
+//        centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 0
+        });
+    })
+    $("#clickbotnext").hover(function () {
+
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerGroup:5,
+            pagination: '.swiper-pagination',
+            nextButton: '#clickbotnext',
+            prevButton: '#clickbotprev',
+            slidesPerView:5,
+//        centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 0
+        });
+    })
+
+</script>
+

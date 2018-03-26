@@ -1,0 +1,248 @@
+<div class="portlet light bordered">
+    <div class="portlet-body form">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <div class="portlet light ">
+                            <div class="portlet-body form">
+                                <form class="form-horizontal">
+                                    <div class="form-body">
+                                        <h4 class="form-section">输入发送手机号码</h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active" style="margin-left: 30px;">
+                                                        <a href="#tab_1_1" data-toggle="tab" target="_self" ng-click="changeTab(1)"> 手动输入 </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#tab_1_2" data-toggle="tab" target="_self" ng-click="changeTab(2)"> 文件导入 </a>
+                                                    </li>
+                                                    <!--<li class="">-->
+                                                    <!--<a href="#tab_1_3" data-toggle="tab" target="_self"> 通讯录 </a>-->
+                                                    <!--</li>-->
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade in active" id="tab_1_1">
+                                                        <div>
+                                                            <textarea class="form-control input-sm" style="resize: none;height: 100px;" ng-blur="checkMobiles()" ng-model="data.mobiles"></textarea>
+                                                        </div>
+                                                        <p class="form-control-static" style="width: 100%;border-left: 1px solid #c2cad8;border-right: 1px solid #c2cad8;border-bottom: 1px solid #c2cad8;padding-left: 20px;">
+                                                            已输入<span class="bold font-red">{{mobileData.mobileCount}}</span>个：有效<span class="bold font-red">{{mobileData.successCount}}</span>个，去重<span class="bold font-red">{{mobileData.repeatCount}}</span>个，无效<span class="bold font-red">{{mobileData.invalidCount}}</span>个；
+                                                            (多个号码使用英文半角逗号","或回车换行分隔)<br>
+                                                            <span class="font-red">提示：手机号前需要加国际代码(中国手机号如86139********，美国手机号如17788******)</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="tab_1_2">
+                                                        <div style="margin-bottom: 10px;">
+                                                            <form action="#" method="post">
+                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <span class="btn btn-sm green btn-file">
+                                                                    <span class="fileinput-new"> 导入文件 </span>
+                                                                    <span class="fileinput-exists"> 导入文件 </span>
+                                                                    <input type="file" name="filename" uploader="uploader" nv-file-select>
+                                                                </span>
+                                                                    <span class="fileinput-filename"> {{fileItem.name}} </span> &nbsp;
+                                                                    <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
+                                                                </div>
+                                                            </form>
+                                                            <div class="pull-right margin-top-10">
+                                                                <span>支持
+                                                                    <a href="#" tooltips tooltip-side="top" tooltip-template="<img src='../public/assets/layout/img/excel_view.jpg'/>">EXCEL</a>
+                                                                    /
+                                                                    <a href="#" tooltips tooltip-side="top" tooltip-template="<img src='../public/assets/layout/img/csv_view.jpg'/>">CSV</a>/
+                                                                    <a href="#" tooltips tooltip-side="top" tooltip-template="<img src='../public/assets/layout/img/txt_view.jpg'/>">TXT</a>
+                                                                    /ZIP格式(<span style="color: red">建议使用ZIP压缩后再导入</span>)
+                                                                </span>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <a href="#" ng-click="download()">下载短信模板</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress" style="height: 2px;margin-bottom: 10px;">
+                                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" ng-style="progress">
+                                                                <span class="sr-only"> {{progress.width}} </span>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <textarea class="form-control input-sm" style="resize: none;height: 100px;" readonly ng-model="data.mobiles"></textarea>
+                                                        </div>
+                                                        <p class="form-control-static" style="width: 100%;border-left: 1px solid #c2cad8;border-right: 1px solid #c2cad8;border-bottom: 1px solid #c2cad8;padding-left: 20px;">
+                                                            已输入<span class="bold font-red">{{mobileData.mobileCount}}</span>个, 去重<span class="bold font-red">{{mobileData.repeatCount}}</span>个;
+                                                            (多个号码使用英文半角逗号","或回车换行分隔)
+                                                        </p>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="tab_1_3">
+                                                        <p> Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
+                                                            skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel
+                                                            fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr. </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <h4 class="form-section">编辑发送内容</h4>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="portlet light bordered">
+                                                    <div class="portlet-title">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group" style="margin-top: 10px;">
+                                                                <label class="control-label col-md-1" style="padding: 5px 0 0 0;">签名</label>
+                                                                <div class="col-md-3">
+                                                                    <ui-select ng-model="sign" theme="bootstrap" search-enabled="false" ng-change="selectSign($select.selected.sign)" class="ui-select-container ui-select-bootstrap dropdown ng-valid" >
+                                                                        <ui-select-match placeholder="--请选择--">{{$select.selected.sign}}</ui-select-match>
+                                                                        <ui-select-choices repeat="sign.id as sign in signs | filter: $select.search">
+                                                                            {{sign.sign }}
+                                                                        </ui-select-choices>
+                                                                    </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="portlet-body">
+                                                        <p ng-if="mobileData.keyList.length > 0" id="keyboard">
+                                                            <button type="button" class="btn btn-xs green margin-right-10" ng-repeat="key in mobileData.keyList track by $index" ng-click="insertAtCaret('content', key)">{{key}}</button>
+                                                        </p>
+                                                        <div style="position: relative;">
+                                                            <span id="signDiv" style="position: absolute;top: 6px;left: 5px;">
+                                                                {{data.sign}}
+                                                            </span>
+                                                            <textarea rows="5" class="form-control input-sm" id="content" style="resize: none;height: 190px;" maxlength="500-{{signWords}}-{{hasT ? 4 : 0}}"
+                                                                      ng-change="change()"
+                                                                      data-ng-trim="false" ng-model="data.content"></textarea>
+                                                            <!--<div style="position: absolute;right: 20px;bottom: 0;">-->
+                                                            <!--<label class="mt-checkbox mt-checkbox-outline"> 回T退订-->
+                                                            <!--<input type="checkbox" ng-model="hasT" ng-change="change()">-->
+                                                            <!--<span></span>-->
+                                                            <!--</label>-->
+                                                            <!--</div>-->
+
+                                                        </div>
+                                                        <p class="form-control-static" style="width: 100%;border-left: 1px solid #c2cad8;border-right: 1px solid #c2cad8;border-bottom: 1px solid #c2cad8;padding-left: 20px;">
+                                                            已输入<span class="bold font-red">{{inputWords}}</span>个字：签名(<span class="bold font-red">{{signWords}}</span>) + 内容(<span class="bold font-red">{{data.content.length}}</span>)<span ng-if="hasT"> + 回T退订(<span class="bold font-red">{{tWords}}</span>)</span>；
+                                                            (发送内容建议少于350个字数，最多不超过500个字)
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="portlet light bordered" style="height: 305px;">
+                                                    <div class="portlet-title">
+                                                        <div class="col-md-12">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group" style="margin-top: 10px;">
+                                                                    <label class="control-label col-md-2" style="padding: 5px 0 0 0;">常用模板</label>
+                                                                    <div style="float: right;"><a class="btn btn-sm btn-info" ng-click="getCommonTemplate()">换一批</a></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="portlet-body">
+                                                        <div class="table-scrollable">
+                                                            <table class="table table-striped table-bordered table-hover" style="height: 100px;">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th> 模板内容 </th>
+                                                                    <th style="width: 80px;"> 操作 </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="tpl in templates" >
+                                                                    <td ng-bind="tpl.template" style="padding: 6px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;-moz-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;">  </td>
+                                                                    <td style="padding: 6px 8px;"> <a class="btn btn-sm btn-link" ng-click="selectTpl(tpl.template)">选用</a> </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <div class="col-md-2" style="top: 8px;max-width: 120px;">
+                                                        <label class="mt-checkbox mt-checkbox-outline pull-right" style="padding-top: 1px;"> 定时发送
+                                                            <input type="checkbox" ng-model="hasTime">
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                    <!--<label class="control-label col-md-1" style="padding: 5px 0 0 0;">定时发送</label>-->
+                                                    <div class="col-md-3">
+                                                        <input class="form-control input-sm" ng-if="hasTime" ng-model="data.scheduleSendTime" readonly date-time view="date" format="YYYY-MM-DD HH:mm"  ng-blur="changeTime()">
+                                                        <span ng-if="hasTime && showTip" style="color: red">时间须设置在10分钟后</span>
+                                                    </div>
+                                                    <div class="col-md-6" style="margin-top: 7px;" ng-if="hasTime">
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('minutes', 10)"> 10分钟后 </a>
+                                                        <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="openMatch(data.template)"> 匹配 </a>-->
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('minutes', 30)"> 30分钟后 </a>
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('hours', 1)"> 1小时后 </a>
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('hours', 24)"> 24小时后 </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-offset-1 col-md-9">
+                                                        <button type="submit" class="col-md-2 btn btn-sm green" ng-click="submit()">发送</button>
+                                                        <p class="form-control-static" style="padding-left: 30px;"><i class="fa fa-info-circle font-blue-oleo"></i>&nbsp;建议发送时段：9：00~21：00</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/javascript">-->
+<!--(function($) {-->
+<!--$.fn.extend({-->
+<!--insertAtCaret: function (myValue) {-->
+<!--var $t = $(this)[0];-->
+<!--//IE-->
+<!--if (document.selection) {-->
+<!--this.focus();-->
+<!--sel = document.selection.createRange();-->
+<!--sel.text = myValue;-->
+<!--this.focus();-->
+<!--} else-->
+<!--//!IE-->
+<!--if ($t.selectionStart || $t.selectionStart == "0") {-->
+<!--var startPos = $t.selectionStart;-->
+<!--var endPos = $t.selectionEnd;-->
+<!--var scrollTop = $t.scrollTop;-->
+<!--$t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);-->
+<!--this.focus();-->
+<!--$t.selectionStart = startPos + myValue.length;-->
+<!--$t.selectionEnd = startPos + myValue.length;-->
+<!--$t.scrollTop = scrollTop;-->
+<!--} else {-->
+<!--this.value += myValue;-->
+<!--this.focus();-->
+<!--}-->
+<!--}-->
+<!--})-->
+<!--})(jQuery);-->
+<!--</script>-->

@@ -1,0 +1,330 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <div class="alert alert-info">
+                            以下信息请填写完整，方便我们客服能及时联系到您;<br>
+                            绑定<a style="text-decoration: none;" ng-click="openMobile(data.mobile)"> <strong>手机号</strong>
+                        </a>或<a style="text-decoration: none;" ng-click="openEmail(data.email)"> <strong>邮箱</strong></a>，可用于账号登录使用。
+                        </div>
+                        <div class="portlet light ">
+                            <div class="portlet-body form">
+                                <!--<div class="alert alert-info">-->
+                                <!--<strong>提示!</strong> IP白名单为调用接口所在服务器的公网IP，若设置为空则表示不限制，容易被攻击。-->
+                                <!--</div>-->
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-body">
+                                        <!--<div class="row">-->
+                                            <!--<div class="col-md-6">-->
+                                                <!--<div class="form-group">-->
+                                                    <!--<label class="control-label col-md-3">特服号</label>-->
+                                                    <!--<div class="col-md-9"><p class="form-control-static" ng-bind="data.passport"></p>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">登录账号</label>
+                                                    <div class="col-md-9">
+                                                        <p class="form-control-static" ng-bind="data.passport"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="row">-->
+                                            <!--<div class="col-md-6">-->
+                                                <!--<div class="form-group">-->
+                                                    <!--<label class="control-label col-md-3">客户名称</label>-->
+                                                    <!--<div class="col-md-9">-->
+                                                        <!--<input type="text" class="form-control input-sm"-->
+                                                               <!--ng-model="data.name" placeholder="请输入您的企业名称或个人姓名">-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">基本联系人</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control input-sm"
+                                                               ng-model="data.contact" placeholder="请输入您的个人姓名">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">手机号</label>
+                                                    <div class="col-md-4">
+                                                        <p class="form-control-static" ng-bind="data.mobile || '无'"></p>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <a class="btn btn-xs btn-link" style="padding: 7px 0;"
+                                                           ng-click="openMobile(data.mobile)">更改手机</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">邮箱</label>
+                                                    <div class="col-md-4">
+                                                        <p class="form-control-static" ng-bind="data.email || '无'"></p>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <a class="btn btn-xs btn-link" style="padding: 7px 0;"
+                                                           ng-click="openEmail(data.email)">更改邮箱</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">QQ</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control input-sm"
+                                                               ng-model="data.qq" placeholder="请输入您的QQ号(选填)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">微信</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control input-sm"
+                                                               ng-model="data.wechat" placeholder="请输入您的微信号(选填)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">省</label>
+                                                    <div class="col-md-6">
+                                                        <ui-select ng-model="data.province" ng-change="changeProvince()" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                                            <ui-select-match placeholder="--省--">{{$select.selected.value  || $select.selected}}</ui-select-match>
+                                                            <ui-select-choices repeat="(key,item) in provinceData" value="{{item.value}}">
+                                                                {{item.value}}
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">市</label>
+                                                    <div class="col-md-6">
+                                                        <ui-select ng-model="data.city" ng-change="changeCity()" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                                            <ui-select-match placeholder="--市--">{{$select.selected.value || $select.selected}}</ui-select-match>
+                                                            <ui-select-choices repeat="(key,item) in cityData" value="{{item.value}}">
+                                                                {{item.value}}
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">区/县</label>
+                                                    <div class="col-md-6">
+                                                        <ui-select ng-model="data.district" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                                            <ui-select-match placeholder="--县/区--">{{$select.selected.value  || $select.selected}}</ui-select-match>
+                                                            <ui-select-choices repeat="(key,val) in countyData" value="{{val.value}}">
+                                                                {{val.value}}
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">详细地址</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control input-sm"
+                                                               ng-model="data.address" placeholder="请输入您的地址">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">公司名称</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control input-sm"
+                                                          style="background-color: #fff;"   ng-disabled="data.authz_status==1"  ng-model="data.username" placeholder="请输入您的公司名称">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">其他联系人</label>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control input-sm" ng-model="data.contact1" placeholder="姓名(选填)">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control input-sm" ng-model="data.contact1_mobile" placeholder="手机号(选填)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="row">-->
+                                            <!--<div class="col-md-6">-->
+                                                <!--<div class="form-group">-->
+                                                    <!--<label class="control-label col-md-3">第二联系人</label>-->
+                                                    <!--<div class="col-md-4">-->
+                                                        <!--<input type="text" class="form-control input-sm"-->
+                                                               <!--ng-model="data.contact2Name" placeholder="姓名(选填)">-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-md-5">-->
+                                                        <!--<input type="text" class="form-control input-sm"-->
+                                                               <!--ng-model="data.contact2Mobile" placeholder="手机号(选填)">-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button type="submit" class="btn btn-sm green"
+                                                                ng-click="modify()">
+                                                            <!--<i class="fa fa-file-o"></i>--> 保存
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template" id="mobile.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">修改安全手机</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">原手机号</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static" ng-bind="data.oldMobile"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">新手机号</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.newMobile" name="newMobile"
+                                   placeholder="请输入新的手机号码" required ng-minlength="11" ng-maxlength="11">
+                            <span style="color:red" ng-show="myForm.newMobile.$dirty && myForm.newMobile.$invalid">手机号限制为11位</span>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">图形验证码</label>
+                        <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8" style="padding-left: 15px;padding-right: 0;width: 38%">
+                            <input class="form-control form-control-solid placeholder-no-fix" ng-model="data.imgcode" type="text" autocomplete="off" placeholder="请输入图片验证码" id="imageCode" name="imageCode" />
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4" style="padding-left: 5px;padding-right: 0;margin-bottom: 0px;height: 34px;line-height: 34px;">
+                            <img style="cursor: pointer;width: 100%;height: 100%;display: block;" src="/api/user/Captcha/generate/?type=3" alt="点击刷新验证码" title="点击刷新验证码" onclick="this.src='/api/user/Captcha/generate/?type=3&'+new Date().getTime()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <button class="btn btn-sm blue" id="sendCode" ng-disabled="myForm.newMobile.$invalid" ng-click="getCode()"> 获取短信验证码
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">验证验证码</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.code" name="code"
+                                   placeholder="请输入手机短信中4位验证码" required ng-minlength="4" ng-maxlength="4">
+                            <span style="color:red" ng-show="myForm.code.$dirty && myForm.code.$invalid">请输入4位验证码</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.newMobile.$invalid || myForm.oldCode.$invalid"
+                    ng-click="ok()">确定
+            </button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="email.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="emailForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">修改安全邮箱</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">原邮箱</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static" ng-bind="data.email || '无'"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">新邮箱</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.newEmail" name="newEmail"
+                                   placeholder="请输入新邮箱">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

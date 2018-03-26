@@ -1,0 +1,118 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <input class="form-control input-sm" style="background-color: #ffffff;width: 170px" readonly date-range-picker  options="opts" type="text" ng-model="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">手机号</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8" style="padding: 0 !important;">
+                                            <input type="text" class="form-control input-sm" ng-model="params.mobile" placeholder="手机号" name="mobile">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">内容</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8" style="padding: 0 !important;">
+                                            <input type="text" class="form-control input-sm" ng-model="params.content" placeholder="内容关键字">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-5">接收状态</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-7" style="padding: 0 !important;">
+                                            <ui-select ng-model="params.type" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width: 95px; float: left;">
+                                                <ui-select-match placeholder="--请选择--">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="type.value as type in types | filter: $select.search">
+                                                    {{type.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="export()">导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th style="width: 120px;"> 提交时间 </th>
+                            <th style="width: 100px;"> 手机号 </th>
+                            <th style="width: 200px;"> 发送内容 </th>
+                            <th style="width: 60px;"> 类别 </th>
+                            <th style="width: 100px;"> 计费条数 <a href="#" tooltips tooltip-side="top" tooltip-template="<span class='font-yellow-gold'>国内</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>港澳台</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>日本</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>韩国</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>纯英文(国外)</span>：160字计1条短信费，超出160字则以153字每条计费；<br><span class='font-yellow-gold'>注意</span>：单个汉字、英文和标点都算1个字；"><i class="fa fa-question-circle font-blue"></i></a> </th>
+                            <th style="width: 120px;"> 定时时间 </th>
+                            <th style="width: 80px;"> 发送状态 </th>
+                            <th ng-if="stateSwitched == 1" style="width: 80px;"> 接收状态 </th>
+                            <!--<th style="width: 180px;"> 接收时间 </th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.ctime | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                            <td ng-bind="data.mobile">  </td>
+                            <td ng-bind="data.sign + data.content">  </td>
+                            <td ng-bind="data.category == null ? '--' : data.category">  </td>
+                            <td ng-bind="data.smCount">  </td>
+                            <td ng-bind="data.scheduleSendTime == null ? '--' : (data.scheduleSendTime | date: 'yyyy-MM-dd HH:mm:ss')">  </td>
+                            <td ng-bind="data.submitResult == null ? '--' : data.submitResult">  </td>
+                            <td ng-if="stateSwitched == 1" ng-bind="data.deliverResult == null ? '--' : data.deliverResult">  </td>
+                            <!--<td ng-if='data.validateFlag == 0 || data.validateFlag == 2 || data.validateFlag == 3'> 人工待审 </td>-->
+                            <!--<td ng-if='data.validateFlag == 0 || data.validateFlag == 2 || data.validateFlag == 3'> 人工待审 </td>-->
+                            <!--<td ng-if='data.validateFlag == 1 || data.validateFlag == 4' ng-bind="data.submitResult == null ? '&#45;&#45;' : data.submitResult">  </td>-->
+                            <!--<td ng-if='data.validateFlag == 1 || data.validateFlag == 4' ng-bind="data.deliverResult == null ? '&#45;&#45;' : data.deliverResult">  </td>-->
+                            <!--<td ng-if='data.validateFlag == 5'> 人工驳回 </td>-->
+                            <!--<td ng-if='data.validateFlag == 5'> 接收失败 </td>-->
+                            <!--<td ng-bind="data.deliverTime | date: 'yyyy-MM-dd HH:mm:ss'">  </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

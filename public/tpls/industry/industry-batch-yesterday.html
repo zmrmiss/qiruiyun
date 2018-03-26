@@ -1,0 +1,114 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <ul id="tabs" class="nav nav-tabs ">
+                    <li ng-repeat="day in tabs2" ng-class="{active:isActiveDay(day.url)}" ng-click="onClickDay(day)">
+                        <a ui-sref="{{day.url}}"> {{day.title}} </a>
+                    </li>
+                    <!--<li ng-class="active.template ? 'active' : ''">-->
+                    <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                    <!--</li>-->
+                </ul>
+
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th width="9%"> 队列 </th>
+                            <th width="10%"> 定时时间 </th>
+                            <th width="11%"> 提交时间 </th>
+                            <th width="12%"> 发送数量 </th>
+                            <th width="10%"> 计费条数
+                                <!--<a href="#" tooltips tooltip-side="top" tooltip-template="<span class='font-yellow-gold'>国内</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>港澳台</span>：70字计1条短信费，超出70字则以66字每条计费；<br><span class='font-yellow-gold'>日本</span>：50字计1条短信费，超出50字则以46字每条计费；<br><span class='font-yellow-gold'>韩国</span>：70字计1条短信费，超出70字则以65字每条计费；<br><span class='font-yellow-gold'>纯英文</span>：140字计1条短信费，超出140字则以132字每条计费；<br><span class='font-yellow-gold'>注意</span>：单个汉字、英文和标点都算1个字；"><i class="fa fa-question-circle font-blue"></i></a> -->
+                            </th>
+                            <!--<th width="15%"> 定时时间 </th>-->
+                            <!--<th width="10%"> 审核状态 </th>-->
+                            <th width="10%"> 处理状态 </th>
+                            <th width="12%"> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.id">  </td>
+                            <td ng-bind="data.timer">  </td>
+                            <td ng-bind="data.submit_time">  </td>
+                            <td ng-bind="data.telephone_total">  </td>
+                            <td ng-bind="data.fees_total">  </td>
+                            <td ng-bind="data.progress">  </td>
+                            <!--<td ng-if="data.validateFlag == 0 || data.validateFlag == 3"> 待审核 </td>-->
+                            <!--<td ng-if="data.validateFlag == 1 || data.validateFlag == 4"> 审核通过 </td>-->
+                            <!--<td ng-if="data.validateFlag == 2 || data.validateFlag == 5"> 审核驳回 </td>-->
+                            <!--<td ng-bind="data.progress">  </td>-->
+                            <td >
+                                <a class="btn btn-xs blue" ng-click="loadTimingList(data.id)">查看详情</a>
+                                <a class="btn btn-xs blue" ng-click="cleanTiming(data.id)">终止操作</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template"  id="Timingdetails.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platBlackEditForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">详情</h5>
+        </div>
+        <div class="tab-content" style="padding: 10px;">
+            <div class="table-scrollable">
+                <table class="table table-hover table-light">
+                    <thead>
+                    <tr>
+                        <th width="150"> 序号 </th>
+                        <th > 接收手机号 </th>
+                        <th width="350"> 短信内容 </th>
+                        <!--<th> 操作</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="data in tableDataLIST">
+                        <td ng-bind="data.id">  </td>
+                        <td>
+                            <span ng-bind="data.tel.substring(0,120)"></span>
+                            <a href="#" ng-click="showTeam(data.tel)" ng-if="data.tel.length>120">查看更多</a>
+                        </td>
+                        <td ng-bind="data.content">  </td>
+                        <!--<td >-->
+                        <!--&lt;!&ndash;<a class="btn btn-xs blue" ng-click="">终止操作</a>&ndash;&gt;-->
+                        <!--</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+                <!--<div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">-->
+                <!--<p class="text-center">-->
+                <!--<img class="avatar" src="../public/assets/layout/img/norecord.png">-->
+                <!--</p>-->
+                <!--</div>-->
+                <tm-pagination ng-if="tableDataLIST.length > 0" conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">关闭</button>
+            <!--<button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>-->
+        </div>
+    </form>
+</script>

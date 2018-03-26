@@ -1,0 +1,93 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <ul id="tabs" class="nav nav-tabs ">
+                    <li ng-repeat="day in tabs2" ng-class="{active:isActiveDay(day.url)}" ng-click="onClickDay(day)">
+                        <a ui-sref="{{day.url}}"> {{day.title}} </a>
+                    </li>
+                    <!--<li ng-class="active.template ? 'active' : ''">-->
+                    <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                    <!--</li>-->
+                </ul>
+                <div class="row" style="margin: 0">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row" style="margin: 0">
+                                <!--手机号-->
+                                <div class="col-sm-3 col-md-4 col-lg-2">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <!--<label class="control-label col-sm-6 col-md-3 col-lg-4">手机号</label>-->
+                                        <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 0 !important;">
+                                            <input type="text" class="form-control input-sm" ng-model="params.telephone" placeholder="请输入接收手机号">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th style="width: 100px;"> 提交时间 </th>
+                            <th style="width: 80px;"> 手机号 </th>
+                            <th style="width: 240px;"> 发送内容 </th>
+                            <!--<th style="width: 60px;"> 类别 </th>-->
+                            <th style="width: 60px;"> 计费条数
+                                <!--<a href="#" tooltips tooltip-side="top" tooltip-template="<span class='font-yellow-gold'>国内</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>港澳台</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>日本</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>韩国</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>纯英文(国外)</span>：160字计1条短信费，超出160字则以153字每条计费；<br><span class='font-yellow-gold'>注意</span>：单个汉字、英文和标点都算1个字；"><i class="fa fa-question-circle font-blue"></i></a>-->
+                            </th>
+                                <!--<th style="width: 100px;"> 定时时间 </th>-->
+                            <th style="width: 120px;"> 发送状态 </th>
+                            <th ng-if="stateSwitched == 1" style="width: 100px;"> 状态报告 </th>
+                            <!--<th style="width: 180px;"> 接收时间 </th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.born_date">  </td>
+                            <td ng-bind="data.telephone">  </td>
+                            <td ng-bind="data.content">  </td>
+                            <td ng-bind="data.branches">  </td>
+                            <td>
+                                <span class="font-green-1">提交成功</span>
+                            </td>
+                            <td>
+                                <span class="font-yellow-gold" ng-if="data.receipt ==-1">等待返回</span>
+                                <span class="font-green-1" ng-if="data.receipt == 0">接收成功</span>
+                                <span class="font-red" ng-if="data.receipt!= 0&&data.receipt!=-1">接收失败</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

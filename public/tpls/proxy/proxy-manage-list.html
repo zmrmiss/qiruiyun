@@ -1,0 +1,126 @@
+<div>
+
+</div>
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <!--<ul id="tabs" class="nav nav-tabs ">-->
+                <!--<li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">-->
+                    <!--<a ui-sref="{{tab.url}}"> {{tab.title}} </a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <a href="#" ng-click="addId()"  class="btn btn-xs blue"  style="padding: 3px 15px;margin-top: 15px">
+                <i class="fa fa-plus-square"></i>
+                新增下级
+            </a>
+            <div class="">
+                <!--<div class="border-green m-bordered">-->
+                <!--<div class="portlet light bordered" style="margin-bottom: 10px;">-->
+                <!--<div class="portlet-body form">-->
+                <!--&lt;!&ndash; BEGIN FORM&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+
+                            <th> 手机号/登录账号 </th>
+                            <th style="width: 150px;"> 姓名 </th>
+                            <th>公司名称</th>
+                            <th style="white-space: normal;">群发短信余量/累计充值条数</th>
+                            <th style="white-space: normal;">模板短信余量/累计充值条数</th>
+                            <th style="white-space: normal;">接口短信余量/累计充值条数</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <!--<td><a href="javascript:;" ng-click="open(data)" ng-class="{'bold': data.flag == 2, 'font-grey-cascade': data.flag == 1}">{{data.title }}</a>  </td>-->
+                            <td ng-bind="data.content">  </td>
+                            <td></td>
+                            <td></td>
+                            <td><span style="margin-right: 10px">1122</span> <a href="#" ng-click="massSee()">查看详情</a></td>
+                            <td><span style="margin-right: 10px">1122</span> <a href="#" ng-click="mouldSee()">查看详情</a></td>
+                            <td><span style="margin-right: 10px">1122</span> <a href="#" ng-click="">查看详情</a></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    .width400{
+        top: 242.5px!important;
+    }
+    .width400>.modal-dialog{
+        width: 400px!important;
+    }
+</style>
+<script type="text/ng-template"  id="Newlyaddedid.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">新增下级</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            注册手机号
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength" style="width: 318px;" ng-model="data.contact" name="name" required="" placeholder="请输入姓名" ng-maxlength="15" ng-minlength="2">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.name.$dirty &amp;&amp; manualForm.name.$invalid" class="ng-hide">姓名限制为2-15个字</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            公司名称
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength" style="width: 318px;" ng-model="data.mobile" name="mobile" required="" placeholder="请输入公司名称" minlength="8" maxlength="20">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.mobile.$dirty &amp;&amp; manualForm.mobile.$invalid" class="ng-hide">请输入公司名称</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            客户姓名
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength" style="width: 318px;" ng-model="data.qq" name="qq" required="" placeholder="请输入客户姓名" ng-maxlength="15" ng-minlength="5">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.qq.$dirty &amp;&amp; manualForm.qq.$invalid" class="ng-hide">请输入客户姓名</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-disabled="manualForm.name.$invalid || manualForm.mobile.$invalid" ng-click="ok()">提交</button>
+        </div>
+    </form>
+</script>

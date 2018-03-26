@@ -1,0 +1,366 @@
+<div class="portlet light">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <div class="tab-content" style="border-top: none">
+
+                <div class="alert" style="background-color: #f4f4f4;font-size: 14px">
+                    您索取了 <span ng-bind="idLength"></span> 条单据开具发票 (若选中多条订单，订单金额将合并开具在一张票据中)
+                </div>
+                <div class="form-border" style="border: 1px solid #e7ebee;">
+                    <div class="ts-name">
+                        <span>发票工具</span>
+                    </div>
+                    <div class="ts-title">
+                        <div class="ts-md">
+                            <div style="width: 10%;"></div>
+                            <div style="width: 20%;">发票类型</div>
+                            <div style="width: 20%;"></div>
+                            <div style="width: 30%;">发票抬头</div>
+                            <div style="width: 10%;text-align: right;margin-right:15px;float: right">操作</div>
+                        </div>
+                    </div>
+                    <label class="mt-radio mt-radio-outline ts-list" ng-repeat="data in tableData">
+                        <div style="width: 100%" class="ts-list-md">
+                            <div style="width: 10%;"></div>
+                            <div style="width: 20%;">
+                                <span ng-if="data.type==1">增值税普通发票</span>
+                                <span ng-if="data.type==2">增值税专用发票</span>
+                            </div>
+                            <div style="width: 20%;"></div>
+                            <div style="width: 40%;">{{data.title}}</div>
+                            <div style="float: right;padding-right: 10px">
+                                <span ng-if="data.is_default==1" style="color: #a7a4a0;padding-right: 10px">默认</span>
+                                <a href="javascript:;" ng-click="openContactInvoice(data.id)">修改</a>
+                            </div>
+                        </div>
+                        <input type="radio" name="data" ng-model="InvGood.id" ng-value="data.id">
+                        <span style="left: 15px;top: 12px;"></span>
+                    </label>
+                </div>
+                <a href="javascript:;" class="clearfix" style="padding: 30px 10px ;" ng-click="openContactInvoice()">+新增开票信息</a>
+                <div class="form-border" style="border: 1px solid #e7ebee;">
+                    <div class="ts-name">
+                        <span>寄送地址</span>
+                    </div>
+                    <div class="ts-title">
+                        <div class="ts-md">
+                            <div style="width: 5%;"></div>
+                            <div style="width: 15%;">收件人姓名</div>
+                            <div style="width: 15%;">电话号码</div>
+                            <div style="width: 30%;">地址</div>
+                            <div style="width: 10%;">邮编</div>
+                            <div style="width: 10%;text-align: right;margin-right:30px;float: right">操作</div>
+                        </div>
+                    </div>
+                    <label class="mt-radio mt-radio-outline ts-list" ng-repeat="data2 in tableDataAdd">
+                        <div style="width: 100%;" class="ts-list-md">
+                            <div style="width: 5%;"></div>
+                            <div style="width: 15%;" ng-bind="data2.name"></div>
+                            <div style="width: 15%;" ng-bind="data2.mobile"></div>
+                            <div style="width: 30%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;line-height: 12px" ng-bind="data2.province+data2.city+data2.region+data2.address">
+                            </div>
+                            <div style="width: 10%;" ng-bind="data2.postalcode"></div>
+                            <div style="float: right;padding-right: 10px;">
+                                <span ng-if="data2.is_default==1" style="color: #a7a4a0;padding-right: 10px">默认地址</span>
+                                 <a href="javascript:;" ng-click="CreateAdd(data2.id)">修改</a> |
+                                    <a href="javascript:;" ng-click="InvoiceAddDel(data2.id)">删除</a>
+                            </div>
+                        </div>
+                        <input type="radio" name="data2" ng-model="AddGood.id" ng-value="data2.id">
+                        <span style="left: 15px;top: 12px;"></span>
+                    </label>
+                </div>
+                <a href="javascript:;" class="clearfix" style="padding: 30px 10px ;" ng-click="CreateAdd()">+新增地址</a>
+
+                <div class="row" style="padding-left: 15px;padding-bottom:40px">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-2">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-search-label col-sm-6 col-md-3 col-lg-4">发票内容</label>
+                                        <div class="col-sm-6 col-md-6 col-lg-6" style="padding: 0 !important;">
+                                            <ui-select ng-model="data.invoice_title" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                                <ui-select-match placeholder="--请选择--">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="status.value as status in invoicetitles | filter: $select.search">
+                                                    {{status.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="submitbtn()"> 提交</button>
+                <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="goback()" style="margin-left: 10px"> 返回上一页</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--新建收货地址-->
+<script type="text/ng-template"  id="openContactAdd.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">{{titleNe}}地址</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            收件人姓名
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.name" name="name" required placeholder="请输入姓名" ng-maxlength="15" ng-minlength="2">
+                            <!--<br>-->
+                            <!--<span style="color:red" ng-show="manualForm.name.$dirty && manualForm.name.$invalid">姓名限制为2-15个字</span>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            所在地区
+                        </label>
+                        <div class="col-md-9">
+                            <div class="col-md-3" style="padding: 0;margin-right: 10px;width: 30%">
+                                <ui-select ng-model="data.province" ng-change="changeProvince()" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.value  || $select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="(key,item) in provinceData" value="{{item.value}}">
+                                        {{item.value}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3" style="padding: 0;margin-right: 10px;width: 30%">
+                                <ui-select ng-model="data.city" ng-change="changeCity()" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.value || $select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="(key,item) in cityData" value="{{item.value}}">
+                                        {{item.value}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3" style="padding: 0;" ng-if="hasDis">
+                                <ui-select ng-model="data.region" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.value  || $select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="(key,val) in countyData" value="{{val.value}}" style="width: auto">
+                                        {{val.value}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            街道地址
+                        </label>
+                        <div class="col-md-9">
+
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.address" name="address" required placeholder="请输入街道地址">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.address.$dirty && manualForm.address.$invalid">请输入街道地址</span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" >
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            邮政编码
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.postalcode" name="postalcode" required placeholder="请输入邮政编码">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.postalcode.$dirty && manualForm.postalcode.$invalid">请输入邮政编码</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            手机号
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.mobile" name="mobile" required placeholder="请输入合法的手机号" minlength="8" maxlength="20">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.mobile.$dirty && manualForm.mobile.$invalid">请输入合法的手机号</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <label class="mt-checkbox mt-checkbox-outline"
+                                   style="padding-top: 1px;"> 设为默认
+                                <input type="checkbox" ng-model="hasTadd">
+                                <span></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>
+
+<!--新建发票-->
+<script type="text/ng-template"  id="openContactInvoice.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">{{titleNe}}发票</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <!--<span style="color: red">*</span>-->
+                            发票类型：
+                        </label>
+                        <div class="col-md-9">
+                            <div class="col-md-9">
+                                <div class="mt-radio-inline">
+                                    <!--<label class="mt-radio"> 保密-->
+                                    <!--<input type="radio" ng-disabled="readOnly" value="0" name="sex" ng-model="data.sex"/>-->
+                                    <!--<span></span>-->
+                                    <!--</label>-->
+                                    <label class="mt-radio"> 增值税普通发票
+                                        <input type="checkbox"  value="1" name="sex" ng-model="invoiceClick1" ng-click="ToggleSwitch()"/>
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-radio"> 增值税专用发票
+                                        <input type="checkbox" value="2" name="sex" ng-model="invoiceClick2" ng-click="ToggleSwitch2()"/>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            发票抬头：
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.title" name="name" required placeholder="请输入发票抬头">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            税务登记证号：
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.taxid" name="taxid" required placeholder="请输入税务登记证号">
+                        </div>
+                    </div>
+
+
+                    <div ng-if="invoiceClick">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                开户银行名称：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.bankname" name="bankname" required placeholder="请输入开户银行名称">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                开户银行账号：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.bankaccount" name="bankaccount" required placeholder="请输入开户银行账号">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                注册场所地址：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.address" name="address" required placeholder="请输入注册场所地址">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                注册固定电话：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.telephone" name="telephone" required placeholder="请输入注册固定电话">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                一般纳税人证明：
+                            </label>
+                            <div class="col-sm-9 col-md-4">
+                                <div style="margin-bottom: 10px;">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                            <span class="btn btn-sm green btn-file" >
+                                                                                <span class="fileinput-new"> 上传 </span>
+                                                                                <span class="fileinput-exists"> 上传 </span>
+                                                                                <input type="file" uploader="uploaders" nv-file-select >
+                                                                            </span>
+                                        <!--<span class="fileinput-filename"> {{fileItem.name}} </span> &nbsp;-->
+                                        <!--<a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>-->
+                                    </div>
+                                    <span id="idCardImg" style="color: red"></span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <label class="mt-checkbox mt-checkbox-outline"
+                                   style="padding-top: 1px;"> 设为默认
+                                <input type="checkbox" ng-model="hasTI">
+                                <span></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

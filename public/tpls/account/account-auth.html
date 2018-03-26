@@ -1,0 +1,203 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+
+                        <div class="portlet light ">
+                            <div class="portlet-body form">
+                                <div class="tabbable-line">
+                                    <ul class="nav nav-tabs ">
+                                        <li class="active">
+                                            <a href="#tab_15_1" data-toggle="tab" target="_self"> 个人认证 </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_15_2" data-toggle="tab" target="_self"> 企业认证 </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_15_1">
+                                            <form class="form-horizontal" role="form" novalidate name="myForm">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">真实姓名</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="username" class="form-control input-sm" ng-model="data1.username"  ng-disabled="data1.authz == 2&&data1.authz_status ==1||data1.authz == 2&&data1.authz_status ==2 || data1.authz == 1 && data1.authz_status == 1||data1.authz == 1 && data1.authz_status == 2" placeholder="请填写身份证中的姓名" required ng-maxlength="5" ng-minlength="2">
+                                                                    <span style="color:red" ng-show="myForm.username.$dirty && myForm.username.$invalid">姓名限制2-5个字</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">证件号码</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="id_card" class="form-control input-sm" ng-model="data1.id_card" ng-disabled="data1.authz == 2&&data1.authz_status ==1||data1.authz == 2&&data1.authz_status ==2 || data1.authz == 1 && data1.authz_status == 1||data1.authz == 1 && data1.authz_status == 2" placeholder="请填写身份证号码" required ng-maxlength="18" ng-minlength="15">
+                                                                    <span style="color:red" ng-show="myForm.id_card.$dirty && myForm.id_card.$invalid">身份证号码限制为15-18位</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">证件照片</label>
+                                                                <!--正面图片地址-->
+                                                                <div class="col-sm-9 col-md-4">
+                                                                    <!--<div class="thumbnail" style="width: 220px;text-align: center;">-->
+                                                                    <img ng-src="{{data1.id_card_pic == null ? '../public/assets/layout/img/sfzback.png' : (data1.id_card_pic)}}" id="idCardImg" alt="" style="height: 141px;display: block;margin-bottom: 10px;">
+                                                                    <!--</div>-->
+                                                                    <div style="margin-bottom: 10px;">
+                                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                            <span class="btn btn-sm green btn-file">
+                                                                                <span class="fileinput-new"> 选择正面图片 </span>
+                                                                                <span class="fileinput-exists"> 选择正面图片 </span>
+                                                                                <input type="file" uploader="uploader1" nv-file-select accept="image/jpeg,image/jpg,image/png" ng-disabled="data1.authz == 2&&data1.authz_status == 2 || data1.authz == 2&&data1.authz_status == 1||data1.authz == 1 && data1.authz_status == 1||data1.authz == 1 && data1.authz_status == 2">
+                                                                            </span>
+                                                                            <!--<span class="fileinput-filename"> {{fileItem.name}} </span> &nbsp;-->
+                                                                            <!--<a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--反面图片地址-->
+                                                                <div class="col-sm-9 col-md-4">
+                                                                    <!--<div class="thumbnail" style="width: 220px;text-align: center;">-->
+                                                                    <img ng-src="{{data1.id_card_pic2 == null ? '../public/assets/layout/img/sfz.png' : (data1.id_card_pic2)}}" id="idCardImg2" alt="" style="height: 141px;display: block;margin-bottom: 10px;">
+                                                                    <!--</div>-->
+                                                                    <div style="margin-bottom: 10px;">
+                                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                            <span class="btn btn-sm green btn-file">
+                                                                                <span class="fileinput-new"> 选择反面图片 </span>
+                                                                                <span class="fileinput-exists"> 选择反面图片 </span>
+                                                                                <input type="file" uploader="uploader3" nv-file-select accept="image/jpeg,image/jpg,image/png" ng-disabled="data1.authz == 2&&data1.authz_status == 2 || data1.authz == 2&&data1.authz_status == 1||data1.authz == 1 && data1.authz_status == 1||data1.authz == 1 && data1.authz_status == 2">
+                                                                            </span>
+                                                                            <!--<span class="fileinput-filename"> {{fileItem.name}} </span> &nbsp;-->
+                                                                            <!--<a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-3 col-md-9">
+                                                                    <button type="button" class="btn btn-sm green" ng-disabled="data1.authz == 1&&data1.authz_status == 2 || data1.authz == 1&&data1.authz_status == 1 ||data1.authz == 2&&data1.authz_status == 2 || data1.authz == 2&&data1.authz_status == 1 || myForm.username.$invalid || myForm.id_card.$invalid" ng-click="modify1()">
+                                                                        <!--<i class="fa fa-file-o"></i>--> 保存</button>
+
+                                                                </div>
+                                                                <div  class="col-md-offset-3 col-md-9" style="margin-top: 20px">
+                                                                    <span style="color:red"   ng-show="data1.authz == 2&&data1.authz_status == 2">认证中...</span>
+                                                                    <span style="color:red"   ng-show="data1.authz == 2&&data1.authz_status == 1">已认证</span>
+                                                                    <span style="color:red"   ng-show="data1.authz == 2&&data1.authz_status == '-1'">认证不通过  <span>驳回原因：</span> <span  ng-bind="data1.reason"></span></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6"> </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="tab_15_2">
+                                            <form class="form-horizontal" role="form" name="myForm2">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">企业名称</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="username" class="form-control input-sm" ng-model="data2.username" ng-disabled="data1.authz == 1&&data1.authz_status ==1||data1.authz == 1&&data1.authz_status ==2" placeholder="请填写营业执照中完整的公司名称"  required ng-minlength="6" ng-maxlength="20">
+                                                                    <span style="color:red" ng-show="myForm2.username.$dirty && myForm2.username.$invalid">企业名称限制为6-20个字</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">证件号码</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="id_card" class="form-control input-sm" ng-model="data2.id_card" ng-disabled="data1.authz == 1&&data1.authz_status ==1||data1.authz == 1&&data1.authz_status ==2" placeholder="营业执照号码" required ng-minlength="1" ng-maxlength="50">
+                                                                    <span style="color:red" ng-show="myForm2.id_card.$dirty && myForm2.id_card.$invalid">营业执照号码限制为1-50位</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">证件照片</label>
+                                                                <div class="col-sm-9 col-md-9">
+                                                                    <!--<a href="javascript:;" class="thumbnail" style="width: 280px;">-->
+                                                                    <img ng-src="{{data2.id_card_pic == null ? '../public/assets/layout/img/yyzz.png' : (data2.id_card_pic)}}" alt="" id="businessLicenceImg" style="height: 141px;display: block;margin-bottom: 10px;">
+                                                                    <!--</a>-->
+                                                                    <div style="margin-bottom: 10px;">
+                                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                            <span class="btn btn-sm green btn-file" ng-disabled="data1.authz == 1&&data1.authz_status ==1||data1.authz == 1&&data1.authz_status ==2">
+                                                                                <span class="fileinput-new"> 选择图片 </span>
+                                                                                <span class="fileinput-exists"> 选择图片 </span>
+                                                                                <input type="file" uploader="uploader2" nv-file-select ng-disabled="data1.authz == 1 && data1.authz_status == 1 ||data1.authz == 1 && data1.authz_status == 2">
+                                                                            </span>
+                                                                            <!--<span class="fileinput-filename"> {{fileItem.name}} </span> &nbsp;-->
+                                                                            <!--<a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-3 col-md-9">
+                                                                    <button type="submit" class="btn btn-sm green" ng-click="modifyBoss()" ng-disabled="data1.authz == 1 && data1.authz_status == 1 ||data1.authz == 1 && data1.authz_status == 2|| myForm2.username.$invalid || myForm2.id_card.$invalid">
+                                                                        <!-- <i class="fa fa-file-o"></i>--> 保存</button>
+
+                                                                </div>
+                                                                <div  class="col-md-offset-3 col-md-9" style="margin-top: 20px">
+                                                                    <span style="color:red"   ng-show="data1.authz == 1&&data1.authz_status == '1'">已认证</span>
+                                                                    <span style="color:red"   ng-show="data1.authz == 1&&data1.authz_status == '2'">认证中</span>
+                                                                    <span style="color:red"   ng-show="data1.authz == 1&&data1.authz_status == '-1'">认证不通过 <span>驳回原因：</span> <span ng-bind="data2.reason"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6"> </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info">
+                            <span style="color: red">1、上传图片文件大小最大支持5M，尺寸支持：4096x2160</span><br>
+                            2、认证中及认证通过的，不可修改<br>
+                            3、已驳回的，显示驳回原因，可修改再次提交<br>
+                            4、所有项均为必填项<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

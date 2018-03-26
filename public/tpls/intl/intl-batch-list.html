@@ -1,0 +1,95 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <input class="form-control input-sm" style="background-color: #ffffff;width: 165px" readonly date-range-picker  options="opts" type="text" ng-model="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">审核状态</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <ui-select ng-model="params.validateFlag" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width: 150px; float: left;">
+                                                <ui-select-match placeholder="--审核状态--">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="item.validateFlag as item in validateFlagData" value="{{item.validateFlag}}">
+                                                    {{item.name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 批次ID </th>
+                            <th> 提交时间 </th>
+                            <!--<th> 类别 </th>-->
+                            <th> 发送数量 </th>
+                            <th> 计费条数 <a href="#" tooltips tooltip-side="top" tooltip-template="<span class='font-yellow-gold'>国内</span>：70字计1条短信费，超出70字则以67字每条计费；<br><span class='font-yellow-gold'>港澳台</span>：70字计1条短信费，超出70字则以66字每条计费；<br><span class='font-yellow-gold'>日本</span>：50字计1条短信费，超出50字则以46字每条计费；<br><span class='font-yellow-gold'>韩国</span>：70字计1条短信费，超出70字则以65字每条计费；<br><span class='font-yellow-gold'>纯英文</span>：140字计1条短信费，超出140字则以132字每条计费；<br><span class='font-yellow-gold'>注意</span>：单个汉字、英文和标点都算1个字；"><i class="fa fa-question-circle font-blue"></i></a> </th>
+                            <th> 来源 </th>
+                            <th> 定时时间 </th>
+                            <th> 审核状态 </th>
+                            <th> 处理状态 </th>
+                            <th> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.id">  </td>
+                            <td ng-bind="data.ctime | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                            <!--<td ng-bind="data.category">  </td>-->
+                            <td ng-bind="data.count">  </td>
+                            <td ng-bind="data.smCount">  </td>
+                            <td ng-bind="data.sendFrom">  </td>
+                            <td ng-bind="data.scheduleSendTime == null ? '--' : (data.scheduleSendTime | date: 'yyyy-MM-dd HH:mm:ss')">  </td>
+                            <td ng-if="data.validateFlag == 0 || data.validateFlag == 3"> 待审核 </td>
+                            <td ng-if="data.validateFlag == 1 || data.validateFlag == 4"> 审核通过 </td>
+                            <td ng-if="data.validateFlag == 2 || data.validateFlag == 5"> 审核驳回 </td>
+                            <td ng-bind="data.progress">  </td>
+                            <td >
+                                <a class="btn btn-xs blue" ng-class="(data.progress == null || data.progress == '处理完成') ? '' : 'disabled'" ng-click="go(data.id)">查看</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,235 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="tab-content">
+                    <div class="row">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <label class="control-label col-sm-6 col-md-3 col-lg-4">查询条件</label>
+                                            <div class="col-sm-6 col-md-9 col-lg-8">
+                                                <input type="text" class="form-control input-sm" ng-model="params.template" placeholder="请输入模板查询">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <label class="control-label col-sm-6 col-md-3 col-lg-4">审核状态</label>
+                                            <div class="col-sm-6 col-md-9 col-lg-8">
+                                                <ui-select ng-model="params.status" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width: 150px; float: left;">
+                                                    <ui-select-match placeholder="不限">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.status as item in statusData" value="{{item.status}}">
+                                                        {{item.name}}
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="search()"><i class="fa fa-search"></i> 查询</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="open3(null)"> 新增模板</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th style="width: 15%;"> 创建日期 </th>
+                                <th style="width: 25%;"> 模板内容 </th>
+                                <th style="width: 11%;"> 备注 </th>
+                                <th style="width: 10%;"> 模板ID
+                                    <!--<a href="#" tooltips tooltip-side="top" tooltip-template="<span>该字段为发送营销短信的templateId字段</span>"><i class="fa fa-question-circle font-blue"></i></a> -->
+                                </th>
+                                <!--<th style="width: 10%;"> 模板类别 </th>-->
+                                <th style="width: 15%;"> 审核状态 </th>
+                                <!--<th style="width: 10%;"> 审核说明 </th>-->
+                                <th style="width: 10%;"> 操作 </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in tableData">
+                                <td ng-bind="data.create_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                                <td ng-bind="data.content">  </td>
+                                <td ng-bind="data.remark">  </td>
+                                <td ng-bind="data.id">  </td>
+                                <!--<td ng-bind="data.category">  </td>-->
+                                <!--<td>-->
+                                    <!--<span ng-if="data.type == 1">验证码</span>-->
+                                    <!--<span ng-if="data.type == 2">营销</span>-->
+                                    <!--<span ng-if="data.type == 3">通知&订单</span>-->
+                                <!--</td>-->
+                                <td>
+                                    <span class="font-yellow-gold" ng-if="data.status == 0">
+                                        待审核</span>
+                                    <span class="font-green-1" ng-if="data.status == 1">已通过</span>
+                                    <span class="font-red" ng-if="data.status == 2">
+                                        已驳回
+                                        <div style="color: red">原因:
+                                            <span>{{data.reason}}</span>
+                                        </div>
+                                    </span>
+                                </td>
+                                <!--<td ng-bind="data.applyReply">  </td>-->
+                                <td>
+                                    <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="open(data)"> 编辑 </a>-->
+                                    <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="openMatch(data.template)"> 匹配 </a>-->
+                                    <a href="javascript:;" class="btn btn-xs blue" ng-click="delete(data.id)"> 删除 </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                            <p class="text-center">
+                                <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                            </p>
+                        </div>
+                        <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template"  id="signTemplate.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="messageTemplateEditForm" name="myForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">短信模板</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label col-md-3">模板类别</label>-->
+                        <!--<div class="col-md-9">-->
+                            <!--<div class="mt-radio-inline">-->
+                                <!--<label class="mt-radio">-->
+                                    <!--<input type="radio" name="product" ng-model="data.type" ng-value="1"  class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1" checked="checked"> 验证码-->
+                                    <!--<span></span>-->
+                                <!--</label>-->
+                                <!--<label class="mt-radio">-->
+                                    <!--<input type="radio" name="product" ng-model="data.type" ng-value="2"  class="ng-pristine ng-untouched ng-valid ng-not-empty" value="2"> 营销-->
+                                    <!--<span></span>-->
+                                <!--</label>-->
+                                <!--<label class="mt-radio">-->
+                                    <!--<input type="radio" name="product" ng-model="data.type" ng-value="3"  class="ng-pristine ng-untouched ng-valid ng-not-empty" value="3" > 通知&订单-->
+                                    <!--<span></span>-->
+                                <!--</label>-->
+
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">模板内容</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control input-sm" ng-model="data.content" required ng-minlength="2" ng-maxlength="500" id="contents2" name="template" placeholder="示例：{1}你好，你的验证码是{2},请在{3}分钟内验证完毕"></textarea>
+                            <span style="color:red" ng-show="myForm.template.$dirty && myForm.template.$invalid">模板内容长度为2至500个字符</span>
+                            <div style="white-space: nowrap;">
+                                <button class="form-control input-sm btn btn-sm blue" style="width: 80px" ng-click="addVar()">添加变量</button>
+                                <a href="#" ng-click="onModShow()">模板规则</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="facePanel">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <span class='font-yellow-gold'>1、</span>不支持全变量模板；<br>
+                            <span class='font-yellow-gold'>2、</span>{序号}为需要接口替换的变量，变量序号从1开始，序号只允许数字；<br>
+                            <span class='font-yellow-gold'>3、</span>最多支持10个变量,变量格式如{1}、{2}、{3}；<br>
+                            <span class='font-yellow-gold'>4、</span>变量允许通过最长字符为20字符；<br>
+                            <span class='font-yellow-gold'>5、</span>短信模板首尾不能添加[]且任意位置不能添加【】符号；<br>
+                            <span class='font-yellow-gold'>6、</span>内容不用添加签名, 签名请单独申请，短信发送需要签名和短信内容；
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">备注</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control input-sm" ng-model="data.remark" required ng-minlength="2" ng-maxlength="255" name="remark" placeholder="请描述您的业务使用场景"></textarea>
+                            <span style="color:red" ng-show="myForm.remark.$dirty && myForm.remark.$invalid">备注长度为2至255个字符</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="testFlag">
+                        <label class="control-label col-md-3">变量内容</label>
+                        <div class="col-md-9">
+                            <textarea rows="2" class="form-control input-sm" ng-model="data.content" name="content" placeholder="示例：小明##1234##5"></textarea>
+                            <button class="form-control input-sm btn btn-sm blue" style="width: 100px" ng-click="testMsgVar()">测试短信内容</button><span style="color: red">提示:多个变量中间用##或者$$隔开</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row alert alert-info" style="margin-bottom: 0;text-align: center">
+                <strong><i class="fa fa-exclamation-circle"></i></strong>人工审核将在1小时内完成，请耐心等待！(工作时间:8:30~21:00)</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <!--<button type="button" class="form-control input-sm btn btn-sm blue" style="width: 80px;" ng-show="!testFlag" ng-click="testFlag=true">我要测试</button>-->
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.templateName.$invalid || myForm.template.$invalid || myForm.remark.$invalid"
+                    ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"  id="matchPlatTemplate.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platTemplateMatchForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">模板匹配</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">模板内容</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">{{data.template}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">短信内容</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control input-sm" ng-model="data.content" name="content" placeholder="请输入待匹配的短信内容"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">匹配结果</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static font-green-1" ng-if="result == 'success'">匹配成功</p>
+                            <p class="form-control-static font-yellow-gold" ng-if="result == 'failed'">匹配失败</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

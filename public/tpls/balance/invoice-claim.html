@@ -1,0 +1,85 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="alert alert-info">
+                    温馨提示：
+                    <span style="color: #652121">1、支持普通发票和增值税发票；2、发票金额大于200时包邮寄送；3、每月25号之前，提交后3-5个工作日寄出； 4、每月25-30日为公司内部结算日不再开票，申请的发票次月初寄出，请合理安排发票申请时间。</span>
+                </div>
+                <div class="alert" ng-if="showAleOn" style="background-color: #f4f4f4;font-size: 14px">
+                   已选可开票金额：
+                    <i class="fa fa-yen" style="color: #ff6900;margin-right: 5px;"></i>
+                    <span style="color: #ff6900" >{{TotalAmount}}</span>
+                    <button type="submit" ng-disabled="Totalbtn" class="btn btn-xs green" ng-click="tosubmit()" style="margin-left: 10px">索取发票</button>
+                    </br>
+                    <div style="padding-top: 10px;font-size: 12px">可开票总金额:&nbsp;&nbsp;
+                         <i class="fa fa-yen"></i>
+                        <span>{{Total}}</span> (不可开票总额：<span>{{TotalBan}}</span>元)</div>
+                </div>
+                <div ng-if="showAleOFF" style="background-color: #f4f4f4;font-size: 14px;padding: 20px;margin-bottom: 300px;">
+                    当前可开票金额：
+                    <i class="fa fa-yen" style="color: #ff6900;margin-right: 5px;"></i>
+                    <span style="color: #ff6900" >{{TotalAmount}}</span>
+                    <button type="submit"  class="btn btn-xs green" ng-click="tosubmit()" style="margin-left: 10px">索取发票</button>
+                </div>
+                <div class="table-scrollable" ng-show="showAleOn">
+                    <table id="tbl" class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th width="5%">
+                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                    <input type="checkbox" class="group-checkable" data-set="#tbl .checkboxes" />
+                                    <span style="margin-top: -8px;"></span>
+                                </label>
+                            </th>
+                            <th width="15%">订单支付时间</th>
+                            <th width="30%">订单编号 </th>
+                            <th width="12%"> 产品 </th>
+                            <th width="13%"> 金额（元） </th>
+                            <th width="15%"> 可开票金额（元） </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td>
+                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                    <input type="checkbox" class="checkboxes" data-id={{data.invoice_money}} value={{data.id}} name="contacts"/>
+                                    <span style="margin-top: -8px;"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <span ng-if="data.update_time!=null">{{data.update_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                <span ng-if="data.update_time==null"> </span>
+                            </td>
+                            <td ng-bind="data.order_num"></td>
+                            <td ng-bind="data.product_title"></td>
+                            <td ng-bind="data.taocan_money"></td>
+                            <td ng-bind="data.invoice_money"></td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                    <!--<div class="portlet light bordered">-->
+                    <!--<button type="submit" style="width: 80px;" class="form-control input-sm btn btn-sm blue" ng-click="deleteContacts()">批量删除</button>-->
+                    <!--<button type="submit" style="width: 80px;" class="form-control input-sm btn btn-sm blue" ng-click="changeContactGroups()">批量转分组</button>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

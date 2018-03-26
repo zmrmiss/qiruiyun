@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="text-align: center;padding-top: 15%;">页面将在 <span id="num">5</span>s后关闭</div>
+<script src="../../../public/assets/plugins/jquery.min.js"></script>
+<script>
+    var num=5;
+    var url = location.search;
+    function UrlSearch()
+    {
+        var name,value;
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("?")
+        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+
+        var arr=str.split("&"); //各个参数放到数组里
+        for(var i=0;i < arr.length;i++){
+            num=arr[i].indexOf("=");
+            if(num>0){
+                name=arr[i].substring(0,num);
+                value=arr[i].substr(num+1);
+                this[name]=value;
+            }
+        }
+    }
+    var Request=new UrlSearch(); //实例化
+
+    $.get('/api/finance/AlipayReturn/back/',Request,function (result) {
+        if(result.code=='10000000'){
+            setInterval(function () {
+                num--;
+                var min= document.getElementById('num');
+                min.innerHTML=num;
+                if(num==0){
+                    var opened=window.open('about:blank','_self'); opened.opener=null; opened.close();
+
+                }
+            },1000)
+        }
+    },'json');
+//                var time1=window.setInterval(function () {
+//                    num--;
+//                    var min= document.getElementById('num');
+//                    min.innerHTML=num;
+//                    if(num==0){
+//                        window.clearInterval(time1)
+//                        document.write("Name: " + navigator.appName);
+//                        var browserName=navigator.appName; //获取浏览器名称
+//                        if (browserName=="Netscape") {
+//                            function closeme() {
+//                                window.open('','_parent','');
+//                                window.close();
+//                            }
+//                        }else{
+//                            if (browserName=="Microsoft Internet Explorer") {
+//                                function closynoshowsme() {
+//                                    window.opener = "test";
+//                                    window.close();
+//                                }
+//                            }
+//                        }
+//                    }
+//                },1000)
+
+</script>
+</body>
+</html>

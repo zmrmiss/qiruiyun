@@ -1,0 +1,595 @@
+<div class="portlet light bordered">
+    <div class="portlet-body form">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+            </ul>
+            <div class="tab-content" style="padding-top: 10px">
+                <div class="col-md-12" ng-if="HtmlRen" style="height: auto;background-color: #ffeeec;margin-bottom: 10px;color: #f00;line-height: 20px;padding: 15px 20px;" ng-bind-html="RzHtml"></div>
+                <ul id="tabs" class="nav nav-tabs ">
+                    <li ng-repeat="day in tabs2" ng-class="{active:isActiveDay(day.url)}" ng-click="onClickDay(day)">
+                        <a ui-sref="{{day.url}}"> {{day.title}} </a>
+                    </li>
+                    <!--<li ng-class="active.template ? 'active' : ''">-->
+                    <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                    <!--</li>-->
+                </ul>
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <div class="portlet light ">
+                            <div class="portlet-body form">
+                                <form class="form-horizontal">
+                                    <div class="form-body">
+                                        <!--<h4 class="form-section">输入发送手机号码</h4>-->
+                                        <div class="col-md-12">
+                                            <div class="form-group" style="margin-top: 10px;">
+                                                <!--<label class="control-label col-md-1"-->
+                                                <!--style="padding: 5px 0 0 0;">签名</label>-->
+                                                <div class="col-md-1" style="padding-top: 5px;">签名</div>
+                                                <div class="col-md-3" ng-if="signs.length>0" >
+                                                    <ui-select ng-model="sign" theme="bootstrap" search-enabled="false" ng-click="selectSign($select.selected.content)" class="ui-select-container ui-select-bootstrap dropdown ng-valid">
+                                                        <ui-select-match placeholder="--请选择--">{{$select.selected.content}}
+                                                        </ui-select-match>
+                                                        <ui-select-choices
+                                                                repeat="sign.sign_id as sign in signs | filter: $select.search">{{sign.content }}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                                <div  class="col-md-9" ng-if="signs.length==0">
+                                                    暂无签名，
+                                                    <a class="btn btn-sm btn-info" href="#/industry/sign" ui-sref="industry.sign">去添加</a>
+                                                    <!--<a class="btn btn-sm btn-info" ng-click="openSign()"></a>-->
+                                                    <!--<a class="btn btn-sm btn-info" ng-click="loadSign()">刷新签名</a>-->
+                                                    <!--<a class="btn btn-sm btn-info" ng-click="buildShortUrl()">生成短链接</a>-->
+                                                    <span style="padding-left: 10px;color: #f00">应运营商要求，添加签名后方可发短信</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-1">输入号码</div>
+                                                <div class="col-md-11">
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane fade in active" id="tab_1_1">
+                                                            <!--<div ng-show="showtable" style='float: right'><a href="#" ng-click="showtable = !showtable">批量导入</a></div>-->
+                                                            <div style="width:100%;">
+                                                                <!--<form action="#" method="post">-->
+                                                                <div class="pull-left" >
+                                                                <span>导入文件：支持
+                                                                    <a href="#" tooltips tooltip-side="top"
+                                                                       tooltip-template="<img src='../public/assets/layout/img/excel_csv.jpg'/>">EXCEL</a>
+                                                                    /
+                                                                    <a href="#" tooltips tooltip-side="top"
+                                                                       tooltip-template="<img src='../public/assets/layout/img/excel_csv.jpg'/>">CSV</a>/
+                                                                    <a href="#" tooltips tooltip-side="top"
+                                                                       tooltip-template="<img src='../public/assets/layout/img/txt_view.jpg'/>">TXT</a>
+                                                                    /ZIP格式(<span style="color: red">建议使用ZIP压缩后再导入</span>)
+                                                                </span>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <a href="#" ng-click="download()">下载短信模板</a>
+                                                                </div>
+
+                                                                <div class="clearfix"></div>
+                                                                <div id="uploadfile" style="margin-top: 15px">
+                                                                    <!--用来存放文件信息-->
+                                                                    <div id="uploadpress1"></div>
+                                                                    <div id="thelist" class="uploader-list"></div>
+                                                                    <div class="form-group form-inline">
+                                                                        <div id="picker" style="float:left;margin-left: 15px;" class="webuploader-container">
+                                                                            <div class="webuploader-pick" style="padding: 11px 18px 1px;">选择文件
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="file" name="file" class="webuploader-element-invisible" multiple="multiple">
+                                                                                <label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255,
+255);"></label>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <!--<button id="ctlBtn" class="btn btn-default" style="padding:8px 15px;">开始上传</button>-->
+                                                                        <p ng-if="batchshow" class="form-control-static"
+                                                                           style="width: 70%;padding-left: 20px;">
+                                                                            已导入<span
+                                                                                class="bold font-red">{{batch.total}}</span>个：有效<span
+                                                                                class="bold font-red">{{batch.valid}}</span>个，去重<span
+                                                                                class="bold font-red">{{batch.repeat}}</span>个，无效<span
+                                                                                class="bold font-red">{{batch.invalid}}</span>个；
+                                                                            <a href="#" style="" ng-click="clerrform()">清空文件导入</a>
+                                                                        </p>
+                                                                        <div ng-if="showResult" class="form-control-static" style="width: 70%;padding-left: 20px;">
+                                                                            导入成功！已导入
+                                                                            <span class="bold font-red">{{shower.total}}</span>
+                                                                            个（有效
+                                                                            <span class="bold font-red">{{shower.valid}}</span>
+                                                                            个，去重
+                                                                            <span class="bold font-red">{{shower.repeat}}</span>
+                                                                            个，无效
+                                                                            <span class="bold font-red">{{shower.invalid}}</span>
+                                                                            个；）
+                                                                            <a href="#" style="" ng-click="clerrform()">清空文件导入</a>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="tab-pane fade" id="tab_1_2">
+
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div>或直接在下方输入号码：</div>
+                                                                <textarea class="form-control input-sm"
+                                                                          style="resize: none;height: 100px;"
+                                                                          ng-blur="checkMobiles()" ng-model="data.mobiles"
+                                                                          name="mobiles" id="mobileschange"
+                                                                          placeholder="可填写多个手机号码（使用换行分隔）" ng-disabled="data.disnone"></textarea>
+                                                            </div>
+                                                            <p class="form-control-static"
+                                                               style="width: 100%;border-left: 1px solid #c2cad8;border-right: 1px solid #c2cad8;border-bottom: 1px solid #c2cad8;padding-left: 20px;">
+                                                                已输入<span class="bold font-red">{{mobileData.total}}</span>个：有效<span
+                                                                    class="bold font-red">{{mobileData.valid}}</span>个，去重<span
+                                                                    class="bold font-red">{{mobileData.repeat}}</span>个，无效<span
+                                                                    class="bold font-red">{{mobileData.invalid}}</span>个；
+                                                                (多个号码使用回车换行分隔)
+                                                                <button type="submit" class="btn btn-xs green"
+                                                                        ng-disabled="data.mobiles==''"
+                                                                        ng-click="FormatTel()" disabled="disabled"
+                                                                        style="float: right;margin-right: 10px">格式化号码
+                                                                </button>
+                                                                <button type="submit" class="btn btn-xs green"
+                                                                        ng-disabled="data.mobiles==''"
+                                                                        ng-click="opencheckedit()" disabled="disabled"
+                                                                        style="float: right;margin-right: 10px">检测黑名单
+                                                                </button>
+                                                                <button type="submit" class="btn btn-xs green"
+                                                                        ng-disabled="data.mobiles==''"
+                                                                        ng-click="openCheckFilteratet()" disabled="disabled"
+                                                                        style="float: right;margin-right: 10px">去重/错号
+                                                                </button>
+                                                            </p>
+
+                                                            <div style="margin-top: 20px" ng-show="callMils">
+                                                                <div>或使用通讯录号码:</div>
+                                                                <div class="col-md-12">
+                                                                    <div class="portlet light bordered">
+                                                                        <div class="portlet-body">
+                                                                            <div id="tree" class="tree-demo"> </div>
+                                                                        </div>
+                                                                        <div class="portlet light" style="    padding: 5px 0 0 0; margin: 0;">
+                                                                            <p class="form-control-static" style="width: 100%;">
+                                                                                <button type="submit" class="btn btn-xs green" ng-click="check_all()" style="float: left;margin-right: 10px">全选
+                                                                                </button>
+
+                                                                                <button type="submit" class="btn btn-xs green" ng-click="uncheck_all()"  style="float: left;margin-right: 10px">全不选
+                                                                                </button>
+                                                                                <button type="submit" class="btn btn-xs green"
+                                                                                        ng-disabled="arr==''"
+                                                                                        ng-click="opencheckMail()" disabled="disabled"
+                                                                                        style="float: left;margin-right: 10px">检测黑名单
+                                                                                </button>
+                                                                                已输入<span class="bold font-red">{{Maillist.total}}</span>个：有效<span
+                                                                                    class="bold font-red">{{Maillist.valid}}</span>个，去重<span
+                                                                                    class="bold font-red">{{Maillist.repeat}}</span>个，无效<span
+                                                                                    class="bold font-red">{{Maillist.invalid}}</span>个;
+
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <!--<button type="submit" style="width: 80px;margin-top: 20px" class="form-control input-sm btn btn-sm blue" ng-disabled="myForm.mobiles.$invalid" ng-click="opencheckedit()">检测黑名单</button>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--/row-->
+                                        <h4 class="form-section">
+                                            <!--编辑发送内容&nbsp;&nbsp;-->
+                                            <!--<small>用于给会员，批量发送营销、通知、提醒信息，简单便捷</small>-->
+                                        </h4>
+                                        <!--/row-->
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <div class="col-md-1">编辑发送内容</div>
+                                                <div class="col-md-6">
+                                                    <div>请在下方录入要发送的短信内容，或从右侧选择合适的模板使用：</div>
+                                                    <div class="portlet light bordered" style="padding: 0;">
+
+                                                        <div class="portlet-body">
+                                                            <p ng-if="keys.length > 0" id="keybored">
+                                                                <button type="button"
+                                                                        class="btn btn-xs green margin-right-10"
+                                                                        ng-repeat="key in keys track by $index"
+                                                                        ng-click="insertAtCaret('content', key)">{{key}}
+                                                                </button>
+                                                            </p>
+                                                            <div style="position: relative;">
+
+                                                            <span id="signDiv"
+                                                                  style="position: absolute;top: 6px;left: 5px;">
+                                                                【{{data.sign}}】
+                                                            </span>
+
+                                                                <textarea rows="5" class="form-control input-sm"
+                                                                          id="content"
+                                                                          style="resize: none;height: 175px; font-family: '-webkit-pictograph'; font-size: 13px;border: 0;border-bottom: 1px solid #ddd;"
+                                                                          maxlength="500-{{signWords}}-{{hasT ? 4 : 0}}"
+                                                                          ng-change="change()" data-ng-trim="false"
+                                                                          ng-model="data.content"
+                                                                          placeholder="请输入短信内容" ng-disabled="data.disnone"></textarea>
+                                                                <div style="position: absolute;right: 20px;bottom: 0;" ng-disabled="true">
+                                                                    <label class="mt-checkbox mt-checkbox-outline"
+                                                                           style="padding-top: 1px;"> 回T退订
+                                                                        <input type="checkbox" ng-model="hasT"
+                                                                               ng-change="change()"  ng-disabled="true">
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <p class="form-control-static"
+                                                               style="width: 100%;padding-left: 20px;">
+                                                                已输入<span class="bold font-red">{{inputWords}}</span>/{{totalWords}}个字：签名(<span
+                                                                    class="bold font-red">{{signWords}}</span>) + 内容(<span
+                                                                    class="bold font-red">{{data.content.length}}</span>)<span
+                                                                    ng-if="hasT"> + 回T退订(<span class="bold font-red">{{tWords}}</span>)</span>，消耗<span
+                                                                    class="bold font-red">{{count}}</span>条短信；
+                                                                (发送内容建议少于350个字数，最多不超过500个字)
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-5">
+                                                    <div class="portlet light bordered" style="height: 305px;">
+                                                        <!--<div class="portlet-title">-->
+                                                        <!--<div class="col-md-12">-->
+                                                        <!--<div class="col-md-12">-->
+                                                        <!--<div class="form-group" style="margin-top: 10px;">-->
+                                                        <!--<label class="control-label col-md-2" style="padding: 5px 0 0 0;">常用模板</label>-->
+                                                        <!--<div style="float: right;"><a class="btn btn-sm btn-info" ng-click="getCommonTemplate()">换一批</a></div>-->
+                                                        <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--</div>-->
+
+                                                        <!--</div>-->
+                                                        <div class="portlet-body">
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="active" style="margin-left: 30px;"
+                                                                    ng-click="changeTplTab(1)">
+                                                                    <a href="#tpl_1" data-toggle="tab" target="_self">
+                                                                        我的模板 </a>
+                                                                </li>
+                                                                <li class="" ng-click="changeTplTab(2)">
+                                                                    <a href="#tpl_2" data-toggle="tab" target="_self">
+                                                                        系统模板 </a>
+                                                                </li>
+                                                                <a class="btn btn-sm btn-link"
+                                                                   style="float:right;margin-top: 5px;"
+                                                                   ng-click="getTemplateClick()">换一批</a>
+                                                            </ul>
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane fade in active" id="tpl_1">
+                                                                    <div class="table-scrollable">
+                                                                        <table class="table table-striped table-bordered table-hover"
+                                                                               style="height: 100px;">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th> 模板内容</th>
+                                                                                <th style="width: 80px;"> 操作</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr ng-repeat="tpl in templates">
+                                                                                <td ng-bind="tpl.content"
+                                                                                    style="padding: 6px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;-moz-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;"></td>
+                                                                                <td style="padding: 6px 8px;"><button
+                                                                                        class="btn btn-sm btn-link"
+                                                                                        ng-click="selectTpl(tpl.content)" ng-disabled="data.disnone">选用</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+                                                                    <div ng-if="templates.length==0">
+                                                                        <div style="text-align: center;width: 100%;margin-top: 30px">暂无模板</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="tpl_2">
+                                                                    <div class="table-scrollable">
+                                                                        <table class="table table-striped table-bordered table-hover"
+                                                                               style="height: 100px;">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th> 模板内容</th>
+                                                                                <th style="width: 80px;"> 操作</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr ng-repeat="tpl in templates">
+                                                                                <td ng-bind="tpl.content"
+                                                                                    style="padding: 6px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;-moz-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;"></td>
+                                                                                <td style="padding: 6px 8px;">
+                                                                                    <button class="btn btn-sm btn-link" ng-click="selectTpl(tpl.content)" ng-disabled="data.disnone">选用</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div ng-if="templates.length==0">
+                                                                        <div style="text-align: center;width: 100%;margin-top: 30px">暂无模板</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row" style="margin-left: 7.3%">
+                                            <div class="col-md-10">
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <div class="col-md-2" style="top: 8px;max-width: 120px;">
+                                                        <label class="mt-checkbox mt-checkbox-outline pull-right"
+                                                               style="padding-top: 1px;"> 定时发送
+                                                            <input type="checkbox" ng-model="hasTime">
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                    <!--<label class="control-label col-md-1" style="padding: 5px 0 0 0;">定时发送</label>-->
+                                                    <div class="col-md-3">
+                                                        <input class="form-control input-sm" ng-if="hasTime"
+                                                               ng-model="data.scheduleSendTime" readonly date-time
+                                                               view="date" format="YYYY-MM-DD HH:mm"
+                                                               ng-blur="changeTime()">
+                                                        <span ng-if="hasTime && showTip"
+                                                              style="color: red">时间须设置在10分钟后</span>
+                                                    </div>
+                                                    <div class="col-md-6" style="margin-top: 7px;" ng-if="hasTime">
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('minutes', 10)"> 10分钟后 </a>
+                                                        <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="openMatch(data.template)"> 匹配 </a>-->
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('minutes', 30)"> 30分钟后 </a>
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('hours', 1)"> 1小时后 </a>
+                                                        <a href="javascript:;" class="btn btn-xs blue"
+                                                           ng-click="setTime('hours', 24)"> 24小时后 </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="row">
+                                                    <div class="col-md-offset-1 col-md-9"
+                                                         style="vertical-align: middle;">
+                                                        <p class="form-control-static" style="padding-left: 50px;"><i
+                                                                class="fa fa-info-circle font-blue-oleo"></i>&nbsp;建议发送时段：9：00~21：00
+                                                        </p>
+                                                        <button type="submit" class="col-md-2 btn btn-sm green"
+                                                                ng-click="Summary()" style="float: right">发送
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--短信发送前弹窗-->
+<script type="text/ng-template"  id="sendMsgSummary.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">您将向 <span ng-bind="sendData.mobiles"></span> 个号码发送以下短信</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-12">
+                    <!--短信内容-->
+                    <div class="form-group">
+                        <label class="control-label col-md-12" style="padding: 0 50px;
+    text-align: left;font-size: 14px" ng-bind="sendData.content"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" style="margin-bottom: 0;">
+            <div class="col-md-12">
+                <div class="form-group" style="padding: 0 50px;">
+                    <div ng-if="sendData.timer!=''" class="control-label col-md-6" style="text-align: left" >定时时间: <span ng-bind="sendData.timer"></span></div>
+                    <div class="control-label col-md-6" style="text-align: left">计费条数: <span ng-bind="sendData.counts"></span> 条</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="text-align: center">
+
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="manualForm.content.$invalid || manualForm.content.$invalid"
+                    ng-click="submit()" style="width: 40%">确定发送</button>
+            <button type="button" class="btn btn-xs default" ng-click="cancel()" style="width: 40%">取消</button>
+        </div>
+    </form>
+</script>
+
+
+<!--黑名单检测弹框-->
+<script type="text/ng-template" id="openBlackRoster.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platSignAddForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">
+                群发号码中发现以下黑名单号码：
+            </h5>
+        </div>
+
+        <!--获取的名单列表-->
+        <div class="table-scrollable">
+            <table id="tbl" class="table table-hover table-light">
+                <thead>
+                <tr>
+                    <th width="5%">
+                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                            <input type="checkbox" class="group-checkable" ng-click="eidtall()"
+                                   data-set="#tbl .checkboxes"/>
+                            <span style="margin-top: -8px;"></span>
+                        </label>
+                    </th>
+                    <th width="95%">手机号</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in tableData">
+                    <td>
+                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                            <input type="checkbox" class="checkboxes" data-id="{{data.mp}}" value={{data.id}}
+                                   name="contacts"/>
+                            <span style="margin-top: -8px;"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <!--<span style="color: red" ng-if="!data.type_id">未分组 </span>-->
+                        <span style="color: red" ng-bind="{{data.mp}}"></span>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                <p class="text-center">
+                    <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                </p>
+            </div>
+            <!--<tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>-->
+            <!--<div class="portlet light bordered">-->
+            <!--<button type="submit" style="width: 80px;" class="form-control input-sm btn btn-sm blue" ng-click="deleteContacts()">批量删除</button>-->
+            <!--<button type="submit" style="width: 80px;" class="form-control input-sm btn btn-sm blue" ng-click="changeContactGroups()">批量转分组</button>-->
+            <!--</div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="getId()">从群发号码中移除</button>
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="platSignAdd.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platSignAddForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">添加签名</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">签名内容</label>
+                        <div class="col-md-9">
+                            <span>【</span><input type="text" class="input-sm" style="width: 318px;" ng-model="data.sign"
+                                                 name="sign" placeholder="签名内容"><span>】</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">备注</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control input-sm" ng-model="data.description" name="remark"
+                                      placeholder="备注"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row alert alert-info" style="margin-bottom: 0;">
+                <strong>1、</strong>营销短信最多支持10个签名。<br>
+                <strong>2、</strong> 人工审核将在10分钟内完成，请耐心等待！(工作时间:8:30 ~ 21:00)。如有紧急情况，请联系客服。
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="platShortUrl.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platShortUrlForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">生成短链接</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">网址</label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.longUrl"
+                                   name="longUrl" placeholder="原网址链接">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>
+<script type="text/javascript">
+    (function ($) {
+        $.fn.extend({
+            insertAtCaret: function (myValue) {
+                var $t = $(this)[0];
+                //IE
+                if (document.selection) {
+                    this.focus();
+                    sel = document.selection.createRange();
+                    sel.text = myValue;
+                    this.focus();
+                } else
+                //!IE
+                if ($t.selectionStart || $t.selectionStart == "0") {
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                } else {
+                    this.value += myValue;
+                    this.focus();
+                }
+            }
+        })
+    })(jQuery);
+</script>
+
+
+<script>
+
+</script>

@@ -1,0 +1,80 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <div class="portlet light ">
+                            <div class="portlet-body form">
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">原密码</label>
+                                                    <div class="col-md-6">
+                                                        <input type="password" class="form-control input-sm" ng-model="data.password" name="password" placeholder="原密码">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">新密码</label>
+                                                    <div class="col-md-6">
+                                                        <input type="password" class="form-control input-sm" ng-model="data.newPassword" id="newPassword" name="newPassword" placeholder="请输入新密码（6-16位数字英文组合）" ng-change="pwStrength()">
+                                                    </div>
+                                                    <div style="margin-top: 10px">
+                                                        密码强度：
+                                                        <strong>
+                                                            <span style="color: red" ng-show="_strongLevel==0">弱</span>
+                                                            <span style="color: coral" ng-show="_strongLevel==1">中</span>
+                                                            <span style="color: green" ng-show="_strongLevel==2">强</span>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">新密码确认</label>
+                                                    <div class="col-md-6">
+                                                        <input type="password" class="form-control input-sm" ng-model="data.newPasswordrs" id="newPassword2" name="rePassword" placeholder="请再次输入新密码" ng-change="pwStrength()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button type="submit" class="btn btn-sm green" ng-click="modify()">
+                                                            <!--<i class="fa fa-file-o"></i>--> 修改密码</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"> </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

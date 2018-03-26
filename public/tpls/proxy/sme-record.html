@@ -1,0 +1,93 @@
+
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <!--<ul id="tabs" class="nav nav-tabs ">-->
+                <!--<li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">-->
+                    <!--<a ui-sref="{{tab.url}}"> {{tab.title}} </a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <div class="">
+                <!--<div class="border-green m-bordered">-->
+                <!--<div class="portlet light bordered" style="margin-bottom: 10px;">-->
+                <!--<div class="portlet-body form">-->
+                <!--&lt;!&ndash; BEGIN FORM&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th>提交时间</th>
+                            <th>手机号</th>
+                            <th>发送内容</th>
+                            <th>计费条数</th>
+                            <th>发送状态</th>
+                            <th>状态报告</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <!--<td><a href="javascript:;" ng-click="open(data)" ng-class="{'bold': data.flag == 2, 'font-grey-cascade': data.flag == 1}">{{data.title }}</a>  </td>-->
+                            <td ng-bind="data.content">  </td>
+                            <td ng-bind="data.content">  </td>
+                            <td ng-bind="data.content">  </td>
+                            <td ng-bind="data.content">  </td>
+                            <td ng-bind="data.content">  </td>
+                            <td> <a href="javascript:;" class="btn btn-xs blue" ng-click="submitView(data.content)"> 立即体验 </a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    .width400{
+        top: 242.5px!important;
+    }
+    .width400>.modal-dialog{
+        width: 400px!important;
+    }
+</style>
+<script type="text/ng-template"  id="sendView.html">
+    <div class="form-horizontal ng-pristine ng-valid">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">短信体验</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-12" style="    padding-right: 35px;
+    padding-left: 35px;text-align: center">
+                    <div class="form-group">
+                        <label class="control-label col-md-12" style="text-align: center" ng-bind="data"></label>
+                    </div>
+                    <div class="form-group" style="padding-left: 10px">
+                        <input type="text" class="form-control input-sm ng-pristine ng-valid ng-empty ng-touched" ng-model="parata.moblie" placeholder="输入体验号码，用于接收短信" style="width: 300px;margin: 0 auto" ng-change="changeTel()">
+                        <span style="color:red" ng-show="btnTitle">请输入正确的手机号码</span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p class="form-control-static" style="color: #f00;font-size: 12px">注：同一个号码1分钟内多次发送可能会受运营商拦截</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="text-align: center">
+            <!--<button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>-->
+            <button type="button" class="btn btn-xs green" ng-click="ok()" ng-disabled="btnT">确定</button>
+        </div>
+    </div>
+</script>

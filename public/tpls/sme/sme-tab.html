@@ -1,0 +1,17 @@
+<div class="page-bar" style="margin-bottom: 20px;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a ui-sref="desktop">管理控制台</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>短信体验</span>
+        </li>
+    </ul>
+</div>
+
+<div style="margin-bottom: 20px" ng-if="BeBack">
+    <a  ui-sref="sme.send" href="#/sme/record"  class="btn btn-xs blue" > 返回体验首页 </a>
+</div>
+<!-- END PAGE BAR -->
+<div ui-view></div>

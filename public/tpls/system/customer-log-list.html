@@ -1,0 +1,92 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8" style="min-width: 170px;padding: 0 !important;">
+                                            <input class="form-control input-sm" style="background-color: #ffffff" readonly date-range-picker  options="opts" type="text" ng-model="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-sm-6 col-md-4 col-lg-2">-->
+                                    <!--<div class="form-group" style="margin-bottom: 0 !important;">-->
+                                        <!--<label class="control-label col-sm-6 col-md-3 col-lg-5">操作类型</label>-->
+                                        <!--<div class="col-sm-6 col-md-9 col-lg-7" style="padding: 0 !important;">-->
+                                            <!--<ui-select ng-model="params.type" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width: 95px; float: left;">-->
+                                                <!--<ui-select-match placeholder="&#45;&#45;请选择&#45;&#45;">{{$select.selected.name}}</ui-select-match>-->
+                                                <!--<ui-select-choices repeat="type.value as type in types | filter: $select.search">-->
+                                                    <!--{{type.name }}-->
+                                                <!--</ui-select-choices>-->
+                                            <!--</ui-select>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 操作类型 </th>
+                            <th> 操作内容 </th>
+                            <th> 操作IP </th>
+                            <th> 操作人 </th>
+                            <th> 操作时间 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.title">
+                                <!--<span ng-if="data.type==0">其他</span>-->
+                                <!--<span ng-if="data.type==1">增加</span>-->
+                                <!--<span ng-if="data.type==2">删除</span>-->
+                                <!--<span ng-if="data.type==3">修改</span>-->
+                            </td>
+                            <td ng-bind="data.content">  </td>
+                            <td>
+                                <span ng-bind="data.ip"></span></br>
+                                <span ng-bind-html="data.ip_address"></span>
+                            </td>
+                            <td>
+                                <span ng-if="data.ht_user_name!=null" ng-bind="data.ht_user_name+'(内部员工)'"></span>
+                                <span ng-if="data.ht_user_name==null">自己</span>
+                            </td>
+                            <td ng-bind="data.create_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

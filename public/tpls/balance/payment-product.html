@@ -1,0 +1,387 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <!--<div class="alert alert-info">-->
+                            <!--<strong>线上充值说明：</strong>-->
+                            <!--<p style="padding-left: 30px;">1、我们提供在线充值服务（支付宝、银联、微信）及银行对公汇款；</p>-->
+                            <!--<p style="padding-left: 30px;">2、请尽量保障账户余额大于您在资费配置内设置的保底套餐额度，避免因余额不足造成业务中断；</p>-->
+                            <!--<p style="padding-left: 30px;">3、在线付款成功后如有问题请联系您的客户经理；</p>-->
+                            <!--<p style="padding-left: 30px;">4、所有购买的产品，使用时没有时间限制。</p>-->
+                        <!--</div>-->
+                        <div class="portlet light ">
+                            <div class="portlet-body form">
+                                <div class="form-horizontal">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="control-label col-md-1">产品</label>
+                                                        <div class="col-md-11 col-sm-11 col-xs-11">
+                                                            <div class="mt-radio-inline">
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="product"
+                                                                           ng-model="data.type" ng-checked="true"
+                                                                           ng-value='0' ng-change="loadGood('0')"> 接口短信
+                                                                    <span></span>
+                                                                </label>
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="product"
+                                                                           ng-model="data.type" ng-value=1
+                                                                           ng-change="loadGood(1)">行业短信
+                                                                    <span></span>
+                                                                </label>
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="product"
+                                                                           ng-model="data.type" ng-value=2
+                                                                           ng-change="loadGood(2)">营销短信
+                                                                    <span></span>
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" id="swiperContainer" style="margin-bottom: 0;background-color: transparent;">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="control-label col-md-1" style=" padding-top: 0; margin-top: 20px;">充值到API账户</label>
+                                                        <div class="col-md-11 col-sm-11 col-xs-11">
+
+                                                            <div class="portlet-body" id='createHtml' style="position: relative;height: 65px">
+                                                                <div id="clickbotprev" style="z-index:270;display: inline-block;float: left;border-right: 1px solid #cae7fb;"><img src="../public/assets/layout/img/next.png" alt=""></div>
+                                                                <div class="tabbable-line swiper-container clearfix" style="width: 90%;display: inline-block;float: left">
+                                                                    <ul id="tabs" class="nav nav-tabs3 nav-tabs swiper-wrapper clearfix">
+                                                                        <li ng-repeat="key in key" class="swiper-slide clearfix" ng-class="{active3:isActiveKey(key.username)}" ng-click="onClickKey(key.username)">
+                                                                            <!--<div ng-class="{triangle:isActiveKey(key.username)}"></div>-->
+                                                                            <a href="javascript:;" style="padding-left: 20px;
+    padding-right: 0;">
+                                                                                <div style="color: #474747" class="ellipsis">{{key.title}} <span ng-if="key.is_stop==1">[已关闭]</span></div>
+                                                                                <div style="font-size: 12px;padding-top: 5px;color: #8c8c8c">APIKey : <span ng-bind="key.username"></span></div>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <!-- Add Arrows -->
+
+                                                                </div>
+
+                                                                <div id="clickbotnext" style="z-index:270;display: inline-block;float: left;border-left: 1px solid #cae7fb;"><img src="../public/assets/layout/img/prev.png" alt=""></div>
+                                                            </div>
+                                                            <a href="#" ng-click="SearchAccount()" ng-if="searchOff" style="padding: 22px;background-color: #ecf6fd;height: 65px;position: absolute;margin-left: 10px;top: 0;">
+                                                                <i class="fa fa-search" style="font-size: 24px;color: #ccc"></i>
+                                                                <span class="title"></span>
+                                                            </a>
+
+                                                            <!--<div class="mt-radio-inline">-->
+                                                                <!--<label class="mt-radio">-->
+                                                                    <!--<input type="radio" name="product"-->
+                                                                           <!--ng-model="data.appId" ng-checked="true"-->
+                                                                           <!--ng-value=1 ng-change="loadGood(1)"> 接口短信-->
+                                                                    <!--<span></span>-->
+                                                                <!--</label>-->
+                                                                <!--<label class="mt-radio">-->
+                                                                    <!--<input type="radio" name="product"-->
+                                                                           <!--ng-model="data.appId" ng-value=2-->
+                                                                           <!--ng-change="loadGood(2)"> 群发短信-->
+                                                                    <!--<span></span>-->
+                                                                <!--</label>-->
+                                                            <!--</div>-->
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"
+                                                         style="padding-top: 10px;">
+                                                        <label class="control-label col-md-1">产品价格</label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="mt-radio-list" ng-if="data.type == 0 || data.type == 1 || data.type == 2" style="padding-top: 10px">
+                                                                <label class="mt-radio mt-radio-outline" ng-repeat="good in goods">
+                                                                    <div style="padding-bottom: 10px">
+                                                                        <span style="margin-right: 20px;font-weight: 700">{{good.title}}：</span></br><div class="clearfix" style="padding-top: 5px"></div>
+                                                                        <span style="display:none;" ng-bind="good.Combotype"></span>
+                                                                        <span style="margin-right: 20px;">折后价：{{ good.price}}元</span>
+                                                                        <!--<span style="margin-right: 20px;">原价：{{ good.oldPrice}}元</span>-->
+                                                                        <!--<span style="margin-right: 20px;">折扣：{{ good.discount}}折</span>-->
+                                                                        <span style="margin-right: 20px;">短信：{{good.amount}}条</span>
+                                                                        <span style="margin-right: 20px;">单价：{{good.unit_price}}元/条</span>
+                                                                    </div>
+                                                                    <input type="radio" name="good" ng-model="data.product" ng-value="good">
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="mt-radio-list"
+                                                                 ng-if="goods2.length>0">
+                                                                <label class="mt-radio mt-radio-outline"
+                                                                       ng-repeat="good in goods2">
+                                                                    <div style="padding-bottom: 10px">
+                                                                        <span style="margin-right: 20px;font-weight: 700">{{good.title}}：</span></br><div class="clearfix" style="padding-top: 5px"></div>
+
+                                                                        <span style="display:none;" ng-bind="good.Combotype"></span>
+                                                                        <span style="margin-right: 20px;">优惠价：{{ good.payable_price}}元  <span ng-if="good.taxes>0">(其中含税 {{good.taxes}} 元)</span></span>
+                                                                        <span style="margin-right: 20px;">短信：{{good.origin}}条</span>
+                                                                        <span style="margin-right: 20px;">单价：{{good.unit_price}}元/条</span>
+                                                                        <span style="margin-right: 20px;" ng-if="good.gift!=0">另：额外赠送{{ good.gift}}条</span>
+                                                                        <span style="margin-right: 20px;">实得短信：{{ good.amount}}条</span>
+                                                                    </div>
+                                                                    <input type="radio" name="good"
+                                                                           ng-model="data.product" ng-value="good">
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+
+
+                                                            <label class="mt-radio">
+                                                                                如需大额套餐请联系您的专属商务或客服（页面右上方->帮助支持）
+                                                            </label>
+
+                                                            <!--<div class="alert alert-info">-->
+                                                            <!--<p>超级vip用户专用通道请联系客户经理办理： <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=613953600&site=qq&menu=yes"><img border="0" th:src="@{/assets/layout/img/qq.gif}" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>-->
+                                                            <!--</p>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="col-md-10 col-sm-10 col-xs-12" style="margin-left: 16px;" ng-if="data.appId == 3">-->
+                                                            <!--<input type="number" class="input-sm" ng-model="data.product.price" ng-maxlength="10">&nbsp;元-->
+                                                            <!--<span id="intlPriceError" class="hidden has-error">国际短信最低不少于3000元</span>-->
+                                                            <!--</div>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="control-label col-md-1">充值方式</label>
+                                                        <div class="col-md-11 col-sm-11 col-xs-11">
+                                                            <div class="mt-radio-inline">
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="mode"
+                                                                           ng-model="data.payMode" value="0">
+                                                                    <img class="img-pay" alt="钱包余额"
+                                                                         src="../public/assets/layout/img/qbye.jpg">
+
+                                                                    <span></span>
+                                                                </label>
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="mode"
+                                                                           ng-model="data.payMode" value="1">
+                                                                    <img class="img-pay" alt="支付宝"
+                                                                         src="../public/assets/layout/img/alipay.jpg">
+                                                                    <span></span>
+                                                                </label>
+                                                                <!--<label class="mt-radio">-->
+                                                                <!--<input type="radio" name="mode" ng-model="data.payMode" value="2">-->
+                                                                <!--<img class="img-pay" alt="微信支付" th:src="@{/assets/layout/img/wepay.jpg}">-->
+                                                                <!--<span></span>-->
+                                                                <!--</label>-->
+                                                                <!--<label class="mt-radio">-->
+                                                                <!--<input type="radio" name="mode" ng-model="data.payMode" value="3">-->
+                                                                <!--<img class="img-pay" alt="银联支付" th:src="@{/assets/layout/img/unionpay.jpg}">-->
+                                                                <!--<span></span>-->
+                                                                <!--</label>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<form ng-if="data.payMode != 0" name="rechargeForm" action="balance/product/pay" ng-submit="recharge($event)" method="get" target="_blank" enctype="application/x-www-form-urlencoded">-->
+                                    <form ng-if="data.payMode != 0" id="rechargeForm">
+                                        <input type="hidden" name="type" ng-value="data.type">
+                                        <input type="hidden" name="productId" ng-value="data.product.id">
+                                        <input type="hidden" name="productName" ng-value="data.product.name">
+                                        <input type="hidden" name="totalFee" ng-value="data.product.price">
+                                        <input type="hidden" name="quantity" ng-value="data.product.quantity">
+                                        <input type="hidden" name="payMode" ng-value="data.payMode">
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-sm-offset-1 col-md-6">
+                                                    <div class="row" style="width: 0%">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="submit" ng-click="PaySubmit()" class="btn btn-sm green">确认支付</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form ng-if="data.payMode == 0" id="rechargeForm">
+                                        <input type="hidden" name="appId" ng-value="data.appId">
+                                        <input type="hidden" name="productId" ng-value="data.product.id">
+                                        <input type="hidden" name="productName" ng-value="data.product.name">
+                                        <input type="hidden" name="totalFee" ng-value="data.product.price">
+                                        <input type="hidden" name="quantity" ng-value="data.product.quantity">
+                                        <input type="hidden" name="payMode" ng-value="data.payMode">
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-sm-offset-1 col-md-6">
+                                                    <div class="row" style="width: 0%">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="submit" class="btn btn-sm green"
+                                                                    ng-click="submit()">确认支付
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerGroup:5,
+            pagination: '.swiper-pagination',
+            nextButton: '#clickbotnext',
+            prevButton: '#clickbotprev',
+            slidesPerView:5,
+//        centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 10,
+//            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+//
+//            observeParents:true//修改swiper的父元素时，自动初始化swiper
+        });
+        $("#clickbotprev").hover(function () {
+
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerGroup:5,
+                pagination: '.swiper-pagination',
+                nextButton: '#clickbotnext',
+                prevButton: '#clickbotprev',
+                slidesPerView:5,
+//        centeredSlides: true,
+                paginationClickable: true,
+                spaceBetween: 10,
+//            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+//
+//            observeParents:true//修改swiper的父元素时，自动初始化swiper
+            });
+        })
+        $("#clickbotnext").hover(function () {
+
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerGroup:5,
+                pagination: '.swiper-pagination',
+                nextButton: '#clickbotnext',
+                prevButton: '#clickbotprev',
+                slidesPerView:5,
+//        centeredSlides: true,
+                paginationClickable: true,
+                spaceBetween: 10,
+//            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+//
+//            observeParents:true//修改swiper的父元素时，自动初始化swiper
+            });
+        })
+
+
+    })
+    //    $('#clickbotprev').on('hover',function () {
+    //        swiper.res
+    //    })
+
+</script>
+<script type="text/ng-template" id="create.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">创建API账号</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">API账号名称</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.title" name="newMobile"
+                                   placeholder="请输入新增的API账号名称（20字以内）" required ng-minlength="2" ng-maxlength="20">
+                            <span style="color:red" ng-show="myForm.newMobile.$dirty && myForm.newMobile.$invalid">API账号限制为2-20个字符</span>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">短信类型</label>
+                        <div class="col-md-9">
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio">
+                                    <input type="radio" name="product" ng-model="data.type" ng-checked="true" ng-value="1" ng-change="loadGood(1)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1" checked="checked"> 验证码
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="product" ng-model="data.type" ng-value="2" ng-change="loadGood(2)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="2" > 通知&订单
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="product" ng-model="data.type" ng-value="3" ng-change="loadGood(2)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="3"> 营销
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.newMobile.$invalid"
+                    ng-click="ok()">确定
+            </button>
+        </div>
+    </form>
+</script>
+<!--搜索-->
+<script type="text/ng-template" id="search.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">API名称</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="dataSearch.title" name="title" placeholder="输入创建API账号时的名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Apikey</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="dataSearch.api_key" name="api_key" placeholder="输入API账号的key">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">查询
+            </button>
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">关闭</button>
+
+        </div>
+    </form>
+</script>

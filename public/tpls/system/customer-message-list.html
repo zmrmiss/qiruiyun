@@ -1,0 +1,77 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <!--<div class="border-green m-bordered">-->
+                <!--<div class="portlet light bordered" style="margin-bottom: 10px;">-->
+                <!--<div class="portlet-body form">-->
+                <!--&lt;!&ndash; BEGIN FORM&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th style="width: 240px;"> 标题 </th>
+                            <th style="min-width: 570px;"> 消息内容 </th>
+                            <th style="width: 150px;"> 日期 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <!--<td><a href="javascript:;" ng-click="open(data)" ng-class="{'bold': data.flag == 2, 'font-grey-cascade': data.flag == 1}">{{data.title }}</a>  </td>-->
+                            <td ng-bind="data.title">  </td>
+                            <td ng-bind="data.content">  </td>
+                            <td ng-bind="data.ht_time">  </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template"  id="newsView.html">
+    <div class="form-horizontal ng-pristine ng-valid">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="ok()"></button>
+            <h5 class="modal-title">消息</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">标题</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">{{data.title}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">内容</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">{{data.content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <!--<button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>-->
+            <button type="button" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </div>
+</script>

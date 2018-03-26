@@ -1,0 +1,304 @@
+<div class="portlet light">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+
+                <!--黑名单设置-->
+                <!--<div class="tab-content">-->
+                    <!--<div><h4>黑名单设置</h4></div>-->
+                    <!--<div class="row">-->
+                        <!--<form class="form-horizontal" role="form">-->
+                            <!--<div class="form-body">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-sm-6 col-md-4 col-lg-3">-->
+                                        <!--<div class="form-group" style="margin-bottom: 0 !important;">-->
+                                            <!--<label class="control-label col-sm-6 col-md-3 col-lg-4">手机号</label>-->
+                                            <!--<div class="col-sm-6 col-md-9 col-lg-8" style="padding: 0 !important;">-->
+                                                <!--<input type="text" class="form-control input-sm" ng-model="params.telephone" placeholder="手机号">-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-1">-->
+                                        <!--<div class="form-group" style="margin-bottom: 0 !important;">-->
+                                            <!--<div class="col-md-12">-->
+                                                <!--<button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-1">-->
+                                        <!--<div class="form-group" style="margin-bottom: 0 !important;">-->
+                                            <!--<div class="col-md-12">-->
+                                                <!--<button type="submit" class="form-control input-sm btn btn-sm green" ng-click="open(null)"> 新增黑名单</button>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                    <!--<div class="table-scrollable">-->
+                        <!--<table class="table table-hover table-light">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th> 手机号 </th>-->
+                                <!--<th> 说明 </th>-->
+                                <!--<th> 操作 </th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr ng-repeat="data in tableData">-->
+                                <!--<td ng-bind="data.telephone">  </td>-->
+                                <!--<td ng-bind="data.remark">  </td>-->
+                                <!--<td>-->
+                                    <!--&lt;!&ndash;<a href="javascript:;" class="btn btn-xs blue" ng-click="open(data)"> 编辑 </a>&ndash;&gt;-->
+                                    <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="delete(data)"> 删除 </a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                        <!--<div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">-->
+                            <!--<p class="text-center">-->
+                                <!--<img class="avatar" src="http://cr.1cloudsp.com/assets/layout/img/ui-noRecord.png">-->
+                            <!--</p>-->
+                        <!--</div>-->
+                        <!--<tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--IP白名单设置-->
+                <div class="tab-content" style="margin-bottom: 50px">
+                    <div>
+                        <h4>IP白名单设置</h4>
+                        <label class="mt-checkbox mt-checkbox-outline pull-left" style="padding-top: 1px;"> 开启
+                            <input type="checkbox" ng-model="hasSetoff" class="ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty">
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="row" ng-if="hasSetoff">
+
+                        <div class="col-lg-12 col-xs-12 col-sm-12">
+                            <div class="alert alert-info">
+                                <strong><i class="fa fa-exclamation-circle"></i></strong> IP白名单为调用接口所在服务器的公网IP，若设置为空则表示不限制，容易被攻击。
+                            </div>
+                            <div class="portlet light ">
+                                <div class="portlet-body form">
+                                    <form class="form-horizontal">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" style="float: left">IP白名单</label>
+                                                        <div class="col-md-9">
+                                                            <textarea rows="3" class="form-control" ng-model="data2.ip_content" name="ip" placeholder="可以设置多个IP，请使用英文半角逗号(,)隔开"></textarea>
+                                                            <!--<span class="help-block"> 可以设置多个IP，请使用英文半角逗号(,)隔开 </span>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/row-->
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="" style="float: left">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3">
+                                                            <button type="submit" class="btn btn-sm green" ng-click="modify()">保存</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6"> </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--数据推送-->
+                <div class="tab-content">
+                    <div><h4>数据推送</h4></div>
+                    <div class="row">
+                        <div class="form-group" style="margin-bottom:50px !important;">
+                            <!--<label class="control-label col-sm-6 col-md-3 col-lg-4">审核状态</label>-->
+                            <div class="col-sm-6 col-md-9 col-lg-8" >
+                                <ui-select ng-model="params.form" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width: 200px; float: left;" ng-disabled="data.status==0" >
+                                    <ui-select-match placeholder="客户通过接口主动获取">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="item.status as item in AuditingData" value="{{item.status}}" ng-click="sjpt(item.status)">
+                                        {{item.name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xs-12 col-sm-12" ng-if="hasurl">
+
+                            <div class="alert alert-info">
+                                1、数据推送是指：平台将短信状态数据以及上行短信数据通过HTTP POST协议发送到客户的推送地址URL，即客户的接收服务器；<br/>2、如果未设置推送地址URL或客户接收服务器出现故障，平台不会重复发送；<br/>3、数据采用JSON格式（详细格式介绍请参见<a href="http://www.qirui.com/view/page/index-10.htm" target="_blank" style="text-decoration: underline !important;"><strong>API文档</strong></a>）。
+                            </div>
+                            <div class="portlet light" >
+                                <div class="portlet-body form">
+                                    <form class="form-horizontal">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">状态报告推送地址</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control input-sm" ng-model="data.status_report" placeholder="状态报告推送地址 如http://pushStatus.example.com" ng-disabled="data.status==0" />
+                                                            <!--<span class="help-block"> 推送地址 </span>-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">上行短信推送地址</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control input-sm" ng-model="data.sms_upload" placeholder="上行推送地址 如http://pushReply.example.com" ng-disabled="data.status==0" />
+                                                            <!--<span class="help-block"> 推送地址 </span>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/row-->
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="submit" class="btn btn-sm green" ng-disabled="data.status==0"  ng-click="Datapush1()" ng-if="datastatus">保存</button>
+                                                            <button type="submit" class="btn btn-sm gray" ng-if="data.status==0"  ng-disabled="data.status==0">解析中</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6"> </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xs-12 col-sm-12" ng-if="hasvip">
+
+                            <div class="alert alert-info">
+                                客户通过官方指定接口地址获取3个月以内的发送记录。<br/>注：已获取过的记录，再次获取时返回为空<br/><a href="http://www.qirui.com/view/page/index-10.htm" target="_blank" style="text-decoration: underline !important;"><strong>相关接口说明</strong></a>。
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="" style="float: left">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button type="submit" class="btn btn-sm green" ng-click="Datapush2()">保存</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--通知设置-->
+                <!--<div class="tab-content">-->
+                    <!--<div><h4>通知设置</h4></div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-lg-12 col-xs-12 col-sm-12">-->
+                            <!--<div class="portlet light ">-->
+                                <!--<div class="portlet-body form">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<div class="col-md-9">-->
+                                            <!--<div class="mt-radio-inline">-->
+                                                <!--<label class="mt-radio">-->
+                                                    <!--<input type="checkbox" name="product" ng-model="dxtype" ng-value="1" ng-change="loadDuanxing(1)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1" > 开启接口短信余量报警-->
+                                                    <!--<span></span>-->
+                                                <!--</label>-->
+
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<script type="text/ng-template"  id="editBlack.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="platBlackEditForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">接口短信-黑名单</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">手机号</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-sm" ng-model="data.telephone" name="mobile" placeholder="手机号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">说明</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control input-sm" ng-model="data.remark" name="comment" placeholder="说明"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <div class="mt-radio-inline">
+
+                                <label class="mt-radio">
+                                    <input type="checkbox" name="product" ng-model="data.sync" ng-value="1" ng-change="loadGood(1)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1"> 同步加入群发短信黑名单
+                                    <span></span>
+                                </label>
+
+                                <!--<label class="mt-radio">-->
+                                    <!--<input type="checked" name="product" ng-model="data.appId" ng-value="1" ng-change="loadGood(1)" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1" > 接口短信-->
+                                    <!--<span></span>-->
+                                <!--</label>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row alert alert-info" style="margin-bottom: 0;">
+                <strong>提示:</strong>
+                <p style="padding-left: 30px;">1、被添加至黑名单的手机号将无法正常接收到短信。</p>
+                <p style="padding-left: 30px;">2、审核将在10分钟内完成，请耐心等待！(工作时间:8:30 ~ 21:00)。如有紧急情况，请联系客服。</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

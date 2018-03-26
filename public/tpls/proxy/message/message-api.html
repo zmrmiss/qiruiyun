@@ -1,0 +1,472 @@
+<div class="portlet light">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <!--信息-->
+                <div class="row widget-row">
+                    <div class="col-md-3">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                            <div class="widget-thumb-wrap">
+                                <!--<i class="widget-thumb-icon bg-green icon-bulb"></i>-->
+                                <div class="widget-thumb-body">
+                                    <span class="widget-thumb-subtitle">剩余条数</span>
+                                    <span class="widget-thumb-body-stat" style="float: left" ng-bind="smsCount"></span>
+                                    <span style="float: right"><a ui-sref="payment.product">充值</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                    <div class="col-md-4">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <!--<div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered" style="padding-top:4px;padding-bottom: 0;padding-right: 0;">-->
+                        <div class="widget-thumb widget-bg-color-white margin-bottom-20 bordered" style="padding-top:4px;padding-bottom: 0;padding-right: 0;">
+                            <div class="widget-thumb-wrap">
+                                <!--<i class="widget-thumb-icon bg-blue icon-bar-chart"></i>-->
+                                <div class="widget-thumb-body" ng-repeat="setTab in setTab" style="background-color: #fff;display: inline-block" ng-if="setTab.username==username">
+                                    <div class="widget-thumb-subtitle">{{setTab.title}} <span style="margin-left: 20px"><a href="#" ng-click="onChangeStep(setTab)" >修改</a></span></div>
+                                    <div style="font-size: 12px;color: #949494">APIKey :
+                                        <span ng-bind="setTab.username"></span>
+                                        <a href="#" ng-click="openSetLoginSize(setTab.username)" ng-if="setTab.is_login==1">设置登录信息</a>
+                                    </div>
+                                    <div style="font-size: 12px;color: #949494">APISecret  :
+                                        <p class="form-control-static ng-binding" id="accessSecretCopy" ng-bind="setTab.password"></p>
+                                        <!--<p class="form-control-static" ng-show="!showSecret">********************************</p>-->
+                                        <span style="margin-left: 10px"><a href="#" ng-click="openShow(setTab.username)" >显示</a></span>
+                                        <span style="margin-left: 10px"><a href="#" ng-click="openRester(setTab.username)" >重置</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                    <div class="col-md-5">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered" style="padding: 4px 20px;">
+                            <div class="" >
+                                <!--<i class="widget-thumb-icon bg-purple icon-screen-desktop"></i>-->
+                                <div class="" >
+                                    <div class="portlet-body form">
+                                        <!-- BEGIN FORM-->
+                                        <div class="form-horizontal" role="form">
+                                            <form class="form-body">
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" style=" margin-bottom: 0;">
+                                                            <label class="control-label col-md-2" style="margin: 0 -15px 0 0; padding: 6px 10px 0 0px; ">测试内容
+                                                            </label>
+                                                            <div class="col-md-8" >
+                                                                <ui-select ng-model="dataList.Temp" theme="bootstrap" search-enabled="false" ng-click="selectSign($select.selected)" class="ui-select-container ui-select-bootstrap dropdown ng-valid">
+                                                                    <ui-select-match placeholder="--请选择--" style="overflow: hidden">{{$select.selected}}
+                                                                    </ui-select-match>
+                                                                     <ui-select-choices repeat="Temp in dataList.Temps">
+                                                                        {{Temp}}
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                            </div>
+                                                            <button type="submit" class="col-md-2 btn btn-xs green" ng-disabled="data.mobiles==''" ng-click="openSignList()" disabled="disabled" style="float: left;margin-right: 10px;margin-right: 10px;background: transparent;color: #30a5ff;border: 0;padding-right: 0;padding-left: 10px;" ng-if="tableDataShow">更改签名</button>
+                                                        </div>
+                                                    </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" style=" margin-bottom: 0;margin-top: 10px">
+                                                            <label class="control-label col-md-2" style="margin: 0 -4px 0 0; padding: 6px 10px 0 0px;">手机号
+                                                            </label>
+                                                            <div class="col-md-4" >
+                                                                <input type="text" style="  height: 24px; line-height: 24px;min-height: 24px;"  class="form-control input-sm" ng-model="mobile" placeholder="测试手机号" name="mobile">
+
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <button type="submit" class="btn btn-sm green" id="send" ng-click="send()" style="padding: 2px 15px;margin-top: 3px">发送短信</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- END FORM-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                </div>
+                <!--发送统计-->
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <div class="portlet light ">
+                            <!--<div class="portlet-title">-->
+                            <!--<div class="caption">-->
+                            <!--<span class="caption-subject bold uppercase font-dark">发送统计</span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="portlet-body">
+                                <div id="sendR" style="height: 400px;">
+                                </div>
+                            </div>
+                            <!--<div class="pull-right"><a class="btn btn-info btn-xs" th:href="@{api/export/report}">导出 &lt;!&ndash;<i class="fa fa-download"></i>&ndash;&gt;</a></div>-->
+                            <!--<br>-->
+                            <!--<div class=" table-scrollable">-->
+                            <!--<table class="table table-hover table-light">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                            <!--<th> 日期 </th>-->
+                            <!--<th> 发送总量 </th>-->
+                            <!--<th> 发送成功 </th>-->
+                            <!--<th> 发送失败 </th>-->
+                            <!--<th> 等待返回 <a href="#" tooltips tooltip-side="top" tooltip-template="短信已提交至运营商网关下发，但运营商网关未将状态及时返回，请耐心等待<br /><span class='font-yellow'>根据运营商规则，状态会在发送后72小时内返回</span>"><i class="fa fa-question-circle font-blue"></i></a> </th>-->
+                            <!--<th> 无效发送 <a href="#" tooltips tooltip-side="top" tooltip-template="短信未成功提交至运营商网关处进行发送<br /><span class='font-yellow'>例如人工驳回，短信自行撤销等</span>"><i class="fa fa-question-circle font-blue"></i></a> </th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr ng-repeat="data in tableData">-->
+                            <!--<td ng-bind="data.day">  </td>-->
+                            <!--<td ng-bind="data.total">  </td>-->
+                            <!--<td ng-bind="data.success">  </td>-->
+                            <!--<td ng-bind="data.error">  </td>-->
+                            <!--<td ng-bind="data.unknown">  </td>-->
+                            <!--<td ng-bind="data.invalid">  </td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                            <!--</table>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <!--<div class="col-lg-5 col-xs-12 col-sm-5">-->
+                    <!--<form class="form-horizontal">-->
+                    <!--<div class="form-body">-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                    <!--<div class="alert alert-info">-->
+                    <!--测试短信所消耗的短信数量将计入【接口短信】当天发送量中，<br>体验前，请先确认【接口短信】中是否尚有剩余条数。-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-12">-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label col-md-3">短信类型</label>-->
+                    <!--<div class="col-md-9">-->
+                    <!--<div class="btn-group " data-toggle="buttons" >-->
+                    <!--<label class="btn btn-sm btn-default active" ng-click="changeContent(1)">-->
+                    <!--<input class="toggle" type="radio" checked name="type" value="1"> 验证码-->
+                    <!--</label>-->
+                    <!--<label class="btn btn-sm btn-default" ng-click="changeContent(2)">-->
+                    <!--<input class="toggle" type="radio" name="type" value="2"> 通知&订单-->
+                    <!--</label>-->
+                    <!--<label class="btn btn-sm btn-default" ng-click="changeContent(3)">-->
+                    <!--<input class="toggle" type="radio" name="type" value="3"> 会员营销-->
+                    <!--</label>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label col-md-3">签名</label>-->
+                    <!--<div class="col-md-9" style="width: 120px;">-->
+                    <!--<ui-select style="width: 120px;" ng-model="data.sign" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" >-->
+                    <!--<ui-select-match placeholder="&#45;&#45;请选择&#45;&#45;">{{$select.selected.sign}}</ui-select-match>-->
+                    <!--<ui-select-choices repeat="sign as sign in signs | filter: $select.search">-->
+                    <!--{{sign.sign }}-->
+                    <!--</ui-select-choices>-->
+                    <!--</ui-select>-->
+                    <!--&lt;!&ndash;<select class="form-control input-sm">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option value="">创瑞</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option value="">天瑞</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option value="">短信网</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label col-md-3">发送内容</label>-->
+                    <!--<div class="col-md-9">-->
+                    <!--<p class="form-control-static" style="padding: 8px;background-color: #E6E6E6" ng-bind="content">  </p>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label col-md-3">手机号</label>-->
+                    <!--<div class="col-md-9">-->
+                    <!--<input type="text" class="form-control input-sm" style="width: 150px;" ng-model="mobile" name="mobile" placeholder="测试手机号">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-actions">-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-offset-2 col-md-9">-->
+                    <!--<button type="submit" class="btn btn-sm green" id="send" ng-click="send()">发送短信</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6"> </div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</form>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--设置登录信息-->
+<script type="text/ng-template"  id="setLoginSize.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="messageTemplateEditForm" name="myForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">设置登录信息</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+
+                        <label class="control-label col-md-3"><span style="color: red">*</span>手机号</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength ng-touched" type="text" ng-model="data.child_mobile" name="child_mobile" placeholder="用于验证，建议输入API登录人手机号" required="" ng-minlength="2" ng-maxlength="20">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="control-label col-md-3"><span style="color: red">*</span>登录密码</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength ng-touched" type="text" ng-model="data.login_password" name="login_password" placeholder="输入API登录密码（8到16位数字英文组合）" required="" ng-minlength="2" ng-maxlength="20">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <!--<button type="button" class="form-control input-sm btn btn-sm blue" style="width: 80px;" ng-show="!testFlag" ng-click="testFlag=true">我要测试</button>-->
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.templateName.$invalid || myForm.template.$invalid || myForm.remark.$invalid"
+                    ng-click="ok()" style="float: left;
+    margin-left: 125px;">确定修改</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template"  id="setoff.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="messageTemplateEditForm" name="myForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">修改状态</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">API账号名称</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength ng-touched" type="text" ng-model="data.title" name="newMobile" placeholder="请输入API账号名称（20字以内）" required="" ng-minlength="2" ng-maxlength="20">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">状态</label>
+                        <div class="col-md-9">
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio ng-binding ng-scope">
+                                    <input type="radio" name="type" ng-model="data.type" ng-checked="data.is_stop==0" ng-value="'0'" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="0"> 开启
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio ng-binding ng-scope">
+                                    <input type="radio" name="type" ng-model="data.type" ng-checked="data.is_stop==1" ng-value="1" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="1"> 关闭
+                                    <span></span>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <!--<button type="button" class="form-control input-sm btn btn-sm blue" style="width: 80px;" ng-show="!testFlag" ng-click="testFlag=true">我要测试</button>-->
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.templateName.$invalid || myForm.template.$invalid || myForm.remark.$invalid"
+                    ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="showword.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">显示AccessSecret</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">APIKEY</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static" ng-bind="data.username"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">新手机号</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static" ng-bind="data.telephone"></p>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">图形验证码</label>
+                        <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8" style="padding-left: 15px;padding-right: 0;width: 38%">
+                            <input class="form-control form-control-solid placeholder-no-fix" ng-model="data.imgcode" type="text" autocomplete="off" placeholder="请输入图片验证码" id="imageCode" name="imageCode" />
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4" style="padding-left: 5px;padding-right: 0;margin-bottom: 0px;height: 34px;line-height: 34px;">
+                            <img style="cursor: pointer;width: 100%;height: 100%;display: block;" src="/api/user/Captcha/generate/?type=4" alt="点击刷新验证码" title="点击刷新验证码" onclick="this.src='/api/user/Captcha/generate/?type=4&'+new Date().getTime()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <button class="btn btn-sm blue" id="sendCode" ng-disabled="myForm.newMobile.$invalid" ng-click="getCode()"> 获取短信验证码
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">验证码</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.sms_code" name="code"
+                                   placeholder="请输入手机短信中4位验证码" required ng-minlength="4" ng-maxlength="4">
+                            <span style="color:red" ng-show="myForm.code.$dirty && myForm.code.$invalid">请输入4位验证码</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.newMobile.$invalid || myForm.oldCode.$invalid"
+                    ng-click="ok()">确定
+            </button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="rester.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="mobileForm" ng-if="step == 1" name="myForm"
+          novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">重置API密码</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">API账号</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static" ng-bind="data.username"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">手机号</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static" ng-bind="data.telephone"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">图形验证码</label>
+                        <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8" style="padding-left: 15px;padding-right: 0;width: 38%">
+                            <input class="form-control form-control-solid placeholder-no-fix" ng-model="data.imgcode" type="text" autocomplete="off" placeholder="请输入图片验证码" id="imageCode" name="imageCode" />
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4" style="padding-left: 5px;padding-right: 0;margin-bottom: 0px;height: 34px;line-height: 34px;">
+                            <img style="cursor: pointer;width: 100%;height: 100%;display: block;" src="/api/user/Captcha/generate/?type=5" alt="点击刷新验证码" title="点击刷新验证码" onclick="this.src='/api/user/Captcha/generate/?type=5&'+new Date().getTime()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <button class="btn btn-sm blue" id="sendCode" ng-disabled="myForm.newMobile.$invalid" ng-click="getCode()"> 获取短信验证码
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">验证验证码</label>
+                        <div class="col-md-9">
+                            <input class="form-control input-sm" type="text" ng-model="data.sms_code" name="code"
+                                   placeholder="请输入手机短信中4位验证码" required ng-minlength="4" ng-maxlength="4">
+                            <span style="color:red" ng-show="myForm.code.$dirty && myForm.code.$invalid">请输入4位验证码</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="myForm.newMobile.$invalid || myForm.oldCode.$invalid"
+                    ng-click="ok()">确定
+            </button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="signlists.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" name="myForm" novalidate>
+        <div class="modal-header">
+            <h5 class="modal-title">签名列表</h5>
+            <button type="button" class="close" ng-click="cancel()"></button>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">选择签名</label>
+                        <div class="col-md-9">
+                            <ui-select ng-model="params.content" theme="bootstrap" search-enabled="false" class="pull-left ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px; width:318px; float: left;">
+                                <ui-select-match placeholder="--请选择签名--">{{$select.selected.content}}</ui-select-match>
+                                <ui-select-choices repeat="item.content as item in tableDataSing" value="{{item.id}}" >
+                                    {{item.content}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-click="ok()">更换签名</button>
+        </div>
+    </form>
+</script>

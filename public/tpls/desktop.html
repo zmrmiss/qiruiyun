@@ -1,0 +1,122 @@
+<div class="page-bar" style="margin-bottom: 20px;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a ui-sref="desktop">管理控制台</a>
+        </li>
+    </ul>
+</div>
+<!--信息-->
+<!--<div class="dashboard-banner clearfix" xmlns:th="http://www.thymeleaf.org">-->
+<!--<img th:src="@{/assets/layout/img/dashboard-banner01.jpg}"   alt="" title=""  class="img-responsive" />-->
+<!--</div>-->
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+        <div class="dashboard-stat2 " style="height: 115px">
+            <div style="display:inline-block;float: left;padding-right: 10px"><img src="../public/assets/layout/img/id.png" alt="" style="width: 50px;padding-bottom: 20px"></div>
+            <a ui-sref="account.info"  class="pull-right" >设置</a>
+            <div class="display" style="margin-bottom: 5px;display:inline-block;">
+                <div class="number" style="min-width: 200px;margin-bottom: 5px">
+
+                    <h3>
+                        <label style="margin-bottom: 0">账号ID: <span ng-bind="heardata.passport" style="color: #30a5ff"></span></label>
+                    </h3>
+                    <span style="height: 20px" ng-bind="data.name"></span>
+
+                </div>
+                <div class="progress-info">
+                    <div class="status">
+                        <img src="../public/assets/layout/img/rztrue.png" ng-if="heardata.authz_status == 1" tooltips tooltip-side="top" tooltip-template="已认证" alt="">
+
+                        <img src="../public/assets/layout/img/rz.png" ng-if="heardata.authz_status != 1" tooltips tooltip-side="top" tooltip-template="未认证" alt="">
+                        &nbsp;&nbsp;
+                        <img src="../public/assets/layout/img/telephone.png" tooltips tooltip-side="top" tooltip-template="已认证" alt="">
+                        &nbsp;&nbsp;
+                        <img src="../public/assets/layout/img/emailtrue.png" ng-if="heardata.email != null" tooltips tooltip-side="top" tooltip-template="已验证邮箱" alt="">
+
+                        <img src="../public/assets/layout/img/email.png" ng-if="heardata.email == null" tooltips tooltip-side="top" tooltip-template="邮箱未验证" alt="">
+                        <!--<a ui-sref="account.auth" style="color: #AAB5BC;" ng-if="data.auth == false" tooltips tooltip-side="top" tooltip-template="未认证"><i class="fa fa-credit-card"></i></a>-->
+                        <!--<a ui-sref="account.auth" ng-if="data.auth == true" tooltips tooltip-side="top" tooltip-template="已认证"><i class="fa fa-credit-card font-green-dark"></i></a>-->
+                        <!--&nbsp;&nbsp;-->
+                        <!--<a ui-sref="account.safe" style="color: #AAB5BC;" ng-if="data.mobile == null" tooltips tooltip-side="top" tooltip-template="未绑定"><i class="icon-screen-tablet"></i></a>-->
+                        <!--<a ui-sref="account.safe" ng-if="data.mobile != null" tooltips tooltip-side="top" tooltip-template="{{data.mobile}}"><i class="icon-screen-tablet font-green-dark"></i></a>-->
+                        <!--&nbsp;&nbsp;-->
+                        <!--<a ui-sref="account.safe" style="color: #AAB5BC;" ng-if="data.email == null" tooltips tooltip-side="top" tooltip-template="未绑定"><i class="fa fa-envelope-o"></i></a>-->
+                        <!--<a ui-sref="account.safe" ng-if="data.email != null" tooltips tooltip-side="top" tooltip-template="{{data.email}}"><i class="fa fa-envelope-o font-green-dark"></i></a>-->
+                        <!--&nbsp;&nbsp;-->
+                        <!--<a href="#" tooltips tooltip-side="top"-->
+                           <!--tooltip-template="<span style='width: 300px;' class='font-yellow-gold02'>累计登录{{data.loginCount}}次。<br>最后登录时间：{{data.lastLoginTime}}<br>最后登录IP：{{data.lastLoginIp}}</span>最后登录地址：{{data.lastLoginAddr}}</span>"><i class="icon-user font-blue"></i></a>-->
+                        <!--&nbsp;&nbsp;-->
+
+
+                        <!--<div class="status-title"> progress </div>-->
+                        <!--<div class="status-number"> 76% </div>-->
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 " style="height: 115px">
+            <div style="display:inline-block;float: left;padding-right: 10px"><img src="../public/assets/layout/img/qb.png" alt="" style="width: 50px;padding-bottom: 20px"></div>
+            <div class="display" >
+                <div class="status pull-right">
+                    <a ui-sref="payment.account">钱包充值</a> &nbsp;
+                    <a ui-sref="payment.product" >短信充值</a>&nbsp;
+                </div>
+                <div class="number">
+                    <h3>钱包余额 <label ng-bind="amount"></label>元 </h3>
+                    <span>昨日消费 <label ng-bind="totalAmount"> </label>元</span>
+                    <!--<span>累计消费 <label> {{data.totalAmount}} 元</label></span>-->
+                </div>
+            </div>
+            <div class="progress-info clearfix" >
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 " style="height: 115px">
+            <div style="display:inline-block;float: left;padding-right: 10px"><img src="../public/assets/layout/img/apiphoto.png" alt="" style="width: 50px;padding-bottom: 20px"></div>
+            <div class="display" style="margin-bottom: 0">
+
+                <div class="number" style="display: block;">
+                    <div class="font-purple-soft">
+                        <!--<span data-counter="counterup" th:text="'AccessKey: ' + ${session.user.accessKey}"></span>-->
+                        <h3 data-counter="counterup"> API账号</h3>
+                        <div style="margin-top: 10px;"><span ng-bind="apinum">0</span>个</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="progress-info">-->
+            <!--<div class="status">-->
+            <!--<div class="status-title"> change </div>-->
+            <!--<div class="status-number"> 57% </div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<!--发送统计-->
+<div class="row">
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject bold uppercase font-dark">发送统计</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id="sendR" style="height: 400px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

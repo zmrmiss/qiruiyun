@@ -1,0 +1,1 @@
+window.domain={user:"sms.qirui.com/api/user",ordinary:"sms.qirui.com/api/ordinary"};

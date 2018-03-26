@@ -1,0 +1,181 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <!--信息-->
+                <div class="row widget-row">
+                    <div class="col-md-3">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                            <div class="widget-thumb-wrap">
+                                <!--<i class="widget-thumb-icon bg-green icon-bulb"></i>-->
+                                <div class="widget-thumb-body">
+                                    <span class="widget-thumb-subtitle">剩余条数</span>
+                                    <span class="widget-thumb-body-stat" style="float: left" ng-bind="smsCount"></span>
+                                    <span style="float: right">
+                                        <a href="#" style="color: #FF9900;margin-right: 10px" ng-if="DonotTransferClick" ng-click="ImmediateTransfer()">转至营销短信</a>
+                                        <a href="#" style="color: #FF9900;margin-right: 10px" ng-click="InterfaceTransfer(0)">转至接口短信</a>
+                                        <a ui-sref="payment.product">充值</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                    <div class="col-md-3">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                            <div class="widget-thumb-wrap">
+                                <!--<i class="widget-thumb-icon bg-red icon-layers"></i>-->
+                                <div class="widget-thumb-body">
+                                    <span class="widget-thumb-subtitle">昨日发送量</span>
+                                    <span class="widget-thumb-body-stat" style="float: left" ng-bind="yesterdayCount"></span>
+                                    <!--<span style="float: right"><a ui-sref="plat.template">设置</a></span>-->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                    <div class="col-md-3">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                            <div class="widget-thumb-wrap">
+                                <!--<i class="widget-thumb-icon bg-purple icon-screen-desktop"></i>-->
+                                <div class="widget-thumb-body">
+                                    <span class="widget-thumb-subtitle">签名个数</span>
+                                    <span class="widget-thumb-body-stat" style="float: left" ng-bind="signCount"></span>
+                                    <span style="float: right"><a ui-sref="plat.sign">设置</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                    <div class="col-md-3">
+                        <!-- BEGIN WIDGET THUMB -->
+                        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                            <div class="widget-thumb-wrap">
+                                <!--<i class="widget-thumb-icon bg-red icon-layers"></i>-->
+                                <div class="widget-thumb-body">
+                                    <span class="widget-thumb-subtitle">模板个数</span>
+                                    <span class="widget-thumb-body-stat" style="float: left" ng-bind="templateCount"></span>
+                                    <span style="float: right"><a ui-sref="plat.template">设置</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END WIDGET THUMB -->
+                    </div>
+                    <!--<div class="col-md-3">
+                        <!-- BEGIN WIDGET THUMB -->
+                    <!--<div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                        <div class="widget-thumb-wrap">
+                            <!--<i class="widget-thumb-icon bg-blue icon-bar-chart"></i>-->
+                    <!-- <div class="widget-thumb-body">
+                         <span class="widget-thumb-subtitle">文档</span>
+                         <div style="margin-top: 11px;">
+                             <span><a th:href="@{/apiv3.html}" target="_blank">API手册</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                             <!--<span><a>SDK手册</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+                    <!--  </div>
+                  </div>
+              </div>
+          </div>-->
+                    <!-- END WIDGET THUMB -->
+                </div>
+            </div>
+            <!--发送统计-->
+            <div class="row">
+                <div class="col-lg-12 col-xs-12 col-sm-12">
+                    <div class="portlet light ">
+                        <!--<div class="portlet-title">-->
+                        <!--<div class="caption">-->
+                        <!--<span class="caption-subject bold uppercase font-dark">发送统计</span>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="portlet-body">
+                            <div id="sendR" style="height: 400px;">
+                            </div>
+                        </div>
+                        <!--<div class="pull-right"><a class="btn btn-info btn-xs" th:href="@{plat/export/report}">导出&lt;!&ndash; <i class="fa fa-download"></i>&ndash;&gt;</a></div>-->
+                        <!--<br>-->
+                        <!--<div class=" table-scrollable">-->
+                        <!--<table class="table table-hover table-light">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                        <!--<th> 日期 </th>-->
+                        <!--<th> 发送总量 </th>-->
+                        <!--<th> 发送成功 </th>-->
+                        <!--<th> 发送失败 </th>-->
+                        <!--<th> 等待返回 <a href="#" tooltips tooltip-side="top" tooltip-template="短信已提交至运营商网关下发，但运营商网关未将状态及时返回，请耐心等待<br /><span class='font-yellow'>根据运营商规则，状态会在发送后72小时内返回</span>"><i class="fa fa-question-circle font-blue"></i></a> </th>-->
+                        <!--<th> 无效发送 <a href="#" tooltips tooltip-side="top" tooltip-template="短信未成功提交至运营商网关处进行发送<br /><span class='font-yellow'>例如人工驳回，短信自行撤销等</span>"><i class="fa fa-question-circle font-blue"></i></a> </th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr ng-repeat="data in tableData">-->
+                        <!--<td ng-bind="data.day">  </td>-->
+                        <!--<td ng-bind="data.total">  </td>-->
+                        <!--<td ng-bind="data.success">  </td>-->
+                        <!--<td ng-bind="data.error">  </td>-->
+                        <!--<td ng-bind="data.unknown">  </td>-->
+                        <!--<td ng-bind="data.invalid">  </td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                        <!--</table>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<style>
+    .width400{
+        top: 242.5px!important;
+    }
+    .width400>.modal-dialog{
+    width: 400px!important;
+    }
+</style>
+<script type="text/ng-template"  id="InterfaceZy.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" id="messageTemplateEditForm" name="myForm" novalidate style="height: 300px">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">短信转移</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin: 0 10px;">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12" style="text-align: left;padding: 0">当前模板短信余量：<span ng-bind="data.total"></span>条，可转移<span ng-bind="data.transfer"></span>条至接口账号</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-sm ng-pristine ng-valid ng-empty ng-touched" ng-model="data.amount" placeholder="请输入要转移的短信条数（单次转移条数需大于等于100条）"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeydown="this.value=this.value.replace(/\D/g,'')">
+                    </div>
+                    <div class="form-group">
+                        <!--<input type="text" class="form-control input-sm ng-pristine ng-valid ng-empty ng-touched" ng-model="data.username" placeholder="请选择接收转移的接口账号">-->
+                        <ui-select ng-model="data.api_username" theme="bootstrap" search-enabled="true" ng-change="selectSign($select.selected)" class="ui-select-container  dropdown ng-valid">
+
+                            <ui-select-match placeholder="请选择接收转移的接口账号">{{$select.selected.title }}({{$select.selected.username}})
+                            </ui-select-match>
+                            <ui-select-choices repeat="user.username as user in usernames | filter: $select.search">{{user.title }}({{user.username }})
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 25px;" class="layui-layer-btn layui-layer-btn-c">
+            <a class="layui-layer-btn0" href="#" ng-click="ok()">确定转移</a>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,68 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs2" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 申请提交日期</th>
+                            <th> 退款总额（元）</th>
+                            <th> 退款原因</th>
+                            <th> 开户公司名称 </th>
+                            <th> 收款账号 </th>
+                            <th> 退还发票 </th>
+                            <!--<th> 赠送条数 </th>-->
+                            <th> 提交人 </th>
+                            <th> 退款状态 </th>
+                            <th style="width:130px;"> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <!--<td ng-bind="data.create_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>-->
+                            <td ng-bind="data.create_time">  </td>
+                            <td>
+                                <span ng-bind="data.money"></span>
+                                <span ng-if="data.taxrate==null" ng-if="data.taxrate==0">(不含税)</span>
+                                <span ng-if="data.taxrate!=null" ng-if=data.taxrate!=0">(含税)</span>
+                            </td>
+                            <td ng-bind="data.reason">  </td>
+                            <td ng-bind="data.company">  </td>
+                            <td ng-bind="data.blankaccount">  </td>
+                            <td ng-bind-html="data.refund_invoice">  </td>
+                            <td ><span ng-bind="data.apply"></span></td>
+                            <td ng-bind="data.status_name">  </td>
+                            <td>
+                                <div ng-if="data.status==7">
+                                    <a href="javascript:;" class="btn btn-xs ng-scope" ng-click="trueBtn(data)"> 确认无误 </a>
+                                    <a href="javascript:;" class="btn btn-xs ng-scope" ng-click="falseBtn(data)"> 驳回 </a>
+                                </div>
+
+                                <!--<a href="javascript:;" class="btn btn-xs" ng-click="open(data)"> 支付宝支付 </a>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

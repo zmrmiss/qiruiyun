@@ -1,0 +1,184 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" style="margin-left: 20px;width: 90px" class="form-control input-sm btn btn-sm blue" ng-click="CreateAdd(null)">
+                                                <!--<i class="fa fa-plus"></i> -->
+                                                新增收件地址</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 收件人姓名</th>
+                            <th> 联系电话</th>
+                            <th> 收件地址</th>
+                            <th> 邮编 </th>
+                            <th> 是否默认 </th>
+                            <th> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.name">  </td>
+                            <td ng-bind="data.mobile">  </td>
+                            <td ng-bind="data.province+data.city+data.region+data.address">  </td>
+                            <td ng-bind="data.postalcode">  </td>
+                            <td ng-bind="data.is_default==1?'是':'否'">  </td>
+                            <td>
+                                <a href="javascript:;"  class="btn btn-xs blue ng-scope" ng-click="InvoiceAddDel(data.id)"> 删除 </a>
+                                 <a href="javascript:;"   class="btn btn-xs blue ng-scope" ng-click="CreateAdd(data.id)"> 修改 </a>
+                                <!--<a href="javascript:;" class="btn btn-xs" ng-click="open(data)"> 支付宝支付 </a>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--新建收货地址-->
+<script type="text/ng-template"  id="openContactAdd.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">{{titleNe}}地址</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            收件人姓名
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.name" name="name" required placeholder="请输入姓名" ng-maxlength="15" ng-minlength="2">
+                            <!--<br>-->
+                            <!--<span style="color:red" ng-show="manualForm.name.$dirty && manualForm.name.$invalid">姓名限制为2-15个字</span>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            所在地区
+                        </label>
+                        <div class="col-md-9">
+                            <div class="col-md-3" style="padding: 0;margin-right: 10px;width: 30%">
+                                <ui-select ng-model="data.province" ng-change="changeProvince()" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.value  || $select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="(key,item) in provinceData" value="{{item.value}}">
+                                        {{item.value}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3" style="padding: 0;margin-right: 10px;width: 30%">
+                                <ui-select ng-model="data.city" ng-change="changeCity()" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.value || $select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="(key,item) in cityData" value="{{item.value}}">
+                                        {{item.value}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3" style="padding: 0;" ng-if="hasDis">
+                                <ui-select ng-model="data.region" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.value  || $select.selected}}</ui-select-match>
+                                    <ui-select-choices repeat="(key,val) in countyData" value="{{val.value}}" style="width: auto">
+                                        {{val.value}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            街道地址
+                        </label>
+                        <div class="col-md-9">
+
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.address" name="address" required placeholder="请输入街道地址">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.address.$dirty && manualForm.address.$invalid">请输入街道地址</span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" >
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            邮政编码
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.postalcode" name="postalcode" required placeholder="请输入邮政编码">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.postalcode.$dirty && manualForm.postalcode.$invalid">请输入邮政编码</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <span style="color: red">*</span>
+                            手机号
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="input-sm" style="width: 318px;" ng-model="data.mobile" name="mobile" required placeholder="请输入合法的手机号" minlength="8" maxlength="20">
+                            <br>
+                            <span style="color:red" ng-show="manualForm.mobile.$dirty && manualForm.mobile.$invalid">请输入合法的手机号</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <label class="mt-checkbox mt-checkbox-outline"
+                                   style="padding-top: 1px;"> 设为默认
+                                <input type="checkbox" ng-model="hasTadd">
+                                <span></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+
+
+
+            </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

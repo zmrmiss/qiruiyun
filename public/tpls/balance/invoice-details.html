@@ -1,0 +1,142 @@
+<div class="portlet light">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <div class="tab-content" style="border-top: none">
+                <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="goback()" style="margin-left: 10px;margin-bottom: 20px;background-color: #f6f6f6;border-radius: 0!important;border: 1px solid #efefef;color: #666" > 返回上一页</button>
+                <!--<div class="form-border" >-->
+                    <!---->
+                <!--</div>-->
+                <!--发票详情-->
+                <div class="clearfix form-border" >
+                    <div class="ts-name">
+                        <span>开票明细</span>
+                    </div>
+                    <div class="col-md-12" style="padding: 0 1px;">
+
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">发票金额：</span>
+                            <span class="set-exp"><i class="fa fa-yen"></i> {{data.money}}</span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">发票状态：</span>
+                            <span class="set-exp" ng-if="data.status!='已驳回'" ng-bind="data.status" style="color:#6ca83a;"></span>
+                            <span class="set-exp" ng-if="data.status=='已驳回'" ng-bind="data.status+',&nbsp;&nbsp; 原因：'+ data.reason" style="color:#ff7777;"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">发票类型：</span>
+                            <span class="set-exp" ng-bind="dataInv.type_title"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">发票抬头：</span>
+                            <span class="set-exp" ng-bind="dataInv.title"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">申请时间：</span>
+                            <span class="set-exp" ng-bind="data.create_time"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">发票编号：</span>
+                            <span class="set-exp" ng-bind="data.invoice_code"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">税务登记证号：</span>
+                            <span class="set-exp" ng-bind="dataInv.taxid"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">发票内容：</span>
+                            <span class="set-exp" ng-bind="data.invoice_title"></span>
+                        </div>
+
+                        <!--zhu专票明细位置开始-->
+                        <div class="col-md-6 set-box" ng-if="dataInv.type_title=='增值税专用发票'">
+                            <span class="set-title">开户银行：</span>
+                            <span class="set-exp" ng-bind="dataInv.bankname"></span>
+                        </div>
+                        <div class="col-md-6 set-box" ng-if="dataInv.type_title=='增值税专用发票'">
+                            <span class="set-title">银行账号：</span>
+                            <span class="set-exp" ng-bind="dataInv.bankaccount"></span>
+                        </div>
+                        <div class="col-md-6 set-box" ng-if="dataInv.type_title=='增值税专用发票'">
+                            <span class="set-title">注册地址：</span>
+                            <span class="set-exp" ng-bind="dataInv.address"></span>
+                        </div>
+                        <div class="col-md-6 set-box" ng-if="dataInv.type_title=='增值税专用发票'">
+                            <span class="set-title">注册固定电话：</span>
+                            <span class="set-exp" ng-bind="dataAdd.mobile"></span>
+                        </div>
+                        <!--zhu专票明细位置结束-->
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">收件人：</span>
+                            <span class="set-exp" ng-bind="dataAdd.name"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">收件地址：</span>
+                            <span class="set-exp" ng-bind="dataAdd.province+dataAdd.city+dataAdd.region+dataAdd.address"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">邮编：</span>
+                            <span class="set-exp" ng-bind="dataAdd.postalcode"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">联系电话：</span>
+                            <span class="set-exp" ng-bind="dataAdd.mobile"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">快递公司：</span>
+                            <span class="set-exp" ng-bind="data.express_com||'快递'"></span>
+                        </div>
+                        <div class="col-md-6 set-box">
+                            <span class="set-title">快递编号：</span>
+                            <span class="set-exp" ng-bind="data.express_num||'无'"></span>
+                        </div>
+                        <div class="col-md-6 set-box"  ng-if="dataInv.type_title=='增值税专用发票'">
+                            <span class="set-title">纳税证明：</span>
+                            <a href="{{dataInv.taximg}}" target="_blank">查看</a>
+                        </div>
+
+
+                    </div>
+                </div>
+                
+                <!--关联订单-->
+                <div class="clearfix form-border" style="margin-top: 50px">
+                    <div class="ts-name" style="border: 0">
+                        <span>关联订单</span>
+                    </div>
+                    <div class="table-scrollable" style="margin-top: 0!important;">
+                        <table class="table table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th> 订单支付时间</th>
+                                <th> 订单编号</th>
+                                <th> 产品</th>
+                                <th> 金额（元）</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in tableData">
+                                <td ng-bind="data.update_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                                <td ng-bind="data.order_num">  </td>
+                                <td ng-bind="data.product_title">  </td>
+                                <td ng-bind="data.money">  </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                            <p class="text-center">
+                                <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                            </p>
+                        </div>
+                        <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+
+                
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

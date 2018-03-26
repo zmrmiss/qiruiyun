@@ -1,0 +1,163 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <!--<input class="form-control input-sm" style="background-color: #ffffff;width: 165px" readonly date-range-picker  options="opts" type="text" ng-model="date">-->
+                                            <!--<input type="text" class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="params.date" is-open="popup1.opened" ng-required="true"  alt-input-formats="altInputFormats" ng-focus="open1()" />-->
+                                            <input type="text" class="form-control input-sm" uib-datepicker-popup="{{format}}" readonly ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="关闭" current-text="今天"  ng-focus="open1()" id="datenew" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">手机号</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <input type="text" class="form-control input-sm" ng-model="params.telephone" placeholder="手机号">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="export()">导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th width="30%"> 回复时间 </th>
+                            <th width="35%"> 手机号码 </th>
+                            <th width="35%"> 回复内容 </th>
+                            <!--<th width="20%"> 操作 </th>-->
+                            <!--<th width="10%"> 联系人 </th>-->
+                            <!--<th width="15%"> 扩展号 </th>-->
+                            <!--<th width="8%"> 是否加黑 </th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.bornDate">  </td>
+                            <td ng-bind="data.sourceAddr">  </td>
+                            <td ng-bind="data.letter">  </td>
+                            <!--<td ng-bind="data.content">  </td>-->
+                            <!--<td ng-bind="data.bornDate">  </td>-->
+                            <!--<td>-->
+                                <!--<span style="color: red" ng-if="data.isBlack">已加黑</span>-->
+                                <!--<span ng-if="!data.isBlack">未加黑</span>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<a href="javascript:;" ng-show="!data.isBlack" class="btn btn-xs blue" ng-click="black(data.mobile)">加黑</a>-->
+                                <!--<a href="javascript:;" ng-show="data.isBlack" class="btn btn-xs blue" ng-click="noblack(data.mobile)">去黑</a>-->
+                                <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="sendMsg(data.mobile)"> 回复短信 </a>-->
+                                <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="delete(data.id)"> 删除 </a>-->
+                            <!--</td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template"  id="sendMsgFromMessage.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">发送短信</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-12">
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label class="control-label col-md-2">
+                            <span style="color: red">*</span>
+                            签名
+                        </label>
+                        <div class="col-md-9">
+                            <ui-select ng-model="sign" theme="bootstrap" search-enabled="false" ng-change="selectSign($select.selected.sign)" class="ui-select-container ui-select-bootstrap dropdown ng-valid" >
+                                <ui-select-match placeholder="--请选择--">{{$select.selected.sign}}</ui-select-match>
+                                <ui-select-choices repeat="sign.id as sign in signs | filter: $select.search">
+                                    {{sign.sign }}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">
+                            <span style="color: red">*</span>
+                            短信内容
+                        </label>
+                        <div class="col-md-9">
+                            <div class="portlet-body">
+                                <p ng-if="keys.length > 0" id="keybored">
+                                    <button type="button" class="btn btn-xs green margin-right-10" ng-repeat="key in keys track by $index" ng-click="insertAtCaret('content', key)">{{key}}</button>
+                                </p>
+                                <div style="position: relative;">
+                                    <span id="signDiv" style="position: absolute;top: 6px;left: 5px;">
+                                        【{{sign.sign}}】
+                                    </span>
+                                    <textarea rows="5" class="form-control input-sm" id="content" style="resize: none;height: 175px; font-family: '-webkit-pictograph'; font-size: 13px;" maxlength="500-{{signWords}}-{{hasT ? 4 : 0}}" ng-change="change()" data-ng-trim="false" ng-model="data.content" placeholder=""></textarea>
+                                    <div style="position: absolute;right: 20px;bottom: 0;">
+                                        <label class="mt-checkbox mt-checkbox-outline" style="padding-top: 1px;"> 回T退订
+                                            <input type="checkbox" ng-model="hasT" ng-change="change()">
+                                            <span></span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <p class="form-control-static" style="width: 100%;border-left: 1px solid #c2cad8;border-right: 1px solid #c2cad8;border-bottom: 1px solid #c2cad8;padding-left: 20px;">
+                                    已输入<span class="bold font-red">{{inputWords}}</span>/{{totalWords}}个字：签名(<span class="bold font-red">{{signWords}}</span>) + 内容(<span class="bold font-red">{{data.content.length}}</span>)<span ng-if="hasT"> + 回T退订(<span class="bold font-red">{{tWords}}</span>)</span>，消耗<span class="bold font-red">{{count}}</span>条短信；
+                                    (发送内容建议少于350个字数，最多不超过500个字)
+                                </p>
+                            </div>
+                            <br>
+                            <span style="color:red" ng-show="manualForm.content.$dirty && manualForm.content.$invalid">短信内容长度限制为2-100位</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green"
+                    ng-disabled="manualForm.content.$invalid || manualForm.content.$invalid"
+                    ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

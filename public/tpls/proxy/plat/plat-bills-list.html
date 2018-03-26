@@ -1,0 +1,92 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <input class="form-control input-sm" style="background-color: #ffffff;width: 180px" readonly date-range-picker  options="opts" type="text" ng-model="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">类型</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8" style="padding: 0 !important;">
+                                            <ui-select ng-model="params.type" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                                <ui-select-match placeholder="--请选择--">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="type.value as type in types | filter: $select.search">
+                                                    {{type.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-1">-->
+                                <!--<div class="form-group" style="margin-bottom: 0 !important;">-->
+                                <!--<div class="col-md-12">-->
+                                <!--<button type="submit" class="form-control input-sm btn btn-sm green" ng-click="export()">导出</button>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 充值时间 </th>
+                            <th> 类型 </th>
+                            <th> 条数 </th>
+                            <th> 归属订单 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.create_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                            <td>
+                                <span ng-if="data.type==1">充值</span>
+                                <span ng-if="data.type==3">注册赠送</span>
+                                <span ng-if="data.type==4">体验赠送</span>
+                                <span ng-if="data.type==-1">短信转移</span>
+                                <span ng-if="data.type==6">短信补给赠送</span>
+                            </td>
+                            <td ng-bind="data.add_sub">  </td>
+                            <td> <span ng-if="data.type!=-1">订单编号: <span ng-bind="data.order_num"></span></span>  </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

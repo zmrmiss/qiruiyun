@@ -1,0 +1,215 @@
+
+    <div class="page-header navbar navbar-fixed-top" ng-class="{activeMs:isActiveMs}">
+    <div class="col-md-12" ng-if="DonotTransferClick" style="height: 60px;background-color: #ffcccc;color: #f00;line-height: 16px;text-align: center;padding-top: 22px;">
+        因平台升级，原短信余量已默认转至行业短信余量中（页面左侧菜单：短信-行业短信），您可将行业短信中的一些短信转至营销短信余量中使用，此转移仅能操作一次，请知悉！感谢您的理解与支持！
+        <a href="#" style="color: #199ed8" ng-click="ImmediateTransfer()">立即转移</a>
+        <a href="" style="margin-left: 30px;color:#199ed8;" ng-click="DonotTransfer()">我已知晓，不做转移</a>
+        <a href="" style="float: right;line-height: 16px;width: 20px;color: #000;">
+            <i class="fa fa-close" ng-click="ClosingHints()"></i></a>
+    </div>
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="index.html">
+                <img src="../public/assets/layout/img/logo.png" alt="logo" class="logo-default" style="margin: 18px 0 0 20px;height: 32px;"/> </a>
+            <!--<img th:src="@{/assets/layout/img/logo.png}" alt="logo" class="logo-default" style="margin: 12px 0 0 20px;height: 24px;" /> </a>-->
+            <div class="menu-toggler sidebar-toggler" style="margin-top: 28px;">
+                <span></span>
+            </div>
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            <span></span>
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <div class="top-menu clearfix">
+            <ul class="nav navbar-nav pull-right">
+                <!--<li class="dropdown dropdown-user">-->
+                <!--<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">-->
+                <!--<span class="username username-hide-on-mobile"> 文档 </span>-->
+                <!--<i class="fa fa-angle-down"></i>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu dropdown-menu-default">-->
+                <!--<li>-->
+                <!--<a href="http://www.crpaas.com/html/developer/api_docs/" target="_blank"> 接口文档 </a>-->
+                <!--</li>-->
+                <!--<li class="divider"> </li>-->
+                <!--<li>-->
+                <!--<a href="http://www.crpaas.com/html/developer/guide/" target="_blank"> 帮助文档 </a>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+
+                <!-- BEGIN INBOX DROPDOWN -->
+                <li class="dropdown dropdown-extended dropdown-inbox dropdown-user" style="line-height: 1">
+                    <div class="sw-tel" ng-if="customServiceInfo.business.nickname!=''">
+                        专属商务： <span>{{customServiceInfo.business.nickname || ''}}</span>
+                    </div>
+                    <div class="sw-tel">
+                       服务热线： <span>{{customServiceInfo.business.tel || '无'}}</span>
+                    </div>
+                </li>
+                <li class="dropdown dropdown-extended dropdown-inbox dropdown-user" id="dropToggle" style="width:148px;padding-right: 0px;">
+
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false" style="padding: 25px">
+                        <i class="fa fa-question-circle-o" style="font-size: 19px;line-height: 31px;position: absolute;top: 20px;left: 16px;color: #79869a;"></i>
+                        <span class="username username-hide-on-mobile" style="color:#79869a;margin-left: 22px"> 帮助支持 </span>
+                        <i class="fa fa-angle-down" style="color:#79869a; "></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <ul class="dropdown-menu-list scroller" style="height: 287px;" data-handle-color="#637283">
+                                <li>
+                                    <a href="#" style="padding:5px 15px 0;border: 0!important;">
+                                        <!--<span class="photo">-->
+                                        <!--<img th:src="@{/assets/layout/img/user.png}" class="img-circle" alt=""> </span>-->
+
+                                        <span class="message" style="margin-left: 0;border-bottom: 1px solid #e3e3e3!important;">
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <span style="font-size: 16px;color: #606060;margin-right: 5px">{{customServiceInfo.business.nickname || ''}}</span> <span style="font-size: 14px;color: #a3a3a3">商务</span>
+                                            </div>
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <img src="../public/assets/layout/img/Tel.png" alt="" style="float: left;margin-top: 7px;margin-right: 5px">
+                                                <span style="float: left;width: 80%;color: #a3a3a3;font-size: 14px">{{customServiceInfo.business.tel || '无'}}</span>
+
+                                            </div>
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <img src="../public/assets/layout/img/qq.png" alt="" style="float: left;margin-top: 7px;margin-right: 5px">
+                                                <span style="float: left;width: 80%;color: #a3a3a3;font-size: 14px">{{customServiceInfo.business.qq || '无'}}</span>
+                                            </div>
+
+                                        </span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" style="padding:5px 15px 0;border: 0!important;">
+                                        <!--<span class="photo">-->
+                                        <!--<img th:src="@{/assets/layout/img/user.png}" class="img-circle" alt=""> </span>-->
+
+                                        <span class="message" style="margin-left: 0;border-bottom: 1px solid #e3e3e3!important;">
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <span style="font-size: 16px;color: #606060;margin-right: 5px">{{customServiceInfo.customer.nickname || ''}}</span> <span style="font-size: 14px;color: #a3a3a3">客服</span>
+                                            </div>
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <img src="../public/assets/layout/img/Tel.png" alt="" style="float: left;margin-top: 7px;margin-right: 5px">
+                                                <span style="float: left;width: 80%;color: #a3a3a3;font-size: 14px">{{customServiceInfo.customer.tel || '无'}}</span>
+
+                                            </div>
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <img src="../public/assets/layout/img/qq.png" alt="" style="float: left;margin-top: 7px;margin-right: 5px">
+                                                <span style="float: left;width: 80%;color: #a3a3a3;font-size: 14px">{{customServiceInfo.customer.qq || '无'}}</span>
+                                            </div>
+
+                                        </span>
+
+                                    </a>
+                                </li>
+                                <li id="dropShow">
+                                    <a href="#" style="padding:5px 15px 0;border: 0!important;">
+                                        <!--<span class="photo">-->
+                                        <!--<img th:src="@{/assets/layout/img/user.png}" class="img-circle" alt=""> </span>-->
+
+                                        <span class="message" style="margin-left: 0;border-bottom: 1px solid #e3e3e3!important;">
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <span style="font-size: 16px;color: #606060;margin-right: 5px">{{customServiceInfo.support.nickname || ''}}</span> <span style="font-size: 14px;color: #a3a3a3">技术支持</span>
+                                            </div>
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <img src="../public/assets/layout/img/Tel.png" alt="" style="float: left;margin-top: 7px;margin-right: 5px">
+                                                <span style="float: left;width: 80%;color: #a3a3a3;font-size: 14px">{{customServiceInfo.support.tel || '无'}}</span>
+
+                                            </div>
+                                            <div style="height: 30px;line-height: 30px;margin-left: 10px">
+                                                <img src="../public/assets/layout/img/qq.png" alt="" style="float: left;margin-top: 7px;margin-right: 5px">
+                                                <span style="float: left;width: 80%;color: #a3a3a3;font-size: 14px">{{customServiceInfo.support.qq || ''}}</span>
+                                            </div>
+
+                                        </span>
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown dropdown-extended dropdown-notification" id="header_inbox_bar" ng-contoller="HeaderCtrl">
+                    <a ui-sref="customer.news" href="#/customer/customer/news" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="padding-left: 10px;padding-right: 10px;">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge badge-danger" ng-if="newsCount > 0"> {{newsCount}} </span>
+                    </a>
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li class="external" ng-if="newsCount > 0">-->
+                    <!--<h3>您有-->
+                    <!--<span class="bold">{{newsCount}} </span> 条新消息</h3>-->
+                    <!--<a ui-sref="news">更多</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<ul class="dropdown-menu-list scroller" style="min-height: 25px;" data-handle-color="#637283">-->
+                    <!--<li ng-repeat="n in news">-->
+                    <!--<a href="javascript:;">-->
+                    <!--<span class="subject">-->
+                    <!--<span class="time" ng-bind="n.time | date: 'MM-dd'"> </span>-->
+                    <!--</span>-->
+                    <!--<span class="message" style="display: block; width:185px; white-space:nowrap; word-break:keep-all; overflow:hidden; text-overflow:ellipsis;"> {{n.title}}  </span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li ng-if="newsCount == 0">-->
+                    <!--<div style="padding: 15px 0; text-align: center">-->
+                    <!--<span style="text-align: center"> 暂无消息  </span>-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                </li>
+                <!-- END INBOX DROPDOWN -->
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <li class="dropdown dropdown-user">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+
+                        <img alt="" ng-if="heardata.authz!=1  || heardata.authz_status!=1" class="img-circle" src="../public/assets/layout/img/personal.png" />
+                        <img alt="" ng-if="heardata.authz==1 && heardata.authz_status==1" class="img-circle" src="../public/assets/layout/img/business.png" />
+                        <span class="username username-hide-on-mobile" ng-bind="heardata.passport"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-default">
+                        <li>
+                            <a ui-sref="account.info">
+                                <i class="icon-user"></i> 个人资料 </a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a ui-sref="customer.news" class="nav-link nav-toggle" href="#/customer/customer/news">-->
+                                <!--<i class="fa fa-calendar"></i>-->
+                                <!--<span class="title">消息日志</span>-->
+                            <!--</a>-->
+                            <!--&lt;!&ndash;<a ui-sref="system.ip">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<i class="icon-settings"></i> 系统设置 </a>&ndash;&gt;-->
+                        <!--</li>-->
+                        <li>
+                            <a ui-sref="account.pwd">
+                                <i class="icon-key"></i> 修改密码 </a>
+                        </li>
+                        <li class="divider"> </li>
+                        <li>
+                            <a href="#" ng-click="logout()">
+                                <i class="icon-logout"></i> 安全退出 </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END USER LOGIN DROPDOWN -->
+            </ul>
+        </div>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+<script>
+    $('#dropToggle').mouseenter(function () {
+        $('#dropToggle').addClass('open')
+    }).mouseleave(function () {
+        $('#dropToggle').removeClass('open')
+    })
+</script>

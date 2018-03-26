@@ -1,0 +1,232 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" style="margin-left: 20px;width: 90px" class="form-control input-sm btn btn-sm blue" ng-click="openContactInvoice(null)">
+                                                <!--<i class="fa fa-plus"></i> -->
+                                                新增发票信息
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 发票类型</th>
+                            <th> 发票抬头</th>
+                            <th> 税务登记证号</th>
+                            <th> 银行账号 </th>
+                            <th> 开户行名称 </th>
+                            <th> 注册场所地址 </th>
+                            <th> 注册固定电话 </th>
+                            <th> 纳税证明 </th>
+                            <th> 是否默认 </th>
+                            <th> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.type==1?'增值税普通发票':'增值税专用发票'">  </td>
+                            <td ng-bind="data.title">  </td>
+                            <td ng-bind="data.taxid">  </td>
+                            <td ng-bind="data.bankaccount">  </td>
+                            <td ng-bind="data.bankname">  </td>
+                            <td ng-bind="data.address">  </td>
+                            <td ng-bind="data.telephone">  </td>
+                            <td>
+                                <a href="{{data.taximg}}" target="_blank" ng-if="data.taximg!='null'">
+                                    <img src="{{data.taximg}}" style="width: 100%" alt="" >
+                                </a>
+
+                            </td>
+                            <td ng-bind="data.is_default==1?'是':'否'">  </td>
+                            <td>
+                                <a href="javascript:;"  class="btn btn-xs blue ng-scope" ng-click="InvoiceDel(data.id)"> 删除 </a>
+                                 <a href="javascript:;"  class="btn btn-xs blue ng-scope" ng-click="openContactInvoice(data.id)"> 修改 </a>
+                                <!--<a href="javascript:;" class="btn btn-xs" ng-click="open(data)"> 支付宝支付 </a>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--新建发票-->
+<script type="text/ng-template"  id="openContactInvoice.html">
+    <form class="form-horizontal ng-pristine ng-valid" role="form" novalidate name="manualForm">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h5 class="modal-title">{{titleNe}}发票</h5>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0;">
+            <div class="row" style="margin-bottom: 0;">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            <!--<span style="color: red">*</span>-->
+                            发票类型：
+                        </label>
+                        <div class="col-md-9">
+                            <div class="col-md-9">
+                                <div class="mt-radio-inline">
+                                    <!--<label class="mt-radio"> 保密-->
+                                    <!--<input type="radio" ng-disabled="readOnly" value="0" name="sex" ng-model="data.sex"/>-->
+                                    <!--<span></span>-->
+                                    <!--</label>-->
+                                    <label class="mt-radio"> 增值税普通发票
+                                        <input type="checkbox"  value="1" name="sex" ng-model="invoiceClick1" ng-click="ToggleSwitch()"/>
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-radio"> 增值税专用发票
+                                        <input type="checkbox" value="2" name="sex" ng-model="invoiceClick2" ng-click="ToggleSwitch2()"/>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                发票抬头：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.title" name="name" required placeholder="请输入发票抬头">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                税务登记证号：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.taxid" name="taxid" required placeholder="请输入税务登记证号">
+                            </div>
+                        </div>
+
+
+                    <div ng-if="invoiceClick">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                开户银行名称：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.bankname" name="bankname" required placeholder="请输入开户银行名称">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                开户银行账号：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.bankaccount" name="bankaccount" required placeholder="请输入开户银行账号" minlength="6" maxlength="20">
+                                <br>
+                                <span style="color:red" ng-show="manualForm.bankaccount.$dirty && manualForm.bankaccount.$invalid">请输入6-20位银行账号</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                注册场所地址：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.address" name="address" required placeholder="请输入注册场所地址">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                注册固定电话：
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="input-sm" style="width: 318px;" ng-model="data.telephone" name="telephone" required placeholder="请输入注册固定电话">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <span style="color: red">*</span>
+                                一般纳税人证明：
+                            </label>
+                            <div class="col-sm-9 col-md-4">
+                                <div style="margin-bottom: 10px;">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                            <span class="btn btn-sm green btn-file" >
+                                                                                <span class="fileinput-new"> 上传 </span>
+                                                                                <span class="fileinput-exists"> 上传 </span>
+                                                                                <input type="file" uploader="uploaders" nv-file-select >
+                                                                            </span>
+                                        <!--<span class="fileinput-filename"> {{fileItem.name}} </span> &nbsp;-->
+                                        <!--<a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>-->
+                                    </div>
+                                    <span id="idCardImg" style="color: red"></span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <label class="mt-checkbox mt-checkbox-outline"
+                                   style="padding-top: 1px;"> 设为默认
+                                <input type="checkbox" ng-model="hasTI">
+                                <span></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-xs default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-xs green" ng-click="ok()">确定</button>
+        </div>
+    </form>
+</script>

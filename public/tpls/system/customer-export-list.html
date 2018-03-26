@@ -1,0 +1,105 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8" style="min-width: 170px;padding: 0 !important;">
+                                            <input class="form-control input-sm" style="background-color: #ffffff" readonly date-range-picker  options="opts" type="text" ng-model="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-search-label col-sm-6 col-md-3 col-lg-4">导出类型</label>
+                                        <div class="col-sm-6 col-md-6 col-lg-6" style="padding: 0 !important;">
+                                            <ui-select ng-model="params.type" theme="bootstrap" search-enabled="false" class="ui-select-container ui-select-bootstrap dropdown ng-valid" style="top: 3px;">
+                                                <ui-select-match placeholder="--请选择--">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="type.value as type in types | filter: $select.search">
+                                                    {{type.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()">刷新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 任务ID</th>
+                            <th> 提交时间</th>
+                            <th> 导出类型</th>
+                            <th> API账号 </th>
+                            <th> 记录数 </th>
+                            <th> IP </th>
+                            <th> 状态 </th>
+                            <th> 操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.id">  </td>
+                            <td ng-bind="data.create_time*1000 | date: 'yyyy-MM-dd HH:mm:ss'">  </td>
+                            <td>
+                                <span ng-if="data.type==1">发送记录</span>
+                                <span ng-if="data.type==2">通讯录</span>
+                                <span ng-if="data.type==3">回复记录</span>
+                            </td>
+                            <td ng-bind="data.username">  </td>
+                            <td ng-bind="data.record">  </td>
+                            <td ng-bind-html="data.ip">  </td>
+                            <td>
+                                <span ng-if="data.status==1">进行中</span>
+                                <span ng-if="data.status==2">已完成</span>
+                                <span ng-if="data.status==-1">失败</span>
+                            </td>
+                            <td>
+                                <a href="{{data.url}}"  class="btn btn-xs blue ng-scope" target="_blank" ng-if="data.url!=''"> 下载 </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

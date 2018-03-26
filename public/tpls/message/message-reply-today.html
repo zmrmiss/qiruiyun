@@ -1,0 +1,69 @@
+<div class="portlet light">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+                <!--<li ng-class="active.template ? 'active' : ''">-->
+                <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <ul id="tabs" class="nav nav-tabs ">
+                    <li ng-repeat="day in tabs3" ng-class="{active:isActiveDayRep(day.url)}" ng-click="onClickDayRep(day)">
+                        <a ui-sref="{{day.url}}"> {{day.title}} </a>
+                    </li>
+                    <!--<li ng-class="active.template ? 'active' : ''">-->
+                    <!--<a ui-sref="setting.template"> 模板报备 </a>-->
+                    <!--</li>-->
+                </ul>
+                <div class="tab-content">
+                    <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th width="30%"> 回复时间 </th>
+                                <th width="35%"> 手机号码 </th>
+                                <th width="35%"> 回复内容 </th>
+                                <!--<th width="20%"> 操作 </th>-->
+                                <!--<th width="10%"> 联系人 </th>-->
+                                <!--<th width="15%"> 扩展号 </th>-->
+                                <!--<th width="8%"> 是否加黑 </th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in tableData">
+                                <td ng-bind="data.born_date">  </td>
+                                <td ng-bind="data.telephone">  </td>
+                                <td ng-bind="data.content">  </td>
+                                <!--<td ng-bind="data.content">  </td>-->
+                                <!--<td ng-bind="data.bornDate">  </td>-->
+                                <!--<td>-->
+                                <!--<span style="color: red" ng-if="data.isBlack">已加黑</span>-->
+                                <!--<span ng-if="!data.isBlack">未加黑</span>-->
+                                <!--</td>-->
+                                <!--<td>-->
+                                <!--<a href="javascript:;" ng-show="!data.isBlack" class="btn btn-xs blue" ng-click="black(data.mobile)">加黑</a>-->
+                                <!--<a href="javascript:;" ng-show="data.isBlack" class="btn btn-xs blue" ng-click="noblack(data.mobile)">去黑</a>-->
+                                <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="sendMsg(data.mobile)"> 回复短信 </a>-->
+                                <!--<a href="javascript:;" class="btn btn-xs blue" ng-click="delete(data.id)"> 删除 </a>-->
+                                <!--</td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                            <p class="text-center">
+                                <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                            </p>
+                        </div>
+                        <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

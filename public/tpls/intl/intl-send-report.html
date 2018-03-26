@@ -1,0 +1,74 @@
+<div class="portlet light bordered">
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <ul id="tabs" class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">
+                    <a ui-sref="{{tab.url}}"> {{tab.title}} </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="control-label col-sm-6 col-md-3 col-lg-4">查询日期</label>
+                                        <div class="col-sm-6 col-md-9 col-lg-8">
+                                            <input class="form-control input-sm" style="background-color: #ffffff;width: 165px" readonly date-range-picker  options="opts" type="text" ng-model="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm blue" ng-click="load()"><i class="fa fa-search"></i> 查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="form-control input-sm btn btn-sm green" ng-click="export()">导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-hover table-light">
+                        <thead>
+                        <tr>
+                            <th> 日期 </th>
+                            <th> 发送总量 </th>
+                            <th ng-if="stateSwitched == 1"> 发送成功 </th>
+                            <th ng-if="stateSwitched == 1"> 发送失败 </th>
+                            <th ng-if="stateSwitched == 1"> 等待返回 <a href="#" tooltips tooltip-side="top" tooltip-template="短信已提交至运营商网关下发，但运营商网关未将状态及时返回，请耐心等待<br /><span class='font-yellow'>根据运营商规则，状态会在发送后72小时内返回</span>"><i class="fa fa-question-circle font-blue"></i></a> </th>
+                            <th ng-if="stateSwitched == 1"> 无效发送 <a href="#" tooltips tooltip-side="top" tooltip-template="短信未成功提交至运营商网关处进行发送<br /><span class='font-yellow'>例如人工驳回，短信自行撤销等</span>"><i class="fa fa-question-circle font-blue"></i></a> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in tableData">
+                            <td ng-bind="data.day | date: 'yyyy-MM-dd'">  </td>
+                            <td ng-bind="data.total">  </td>
+                            <td ng-if="stateSwitched == 1" ng-bind="data.success">  </td>
+                            <td ng-if="stateSwitched == 1" ng-bind="data.error">  </td>
+                            <td ng-if="stateSwitched == 1" ng-bind="data.unknown">  </td>
+                            <td ng-if="stateSwitched == 1" ng-bind="data.invalid">  </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-if="tableData.length == 0" style="margin: 0;padding: 80px;">
+                        <p class="text-center">
+                            <img class="avatar" src="../public/assets/layout/img/norecord.png">
+                        </p>
+                    </div>
+                    <tm-pagination ng-if="tableData.length > 0" conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
